@@ -5,9 +5,9 @@ import 'package:flutter_auto_form/src/configuration/configuration.dart';
 import 'package:flutter_auto_form/src/models/field/field.dart';
 import 'package:flutter_auto_form/src/models/form.dart';
 
-abstract class GAFormState<T extends StatefulWidget, G extends TemplateForm>
+abstract class AutoFormFormState<T extends StatefulWidget, G extends TemplateForm>
     extends State<T> {
-  GAFormState(
+  AutoFormFormState(
     this.model, {
     this.enableFinalAction = true,
   });

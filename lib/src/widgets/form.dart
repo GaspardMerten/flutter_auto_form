@@ -23,7 +23,7 @@ class AutoFormWidget<T extends TemplateForm> extends StatefulWidget {
 }
 
 class _AutoFormWidgetState<T extends TemplateForm>
-    extends GAFormState<AutoFormWidget, T> {
+    extends AutoFormFormState<AutoFormWidget, T> {
   _AutoFormWidgetState(T model) : super(model);
 
   @override
