@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auto_form/src/configuration/smart_text_field.dart';
+import 'package:smarter_text_field/smarter_text_field.dart';
 
 Widget kTextFieldWidgetBuilder(
   BuildContext context, {

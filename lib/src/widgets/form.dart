@@ -42,8 +42,9 @@ class _AutoFormWidgetState<T extends TemplateForm>
         children: [
           child,
           widget.submitButton(
-            (bool showLoadingDialog) =>
-                submitForm(showLoading: showLoadingDialog),
+            (bool showLoadingDialog) => submitForm(
+              showLoading: showLoadingDialog,
+            ),
           )
         ],
       );
@@ -53,9 +54,5 @@ class _AutoFormWidgetState<T extends TemplateForm>
   }
 
   @override
-  FutureOr<void> submit(T form) async {
-    await Future<void>.delayed(Duration(seconds: 1));
-
-    widget.onSubmitted(form);
-  }
+  FutureOr<void> submit(T form) => widget.onSubmitted(form);
 }

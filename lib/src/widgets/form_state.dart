@@ -31,10 +31,10 @@ abstract class AutoFormWidgetState<T extends StatefulWidget,
     super.initState();
 
     for (final Field e in model.fields) {
-      textEditingControllers[e.id] =
-          TextEditingController(text: e.value?.toString());
-      textEditingControllers[e.id]
-          .addListener(() => e.value = textEditingControllers[e.id].text);
+      textEditingControllers[e.id] = TextEditingController(text: e.value)
+        ..addListener(
+          () => e.value = textEditingControllers[e.id].text,
+        );
 
       focusNodes[e.id] = FocusNode();
     }
