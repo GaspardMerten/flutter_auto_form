@@ -13,9 +13,10 @@ class AutoFormTheme extends InheritedWidget {
 
   static AutoFormTheme of(BuildContext context) {
     final AutoFormTheme result =
-    context.dependOnInheritedWidgetOfExactType<AutoFormTheme>();
+        context.dependOnInheritedWidgetOfExactType<AutoFormTheme>();
 
-    assert(result != null, 'Please wrap the current widget with an AutoFormTheme widget.');
+    assert(result != null,
+        'Please wrap the current widget with an AutoFormTheme widget.');
 
     return result;
   }

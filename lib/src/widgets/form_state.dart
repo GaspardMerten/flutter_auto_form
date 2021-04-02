@@ -5,9 +5,10 @@ import 'package:flutter_auto_form/src/models/field/field.dart';
 import 'package:flutter_auto_form/src/models/form.dart';
 import 'package:flutter_auto_form/src/widgets/auto_form_theme.dart';
 
-abstract class AutoFormFormState<T extends StatefulWidget, G extends TemplateForm>
-    extends State<T> {
-  AutoFormFormState(this.model, {
+abstract class AutoFormFormState<T extends StatefulWidget,
+    G extends TemplateForm> extends State<T> {
+  AutoFormFormState(
+    this.model, {
     this.enableFinalAction = true,
     this.handleErrorOnSubmit,
   });
@@ -72,7 +73,8 @@ abstract class AutoFormFormState<T extends StatefulWidget, G extends TemplateFor
     );
   }
 
-  Widget fieldWidget(Field field, {
+  Widget fieldWidget(
+    Field field, {
     String nextFocusName,
     bool isFinal = false,
   }) {
@@ -83,9 +85,11 @@ abstract class AutoFormFormState<T extends StatefulWidget, G extends TemplateFor
     return autoFormTheme.buildField(nextFocusName, field, isFinal);
   }
 
-  Widget buildTextField(String nextFocusName,
-      AutoFormTextField field,
-      bool isFinal,) {
+  Widget buildTextField(
+    String nextFocusName,
+    AutoFormTextField field,
+    bool isFinal,
+  ) {
     final FocusNode focusNode = focusNodes[field.id];
 
     final bool shouldObscureText =
