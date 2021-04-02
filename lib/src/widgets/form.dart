@@ -17,7 +17,7 @@ class AutoFormWidget<T extends TemplateForm> extends StatefulWidget {
 
   final Function(T form) onSubmitted;
 
-  final Function(String error) handleErrorOnSubmit;
+  final ValueChanged<String> handleErrorOnSubmit;
 
   final Widget Function(Function(bool showLoadingDialog) submit) submitButton;
 
@@ -30,8 +30,8 @@ class AutoFormWidget<T extends TemplateForm> extends StatefulWidget {
 
 class _AutoFormWidgetState<T extends TemplateForm>
     extends AutoFormWidgetState<AutoFormWidget, T> {
-  _AutoFormWidgetState(T model, {Function(String) handleErrorOnSubmit})
-      : super(model, handleErrorOnSubmit: handleErrorOnSubmit);
+  _AutoFormWidgetState(T model, {ValueChanged<String> handleErrorOnSubmit})
+      : super(model: model, handleErrorOnSubmit: handleErrorOnSubmit);
 
   @override
   Widget build(BuildContext context) {

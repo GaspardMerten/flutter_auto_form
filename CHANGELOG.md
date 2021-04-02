@@ -1,3 +1,9 @@
+## [0.0.4] - 04-02-2021.
+
+* Removing debug code
+* Refactoring code
+* Upgrading smarted_text_field to v0.0.2
+
 ## [0.0.3] - 04-02-2021.
 
 * Renaming AutoFormFormState to AutoFormWidgetState

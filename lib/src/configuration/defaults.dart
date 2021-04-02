@@ -17,8 +17,6 @@ Widget kTextFieldWidgetBuilder(
     labelText: labelText,
   ).applyDefaults(Theme.of(context).inputDecorationTheme);
 
-  print(forceError);
-
   return Padding(
     padding: const EdgeInsets.only(top: 16),
     child: SmartTextFormField(
