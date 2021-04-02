@@ -1,22 +1,26 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_auto_form/src/configuration/configuration.dart';
 import 'package:flutter_auto_form/src/models/field/field.dart';
 import 'package:flutter_auto_form/src/models/form.dart';
+import 'package:flutter_auto_form/src/widgets/auto_form_theme.dart';
 
 abstract class AutoFormFormState<T extends StatefulWidget, G extends TemplateForm>
     extends State<T> {
-  AutoFormFormState(
-    this.model, {
+  AutoFormFormState(this.model, {
     this.enableFinalAction = true,
+    this.handleErrorOnSubmit,
   });
 
   final G model;
 
   final bool enableFinalAction;
 
+  final Function(String error) handleErrorOnSubmit;
+
   bool forceError = false;
+
+  AutoFormTheme get autoFormTheme => AutoFormTheme.of(context);
 
   Map<String, TextEditingController> textEditingControllers = {};
   Map<String, FocusNode> focusNodes = {};
@@ -68,8 +72,7 @@ abstract class AutoFormFormState<T extends StatefulWidget, G extends TemplateFor
     );
   }
 
-  Widget fieldWidget(
-    Field field, {
+  Widget fieldWidget(Field field, {
     String nextFocusName,
     bool isFinal = false,
   }) {
@@ -77,14 +80,12 @@ abstract class AutoFormFormState<T extends StatefulWidget, G extends TemplateFor
       return buildTextField(nextFocusName, field, isFinal);
     }
 
-    return AutoFormConfiguration().buildField(nextFocusName, field, isFinal);
+    return autoFormTheme.buildField(nextFocusName, field, isFinal);
   }
 
-  Widget buildTextField(
-    String nextFocusName,
-    AutoFormTextField field,
-    bool isFinal,
-  ) {
+  Widget buildTextField(String nextFocusName,
+      AutoFormTextField field,
+      bool isFinal,) {
     final FocusNode focusNode = focusNodes[field.id];
 
     final bool shouldObscureText =
@@ -97,7 +98,7 @@ abstract class AutoFormFormState<T extends StatefulWidget, G extends TemplateFor
       nextFocusNode = focusNodes[nextFocusName];
     }
 
-    return AutoFormConfiguration().textFieldWidgetBuilder(
+    return autoFormTheme.textFieldWidgetBuilder(
       context,
       labelText: field.name,
       validator: field.validate,
@@ -153,13 +154,15 @@ abstract class AutoFormFormState<T extends StatefulWidget, G extends TemplateFor
 
     if (model.isComplete()) {
       if (showLoading && enableFinalAction) {
-        await AutoFormConfiguration().showFutureLoadingWidget(
+        await autoFormTheme.showFutureLoadingWidget(
           context: context,
           future: submit(model),
         );
       } else {
         await submit(model);
       }
+    } else {
+      handleErrorOnSubmit?.call(model.getFirstError());
     }
   }
 }

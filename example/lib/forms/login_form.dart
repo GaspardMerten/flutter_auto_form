@@ -9,7 +9,7 @@ class LoginForm extends TemplateForm {
             [
               MinimumStringLengthValidator(
                 5,
-                (e) => 'Min 5 characters, currently ${e.length} ',
+                (e) => 'Min 5 characters, currently ${e?.length ?? 0} ',
               )
             ],
             AutoFormTextFieldType.USERNAME,
@@ -20,7 +20,7 @@ class LoginForm extends TemplateForm {
             [
               MinimumStringLengthValidator(
                 6,
-                (e) => 'Min 6 characters, currently ${e.length} ',
+                (e) => 'Min 6 characters, currently ${e?.length ?? 0} ',
               )
             ],
             AutoFormTextFieldType.PASSWORD,

@@ -7,24 +7,31 @@ import 'package:flutter_auto_form/src/widgets/form_state.dart';
 class AutoFormWidget<T extends TemplateForm> extends StatefulWidget {
   const AutoFormWidget(
       {Key key,
-      @required this.formBuilder,
-      @required this.onSubmitted,
-      this.submitButton})
+        @required this.formBuilder,
+        @required this.onSubmitted,
+        this.submitButton,
+        this.handleErrorOnSubmit})
       : super(key: key);
 
   final T Function() formBuilder;
 
   final Function(T form) onSubmitted;
 
+  final Function(String error) handleErrorOnSubmit;
+
   final Widget Function(Function(bool showLoadingDialog) submit) submitButton;
 
   @override
-  _AutoFormWidgetState createState() => _AutoFormWidgetState<T>(formBuilder());
+  _AutoFormWidgetState createState() => _AutoFormWidgetState<T>(
+    formBuilder(),
+    handleErrorOnSubmit: handleErrorOnSubmit,
+  );
 }
 
 class _AutoFormWidgetState<T extends TemplateForm>
     extends AutoFormFormState<AutoFormWidget, T> {
-  _AutoFormWidgetState(T model) : super(model);
+  _AutoFormWidgetState(T model, {Function(String) handleErrorOnSubmit})
+      : super(model, handleErrorOnSubmit: handleErrorOnSubmit);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +42,7 @@ class _AutoFormWidgetState<T extends TemplateForm>
         children: [
           child,
           widget.submitButton(
-            (bool showLoadingDialog) =>
+                (bool showLoadingDialog) =>
                 submitForm(showLoading: showLoadingDialog),
           )
         ],

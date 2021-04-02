@@ -19,6 +19,17 @@ abstract class TemplateForm {
     return true;
   }
 
+  String getFirstError() {
+    for (final Field field in fields) {
+      final String error = field.validate(field.value);
+      if (error != null) {
+        return error;
+      }
+    }
+
+    return null;
+  }
+
   T get<T>(String id) {
     return fields.singleWhere((e) => e.id == id, orElse: null)?.value;
   }

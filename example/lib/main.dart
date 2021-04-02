@@ -11,13 +11,15 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Auto Form Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return AutoFormTheme(
+      child: MaterialApp(
+        title: 'Auto Form Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: MyHomePage(),
       ),
-      home: MyHomePage(),
     );
   }
 }
@@ -45,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   FormShowcaseTile(
                     title: 'Login form',
                     child: AutoFormWidget<LoginForm>(
+                      handleErrorOnSubmit: print,
                       formBuilder: () => LoginForm(),
                       submitButton: (Function(bool showLoadingDialog) submit) =>
                           Padding(

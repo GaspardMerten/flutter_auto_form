@@ -29,6 +29,7 @@ Widget kTextFieldWidgetBuilder(
       focusNode: focusNode,
       obscureText: obscureText,
       action: action,
+      forceError: forceError,
       completeAction: completeAction,
       displayObscureTextToggle: obscureText,
     ),
