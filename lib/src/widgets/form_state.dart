@@ -5,9 +5,9 @@ import 'package:flutter_auto_form/src/models/field/field.dart';
 import 'package:flutter_auto_form/src/models/form.dart';
 import 'package:flutter_auto_form/src/widgets/auto_form_theme.dart';
 
-abstract class AutoFormFormState<T extends StatefulWidget,
+abstract class AutoFormWidgetState<T extends StatefulWidget,
     G extends TemplateForm> extends State<T> {
-  AutoFormFormState(
+  AutoFormWidgetState(
     this.model, {
     this.enableFinalAction = true,
     this.handleErrorOnSubmit,

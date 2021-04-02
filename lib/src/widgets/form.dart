@@ -29,7 +29,7 @@ class AutoFormWidget<T extends TemplateForm> extends StatefulWidget {
 }
 
 class _AutoFormWidgetState<T extends TemplateForm>
-    extends AutoFormFormState<AutoFormWidget, T> {
+    extends AutoFormWidgetState<AutoFormWidget, T> {
   _AutoFormWidgetState(T model, {Function(String) handleErrorOnSubmit})
       : super(model, handleErrorOnSubmit: handleErrorOnSubmit);
 

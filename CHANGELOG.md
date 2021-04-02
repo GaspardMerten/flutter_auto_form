@@ -1,3 +1,7 @@
+## [0.0.3] - 04-02-2021.
+
+* Renaming AutoFormFormState to AutoFormWidgetState
+
 ## [0.0.2] - 04-02-2021.
 
 * Replacing the config singleton with an InheritedWidget.
