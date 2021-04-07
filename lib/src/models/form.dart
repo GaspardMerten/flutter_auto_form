@@ -19,9 +19,9 @@ abstract class TemplateForm {
     return true;
   }
 
-  String getFirstError() {
+  String? getFirstError() {
     for (final Field field in fields) {
-      final String error = field.validate(field.value);
+      final String? error = field.validate(field.value);
       if (error != null) {
         return error;
       }
@@ -30,12 +30,12 @@ abstract class TemplateForm {
     return null;
   }
 
-  T get<T>(String id) {
-    return fields.singleWhere((e) => e.id == id, orElse: null)?.value;
+  T? get<T>(String id) {
+    return fields.singleWhere((e) => e.id == id, orElse: null).value as T?;
   }
 
   dynamic set(String id, dynamic value) {
-    return fields.singleWhere((e) => e.id == id, orElse: null)?.value = value;
+    return fields.singleWhere((e) => e.id == id, orElse: null).value = value;
   }
 
   Map<String, dynamic> toMap() =>

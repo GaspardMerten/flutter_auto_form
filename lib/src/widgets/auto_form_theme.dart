@@ -5,18 +5,15 @@ import 'package:flutter_auto_form/src/configuration/typedef.dart';
 
 class AutoFormTheme extends InheritedWidget {
   AutoFormTheme({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     this.textFieldWidgetBuilder = kTextFieldWidgetBuilder,
     this.showFutureLoadingWidget = kShowFutureLoadingWidget,
   }) : super(key: key, child: child);
 
   static AutoFormTheme of(BuildContext context) {
     final AutoFormTheme result =
-        context.dependOnInheritedWidgetOfExactType<AutoFormTheme>();
-
-    assert(result != null,
-        'Please wrap the current widget with an AutoFormTheme widget.');
+        context.dependOnInheritedWidgetOfExactType<AutoFormTheme>()!;
 
     return result;
   }
@@ -24,7 +21,7 @@ class AutoFormTheme extends InheritedWidget {
   final TextFieldWidgetBuilder textFieldWidgetBuilder;
   final FutureLoadingWidget showFutureLoadingWidget;
 
-  Widget buildField(String nextFocusName, Field<Object> field, bool isFinal) {
+  Widget buildField(String? nextFocusName, Field<Object> field, bool isFinal) {
     throw UnimplementedError(
         'Override the buildField method to render custom Field !');
   }

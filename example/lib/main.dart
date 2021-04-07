@@ -25,8 +25,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
-
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -38,7 +37,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        resizeToAvoidBottomPadding: false,
         body: Column(
           children: [
             Expanded(
@@ -57,9 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           onPressed: () => submit(true),
                         ),
                       ),
-                      onSubmitted: (TemplateForm form) async {
+                      onSubmitted: (dynamic form) async {
                         await Future.delayed(Duration(seconds: 2));
-
                         print(form.toMap());
                       },
                     ),
@@ -96,7 +93,8 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class FormShowcaseTile extends StatelessWidget {
-  const FormShowcaseTile({Key key, this.child, this.title}) : super(key: key);
+  const FormShowcaseTile({Key? key, required this.child, required this.title})
+      : super(key: key);
 
   final String title;
 

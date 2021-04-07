@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 
 export 'defaults.dart';
 
-abstract class Validator<T extends Object> {
-  String validate(T value);
+abstract class Validator<T extends Object?> {
+  String? validate(T value);
 }
 
-abstract class ValidatorWithStaticError<T extends Object> extends Validator<T> {
+abstract class ValidatorWithStaticError<T extends Object?>
+    extends Validator<T> {
   ValidatorWithStaticError(this.error);
 
   final String error;
 
   @protected
-  String validate(T value) {
+  String? validate(T? value) {
     if (innerValidate(value)) {
       return null;
     } else {
@@ -20,5 +21,5 @@ abstract class ValidatorWithStaticError<T extends Object> extends Validator<T> {
     }
   }
 
-  bool innerValidate(T value);
+  bool innerValidate(T? value);
 }

@@ -8,7 +8,7 @@ class RegistrationForm extends TemplateForm {
       [
         MinimumStringLengthValidator(
           6,
-          (e) => 'Min 6 cara. Currently: ${e.length}',
+          (e) => 'Min 6 cara. Currently: ${e?.length ?? 0}',
         )
       ],
       AutoFormTextFieldType.NEW_PASSWORD,
@@ -40,5 +40,5 @@ class RegistrationForm extends TemplateForm {
   }
 
   @override
-  List<Field> fields;
+  late List<Field> fields;
 }

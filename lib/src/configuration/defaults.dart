@@ -3,15 +3,15 @@ import 'package:smarter_text_field/smarter_text_field.dart';
 
 Widget kTextFieldWidgetBuilder(
   BuildContext context, {
-  String labelText,
-  Function(String value) validator,
-  TextEditingController controller,
-  FocusNode focusNode,
-  bool forceError,
-  TextInputAction action,
-  Function() completeAction,
-  List<String> autoFillHints,
-  bool obscureText,
+  String? labelText,
+  Function(String value)? validator,
+  required TextEditingController controller,
+  required FocusNode focusNode,
+  required bool forceError,
+  required TextInputAction action,
+  Function()? completeAction,
+  required List<String> autoFillHints,
+  required bool obscureText,
 }) {
   final InputDecoration decoration = InputDecoration(
     labelText: labelText,
@@ -21,7 +21,7 @@ Widget kTextFieldWidgetBuilder(
     padding: const EdgeInsets.only(top: 16),
     child: SmartTextFormField(
       decoration: decoration,
-      validator: validator,
+      validator: validator as String? Function(String?)?,
       controller: controller,
       autoFillHints: autoFillHints,
       focusNode: focusNode,
@@ -35,8 +35,8 @@ Widget kTextFieldWidgetBuilder(
 }
 
 Future<T> kShowFutureLoadingWidget<T>({
-  @required BuildContext context,
-  @required Future<T> future,
+  required BuildContext context,
+  required Future<T> future,
 }) async {
   showDialog<dynamic>(
     context: context,
@@ -53,7 +53,7 @@ Future<T> kShowFutureLoadingWidget<T>({
 
 class _KLoadingWidget extends StatelessWidget {
   const _KLoadingWidget({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

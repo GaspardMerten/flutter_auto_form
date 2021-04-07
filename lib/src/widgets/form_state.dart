@@ -13,7 +13,7 @@ import 'package:flutter_auto_form/src/widgets/auto_form_theme.dart';
 abstract class AutoFormWidgetState<T extends StatefulWidget,
     G extends TemplateForm> extends State<T> {
   AutoFormWidgetState({
-    @required this.model,
+    required this.model,
     this.enableFinalAction = true,
     this.handleErrorOnSubmit,
   });
@@ -27,7 +27,7 @@ abstract class AutoFormWidgetState<T extends StatefulWidget,
   /// A callback that will be triggered whenever the [submitForm] method is called
   /// while the form is invalid. It exposes the first error returned by one of the
   /// form's field ([Field]
-  final ValueChanged<String> handleErrorOnSubmit;
+  final ValueChanged<String>? handleErrorOnSubmit;
 
   /// Whether to display each field's respective error (if there is one) even if
   /// the user did not interact with any of these fields.
@@ -52,10 +52,11 @@ abstract class AutoFormWidgetState<T extends StatefulWidget,
     for (final Field e in model.fields) {
       if (e is AutoFormTextField) {
         // Populate the [textEditingControllers] map for the given field.
-        textEditingControllers[e.id] = TextEditingController(text: e.value)
-          ..addListener(
-            () => e.value = textEditingControllers[e.id].text,
-          );
+        textEditingControllers[e.id] =
+            TextEditingController(text: e.value as String?)
+              ..addListener(
+                () => e.value = textEditingControllers[e.id]!.text,
+              );
 
         // Populate the [focusNodes] map for the given field.
         focusNodes[e.id] = FocusNode();
@@ -82,7 +83,7 @@ abstract class AutoFormWidgetState<T extends StatefulWidget,
     for (final Field _field in model.fields) {
       bool isFinal = _index == -1 || _index == model.fields.length - 1;
 
-      final String nextFocusId = isFinal ? null : model.fields[_index + 1].id;
+      final String? nextFocusId = isFinal ? null : model.fields[_index + 1].id;
 
       fieldWidgets.add(fieldWidget(
         _field,
@@ -103,7 +104,7 @@ abstract class AutoFormWidgetState<T extends StatefulWidget,
   /// Returns the matching widget for a given [Field]
   Widget fieldWidget(
     Field field, {
-    String nextFocusName,
+    String? nextFocusName,
     bool isFinal = false,
   }) {
     if (field is AutoFormTextField) {
@@ -114,17 +115,17 @@ abstract class AutoFormWidgetState<T extends StatefulWidget,
   }
 
   Widget buildTextField(
-    String nextFocusName,
+    String? nextFocusName,
     AutoFormTextField field,
     bool isFinal,
   ) {
-    final FocusNode focusNode = focusNodes[field.id];
+    final FocusNode focusNode = focusNodes[field.id]!;
 
     final bool shouldObscureText =
         field.type == AutoFormTextFieldType.PASSWORD ||
             field.type == AutoFormTextFieldType.NEW_PASSWORD;
 
-    FocusNode nextFocusNode;
+    FocusNode? nextFocusNode;
 
     if (nextFocusName != null) {
       nextFocusNode = focusNodes[nextFocusName];
@@ -134,7 +135,7 @@ abstract class AutoFormWidgetState<T extends StatefulWidget,
       context,
       labelText: field.name,
       validator: field.validate,
-      controller: textEditingControllers[field.id],
+      controller: textEditingControllers[field.id]!,
       action: isFinal ? TextInputAction.done : TextInputAction.next,
       autoFillHints: getAutoFillHintsFromFieldType(field),
       obscureText: shouldObscureText,
@@ -152,7 +153,7 @@ abstract class AutoFormWidgetState<T extends StatefulWidget,
   }
 
   List<String> getAutoFillHintsFromFieldType(AutoFormTextField field) {
-    String autoFillHint;
+    String? autoFillHint;
 
     switch (field.type) {
       case AutoFormTextFieldType.PASSWORD:
@@ -188,13 +189,13 @@ abstract class AutoFormWidgetState<T extends StatefulWidget,
       if (showLoading && enableFinalAction) {
         await autoFormTheme.showFutureLoadingWidget(
           context: context,
-          future: submit(model),
+          future: submit(model) as Future<dynamic>,
         );
       } else {
         await submit(model);
       }
     } else {
-      handleErrorOnSubmit?.call(model.getFirstError());
+      handleErrorOnSubmit?.call(model.getFirstError()!);
     }
   }
 }

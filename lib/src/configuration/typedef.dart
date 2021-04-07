@@ -3,25 +3,25 @@ import 'package:flutter_auto_form/flutter_auto_form.dart';
 
 typedef TextFieldWidgetBuilder<T> = Widget Function(
   BuildContext context, {
-  String labelText,
-  Function(T value) validator,
-  TextEditingController controller,
-  FocusNode focusNode,
-  TextInputAction action,
-  bool forceError,
-  Function() completeAction,
-  List<String> autoFillHints,
-  bool obscureText,
+  String? labelText,
+  Function(String value)? validator,
+  required TextEditingController controller,
+  required FocusNode focusNode,
+  required bool forceError,
+  required TextInputAction action,
+  required List<String> autoFillHints,
+  required bool obscureText,
+  Function()? completeAction,
 });
 
 typedef FutureLoadingWidget<T> = Future<T> Function({
-  @required BuildContext context,
-  @required Future<T> future,
+  required BuildContext context,
+  required Future<T> future,
 });
 
 typedef FieldWidgetBuilder<T> = Widget Function(
   BuildContext context, {
-  Field field,
-  String nextFieldId,
-  bool isFinal,
+  Field? field,
+  String? nextFieldId,
+  bool? isFinal,
 });

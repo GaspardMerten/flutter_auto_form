@@ -1,3 +1,12 @@
+## [0.0.6] - 04-07-2021.
+
+* Migrating to null safety
+
+## [0.0.5] - 04-02-2021.
+
+* Fixing issue with the loading dialog
+* Adding first pieces of documentation
+
 ## [0.0.4] - 04-02-2021.
 
 * Removing debug code

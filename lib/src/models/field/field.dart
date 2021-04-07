@@ -11,11 +11,11 @@ abstract class Field<T extends Object> {
   final String name;
   final List<Validator> validators;
 
-  T value;
+  T? value;
 
-  String validate(dynamic value) {
+  String? validate(dynamic value) {
     for (final Validator validator in validators) {
-      final String error = validator.validate(value);
+      final String? error = validator.validate(value);
 
       if (error != null) return error;
     }
