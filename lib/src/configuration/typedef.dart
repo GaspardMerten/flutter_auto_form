@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auto_form/flutter_auto_form.dart';
 
+/// An interface for the text field builder. See [kTextFieldWidgetBuilder] for
+/// an example of a working implementation.
 typedef TextFieldWidgetBuilder<T> = Widget Function(
   BuildContext context, {
   String? labelText,
@@ -14,11 +16,14 @@ typedef TextFieldWidgetBuilder<T> = Widget Function(
   Function()? completeAction,
 });
 
+/// An interface for the future loader. See [kShowFutureLoadingWidget] for
+/// an example of a working implementation.
 typedef FutureLoadingWidget<T> = Future<T> Function({
   required BuildContext context,
   required Future<T> future,
 });
 
+/// The generic interface for field widget builder.
 typedef FieldWidgetBuilder<T> = Widget Function(
   BuildContext context, {
   Field? field,
