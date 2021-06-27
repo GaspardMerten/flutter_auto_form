@@ -3,7 +3,7 @@ import 'package:flutter_auto_form/flutter_auto_form.dart';
 class LoginForm extends TemplateForm {
   LoginForm()
       : fields = [
-          AutoFormTextField(
+          AFTextField(
             'identifier',
             'Identifier',
             [
@@ -12,9 +12,9 @@ class LoginForm extends TemplateForm {
                 (e) => 'Min 5 characters, currently ${e?.length ?? 0} ',
               )
             ],
-            AutoFormTextFieldType.USERNAME,
+            AFTextFieldType.USERNAME,
           ),
-          AutoFormTextField(
+    AFTextField(
             'password',
             'Password',
             [
@@ -23,7 +23,7 @@ class LoginForm extends TemplateForm {
                 (e) => 'Min 6 characters, currently ${e?.length ?? 0} ',
               )
             ],
-            AutoFormTextFieldType.PASSWORD,
+            AFTextFieldType.PASSWORD,
           )
         ];
 

@@ -1,18 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_auto_form/flutter_auto_form.dart';
 import 'package:flutter_auto_form/src/models/field/field.dart';
 import 'package:flutter_auto_form/src/models/form.dart';
 import 'package:flutter_auto_form/src/widgets/auto_form_theme.dart';
 
-/// The [AutoFormWidgetState] allows to override and customize even more the behavior
+/// The [AFWidgetState] allows to override and customize even more the behavior
 /// of the form widget's logic.
 ///
-/// Before considering extending this class, make sure that the [AutoFormWidget] class
+/// Before considering extending this class, make sure that the [AFWidget] class
 /// does not satisfy your requirements!
-abstract class AutoFormWidgetState<T extends StatefulWidget,
-    G extends TemplateForm> extends State<T> {
-  AutoFormWidgetState({
+abstract class AFWidgetState<T extends StatefulWidget, G extends TemplateForm>
+    extends State<T> {
+  AFWidgetState({
     required this.model,
     this.enableFinalAction = true,
     this.handleErrorOnSubmit,
@@ -35,13 +36,13 @@ abstract class AutoFormWidgetState<T extends StatefulWidget,
 
   /// Since this getter makes use of the [context] value, it should not be
   /// called inside the [initState].
-  AutoFormTheme get autoFormTheme => AutoFormTheme.of(context);
+  AFThemeData get theme => AFTheme.of(context);
 
-  /// A map linking each [AutoFormTextField]'id to its respective [TextEditingController]
+  /// A map linking each [AFTextField]'id to its respective [TextEditingController]
   /// that will be populated inside the [initState] method.
   Map<String, TextEditingController> textEditingControllers = {};
 
-  /// A map linking each [AutoFormTextField]'id to its respective [FocusNode]
+  /// A map linking each [AFTextField]'id to its respective [FocusNode]
   /// that will be populated inside the [initState] method.
   Map<String, FocusNode> focusNodes = {};
 
@@ -50,7 +51,7 @@ abstract class AutoFormWidgetState<T extends StatefulWidget,
     super.initState();
 
     for (final Field e in model.fields) {
-      if (e is AutoFormTextField) {
+      if (e is AFTextField) {
         // Populate the [textEditingControllers] map for the given field.
         textEditingControllers[e.id] =
             TextEditingController(text: e.value as String?)
@@ -107,23 +108,22 @@ abstract class AutoFormWidgetState<T extends StatefulWidget,
     String? nextFocusName,
     bool isFinal = false,
   }) {
-    if (field is AutoFormTextField) {
+    if (field is AFTextField) {
       return buildTextField(nextFocusName, field, isFinal);
     }
 
-    return autoFormTheme.buildField(nextFocusName, field, isFinal);
+    return theme.buildField(nextFocusName, field, isFinal);
   }
 
   Widget buildTextField(
     String? nextFocusName,
-    AutoFormTextField field,
+    AFTextField field,
     bool isFinal,
   ) {
     final FocusNode focusNode = focusNodes[field.id]!;
 
-    final bool shouldObscureText =
-        field.type == AutoFormTextFieldType.PASSWORD ||
-            field.type == AutoFormTextFieldType.NEW_PASSWORD;
+    final bool shouldObscureText = field.type == AFTextFieldType.PASSWORD ||
+        field.type == AFTextFieldType.NEW_PASSWORD;
 
     FocusNode? nextFocusNode;
 
@@ -131,7 +131,7 @@ abstract class AutoFormWidgetState<T extends StatefulWidget,
       nextFocusNode = focusNodes[nextFocusName];
     }
 
-    return autoFormTheme.textFieldWidgetBuilder(
+    return theme.textFieldWidgetBuilder(
       context,
       labelText: field.name,
       validator: field.validate,
@@ -152,23 +152,23 @@ abstract class AutoFormWidgetState<T extends StatefulWidget,
     );
   }
 
-  List<String> getAutoFillHintsFromFieldType(AutoFormTextField field) {
+  List<String> getAutoFillHintsFromFieldType(AFTextField field) {
     String? autoFillHint;
 
     switch (field.type) {
-      case AutoFormTextFieldType.PASSWORD:
+      case AFTextFieldType.PASSWORD:
         autoFillHint = AutofillHints.password;
         break;
-      case AutoFormTextFieldType.EMAIL:
+      case AFTextFieldType.EMAIL:
         autoFillHint = AutofillHints.email;
         break;
-      case AutoFormTextFieldType.USERNAME:
+      case AFTextFieldType.USERNAME:
         autoFillHint = AutofillHints.username;
         break;
-      case AutoFormTextFieldType.NEW_PASSWORD:
+      case AFTextFieldType.NEW_PASSWORD:
         autoFillHint = AutofillHints.newPassword;
         break;
-      case AutoFormTextFieldType.NEW_USERNAME:
+      case AFTextFieldType.NEW_USERNAME:
         autoFillHint = AutofillHints.newUsername;
         break;
       default:
@@ -187,7 +187,7 @@ abstract class AutoFormWidgetState<T extends StatefulWidget,
 
     if (model.isComplete()) {
       if (showLoading && enableFinalAction) {
-        await autoFormTheme.showFutureLoadingWidget(
+        await theme.showFutureLoadingWidget(
           context: context,
           future: submit(model) as Future<dynamic>,
         );

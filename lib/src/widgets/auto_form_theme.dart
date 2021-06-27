@@ -3,20 +3,34 @@ import 'package:flutter_auto_form/flutter_auto_form.dart';
 import 'package:flutter_auto_form/src/configuration/defaults.dart';
 import 'package:flutter_auto_form/src/configuration/typedef.dart';
 
-class AutoFormTheme extends InheritedWidget {
-  AutoFormTheme({
+const _dTheme = AFThemeData();
+
+class AFTheme extends InheritedWidget {
+  AFTheme({
     Key? key,
     required Widget child,
-    this.textFieldWidgetBuilder = kTextFieldWidgetBuilder,
-    this.showFutureLoadingWidget = kShowFutureLoadingWidget,
+    this.data = _dTheme,
   }) : super(key: key, child: child);
 
-  static AutoFormTheme of(BuildContext context) {
-    final AutoFormTheme result =
-        context.dependOnInheritedWidgetOfExactType<AutoFormTheme>()!;
+  final AFThemeData data;
 
-    return result;
+  static AFThemeData of(BuildContext context) {
+    final result = context.dependOnInheritedWidgetOfExactType<AFTheme>()?.data;
+
+    return result ?? _dTheme;
   }
+
+  @override
+  bool updateShouldNotify(AFTheme old) {
+    return old.data != data;
+  }
+}
+
+class AFThemeData {
+  const AFThemeData({
+    this.textFieldWidgetBuilder = kTextFieldWidgetBuilder,
+    this.showFutureLoadingWidget = kShowFutureLoadingWidget,
+  });
 
   final TextFieldWidgetBuilder textFieldWidgetBuilder;
   final FutureLoadingWidget showFutureLoadingWidget;
@@ -24,11 +38,5 @@ class AutoFormTheme extends InheritedWidget {
   Widget buildField(String? nextFocusName, Field<Object> field, bool isFinal) {
     throw UnimplementedError(
         'Override the buildField method to render custom Field !');
-  }
-
-  @override
-  bool updateShouldNotify(AutoFormTheme old) {
-    return textFieldWidgetBuilder != old.textFieldWidgetBuilder ||
-        showFutureLoadingWidget != old.showFutureLoadingWidget;
   }
 }

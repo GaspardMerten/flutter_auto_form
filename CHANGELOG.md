@@ -1,3 +1,9 @@
+## [0.0.7] - 06-27-2021.
+
+* Renaming AutoForm to AF => less verbose
+* Fixing a type issue
+* Decoupling the AFTheme into AFTheme and AFThemeData
+
 ## [0.0.6] - 04-07-2021.
 
 * Migrating to null safety

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:smarter_text_field/smarter_text_field.dart';
 
-/// The default text field builder used by the [AutoFormTheme] widget.
+/// The default text field builder used by the [AFTheme] widget.
 /// See [TextFieldWidgetBuilder] if you want to create your own text field
-/// builder compatible with the requirement of the [AutoFormTheme]. 
+/// builder compatible with the requirement of the [AFTheme].
 Widget kTextFieldWidgetBuilder(
   BuildContext context, {
   String? labelText,
@@ -37,9 +37,9 @@ Widget kTextFieldWidgetBuilder(
   );
 }
 
-/// The default loading dialog builder used by the [AutoFormTheme] widget.
+/// The default loading dialog builder used by the [AFTheme] widget.
 /// See [FutureLoadingWidget] if you want to create your own loading dialog
-/// compatible with the requirement of the [AutoFormTheme]. 
+/// compatible with the requirement of the [AFTheme].
 Future<T> kShowFutureLoadingWidget<T>({
   required BuildContext context,
   required Future<T> future,

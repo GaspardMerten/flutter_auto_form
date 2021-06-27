@@ -5,7 +5,7 @@ export 'defaults.dart';
 typedef FieldValueParser<T> = T Function(String value);
 
 /// This class is the base class for any type of custom fields you would
-/// want to create. See the [AutoFormTextField] widget to learn more on how
+/// want to create. See the [AFTextField] widget to learn more on how
 /// to extend it.
 abstract class Field<T extends Object> {
   Field(this.id, this.name, this.validators);

@@ -2,7 +2,7 @@ import 'package:flutter_auto_form/flutter_auto_form.dart';
 
 class RegistrationForm extends TemplateForm {
   RegistrationForm() {
-    final Field passwordField = AutoFormTextField(
+    final Field passwordField = AFTextField(
       'password',
       'Password',
       [
@@ -11,11 +11,11 @@ class RegistrationForm extends TemplateForm {
           (e) => 'Min 6 cara. Currently: ${e?.length ?? 0}',
         )
       ],
-      AutoFormTextFieldType.NEW_PASSWORD,
+      AFTextFieldType.NEW_PASSWORD,
     );
 
     fields = [
-      AutoFormTextField(
+      AFTextField(
           'email',
           'E-mail address',
           [
@@ -23,9 +23,9 @@ class RegistrationForm extends TemplateForm {
               'Invalid email',
             ),
           ],
-          AutoFormTextFieldType.EMAIL),
+          AFTextFieldType.EMAIL),
       passwordField,
-      AutoFormTextField(
+      AFTextField(
         'verify',
         'Confirm password',
         [
@@ -34,7 +34,7 @@ class RegistrationForm extends TemplateForm {
             passwordField,
           ),
         ],
-        AutoFormTextFieldType.NEW_PASSWORD,
+        AFTextFieldType.NEW_PASSWORD,
       ),
     ];
   }

@@ -11,7 +11,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AutoFormTheme(
+    return AFTheme(
       child: MaterialApp(
         title: 'Auto Form Demo',
         theme: ThemeData(
@@ -44,13 +44,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   FormShowcaseTile(
                     title: 'Login form',
-                    child: AutoFormWidget<LoginForm>(
+                    child: AFWidget<LoginForm>(
                       handleErrorOnSubmit: print,
                       formBuilder: () => LoginForm(),
                       submitButton: (Function(bool showLoadingDialog) submit) =>
                           Padding(
                         padding: const EdgeInsets.only(top: 32),
-                        child: FlatButton(
+                        child: MaterialButton(
                           child: Text('Submit'),
                           onPressed: () => submit(true),
                         ),
@@ -63,12 +63,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   FormShowcaseTile(
                     title: 'Registration form',
-                    child: AutoFormWidget<RegistrationForm>(
+                    child: AFWidget<RegistrationForm>(
                       formBuilder: () => RegistrationForm(),
                       submitButton: (Function(bool showLoadingDialog) submit) =>
                           Padding(
                         padding: const EdgeInsets.only(top: 32),
-                        child: FlatButton(
+                        child: MaterialButton(
                           child: Text('Submit'),
                           onPressed: () => submit(true),
                         ),
