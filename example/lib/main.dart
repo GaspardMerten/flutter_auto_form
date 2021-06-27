@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           onPressed: () => submit(true),
                         ),
                       ),
-                      onSubmitted: (dynamic form) async {
+                      onSubmitted: (LoginForm form) async {
                         await Future.delayed(Duration(seconds: 2));
                         print(form.toMap());
                       },
@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           onPressed: () => submit(true),
                         ),
                       ),
-                      onSubmitted: (TemplateForm form) {
+                      onSubmitted: (RegistrationForm form) {
                         print(form.toMap());
                       },
                     ),
