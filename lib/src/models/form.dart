@@ -1,3 +1,4 @@
+
 import 'package:flutter_auto_form/src/models/field/field.dart';
 
 /// An abstract class that makes it easy to create form with a strong validation
