@@ -14,6 +14,15 @@ class AFTextField<T extends Object> extends Field<T> {
   /// Depending on the value of this field, the widget's related instance will act differently.
   ///(For instance, if you choose the password option it will display a hide/display icon).
   final AFTextFieldType type;
+
+  @override
+  set value(T? _value) {
+    if (type == AFTextFieldType.EMAIL && T == String) {
+      super.value = (_value as String?)?.trim() as T;
+    } else {
+      super.value = _value;
+    }
+  }
 }
 
 /// The default [Field] extended class used to represent a form's text field.

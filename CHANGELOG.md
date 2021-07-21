@@ -1,3 +1,7 @@
+## [0.0.8] - 21-27-2021.
+
+* Adding auto trim for email field
+
 ## [0.0.7] - 06-27-2021.
 
 * Renaming AutoForm to AF => less verbose
