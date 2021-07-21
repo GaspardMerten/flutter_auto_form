@@ -1,3 +1,7 @@
+## [0.0.9] - 21-27-2021.
+
+* Adding auto trim for email field validator
+
 ## [0.0.8] - 21-27-2021.
 
 * Adding auto trim for email field

@@ -66,6 +66,6 @@ class EmailValidator extends ValidatorWithStaticError<String> {
 
   @override
   bool innerValidate(String? value) {
-    return value != null && RegExp(emailRegex).hasMatch(value);
+    return value != null && RegExp(emailRegex).hasMatch(value.trim());
   }
 }

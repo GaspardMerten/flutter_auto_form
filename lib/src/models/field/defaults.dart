@@ -17,7 +17,7 @@ class AFTextField<T extends Object> extends Field<T> {
 
   @override
   set value(T? _value) {
-    if (type == AFTextFieldType.EMAIL && T == String) {
+    if (type == AFTextFieldType.EMAIL) {
       super.value = (_value as String?)?.trim() as T;
     } else {
       super.value = _value;
