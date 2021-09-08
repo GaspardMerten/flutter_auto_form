@@ -1,3 +1,7 @@
+## [0.1.1] - 09-08-2021.
+
+* Fixing documentation
+
 ## [0.1.0] - 09-08-2021.
 
 * Adding documentation
