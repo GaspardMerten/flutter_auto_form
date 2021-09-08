@@ -1,8 +1,13 @@
-## [0.0.9] - 21-27-2021.
+## [0.1.0] - 09-08-2021.
+
+* Adding documentation
+* Adding the ability to specify the type for the NotNullValidator.
+
+## [0.0.9] - 07-21-2021.
 
 * Adding auto trim for email field validator
 
-## [0.0.8] - 21-27-2021.
+## [0.0.8] - 07-21-2021.
 
 * Adding auto trim for email field
 

@@ -22,11 +22,11 @@ class HexColorValidator extends ValidatorWithStaticError<String> {
   }
 }
 
-class NotNullValidator extends ValidatorWithStaticError<String> {
+class NotNullValidator<T> extends ValidatorWithStaticError<T> {
   NotNullValidator(String error) : super(error);
 
   @override
-  bool innerValidate(String? value) => value != null;
+  bool innerValidate(T? value) => value != null;
 }
 
 class MinimumStringLengthValidator extends Validator<String> {

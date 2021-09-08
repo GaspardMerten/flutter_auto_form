@@ -32,9 +32,6 @@ class AFNumberField<T extends num> extends AFTextField<T> {
     String name,
     List<Validator<T>> validators,
   ) : super(id, name, validators, AFTextFieldType.NUMBER);
-
-  /// Depending on the value of this field, the widget's related instance will act differently.
-  ///(For instance, if you choose the password option it will display a hide/display icon).
 }
 
 /// The different types of field for the [AFTextField].
@@ -46,5 +43,6 @@ enum AFTextFieldType {
   USERNAME,
   NEW_PASSWORD,
   NEW_USERNAME,
+  COLOR,
   URL
 }

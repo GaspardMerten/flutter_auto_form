@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auto_form/flutter_auto_form.dart';
 import 'package:flutter_auto_form/src/models/field/field.dart';
 import 'package:flutter_auto_form/src/models/form.dart';
-import 'package:flutter_auto_form/src/widgets/auto_form_theme.dart';
+import 'package:flutter_auto_form/src/widgets/theme.dart';
 
 /// The [AFWidgetState] allows to override and customize even more the behavior
 /// of the form widget's logic.
@@ -82,7 +82,7 @@ abstract class AFWidgetState<T extends StatefulWidget, G extends TemplateForm>
     int _index = 0;
 
     for (final Field _field in model.fields) {
-      bool isFinal = _index == -1 || _index == model.fields.length - 1;
+      final bool isFinal = _index == -1 || _index == model.fields.length - 1;
 
       final String? nextFocusId = isFinal ? null : model.fields[_index + 1].id;
 

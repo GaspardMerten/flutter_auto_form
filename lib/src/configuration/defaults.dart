@@ -77,10 +77,10 @@ class _KLoadingWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.5),
               color: Colors.white,
             ),
-            child: Material(
+            child: const Material(
               color: Colors.transparent,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: CircularProgressIndicator(),
               ),
             ),

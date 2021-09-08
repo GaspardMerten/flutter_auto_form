@@ -6,7 +6,7 @@ import 'package:flutter_auto_form/src/configuration/typedef.dart';
 const _dTheme = AFThemeData();
 
 class AFTheme extends InheritedWidget {
-  AFTheme({
+  const AFTheme({
     Key? key,
     required Widget child,
     this.data = _dTheme,
@@ -21,8 +21,8 @@ class AFTheme extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(AFTheme old) {
-    return old.data != data;
+  bool updateShouldNotify(AFTheme oldWidget) {
+    return oldWidget.data != data;
   }
 }
 

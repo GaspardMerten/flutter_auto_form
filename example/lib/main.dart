@@ -18,14 +18,14 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: MyHomePage(),
+        home: const MyHomePage(),
       ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -47,16 +47,18 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: AFWidget<LoginForm>(
                       handleErrorOnSubmit: print,
                       formBuilder: () => LoginForm(),
-                      submitButton: (Function(bool showLoadingDialog) submit) =>
-                          Padding(
-                        padding: const EdgeInsets.only(top: 32),
-                        child: MaterialButton(
-                          child: Text('Submit'),
-                          onPressed: () => submit(true),
-                        ),
-                      ),
+                      submitButton:
+                          (Function({bool showLoadingDialog}) submit) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 32),
+                          child: MaterialButton(
+                            child: const Text('Submit'),
+                            onPressed: () => submit(showLoadingDialog: true),
+                          ),
+                        );
+                      },
                       onSubmitted: (LoginForm form) async {
-                        await Future.delayed(Duration(seconds: 2));
+                        await Future.delayed(const Duration(seconds: 2));
                         print(form.toMap());
                       },
                     ),
@@ -65,14 +67,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     title: 'Registration form',
                     child: AFWidget<RegistrationForm>(
                       formBuilder: () => RegistrationForm(),
-                      submitButton: (Function(bool showLoadingDialog) submit) =>
-                          Padding(
-                        padding: const EdgeInsets.only(top: 32),
-                        child: MaterialButton(
-                          child: Text('Submit'),
-                          onPressed: () => submit(true),
-                        ),
-                      ),
+                      submitButton:
+                          (Function({bool showLoadingDialog}) submit) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 32),
+                          child: MaterialButton(
+                            child: const Text('Submit'),
+                            onPressed: () => submit(showLoadingDialog: true),
+                          ),
+                        );
+                      },
                       onSubmitted: (RegistrationForm form) {
                         print(form.toMap());
                       },
@@ -81,8 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16),
+            const Padding(
+              padding: EdgeInsets.all(16),
               child: TabPageSelector(),
             )
           ],
@@ -108,7 +112,7 @@ class FormShowcaseTile extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 blurRadius: 16,
                 color: Colors.black12,
@@ -124,7 +128,7 @@ class FormShowcaseTile extends StatelessWidget {
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
                   color: Colors.blueAccent,

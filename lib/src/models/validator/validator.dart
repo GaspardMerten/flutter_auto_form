@@ -17,6 +17,7 @@ abstract class ValidatorWithStaticError<T extends Object?>
 
   final String error;
 
+  @override
   @protected
   String? validate(T? value) {
     if (innerValidate(value)) {
