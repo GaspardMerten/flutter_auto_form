@@ -1,5 +1,9 @@
 ## [0.2.0] - 09-09-2021
 
+* AFWidgetState is now a public api.
+
+## [0.2.0] - 09-09-2021
+
 * Moving from positional to named parameters for AFTextField.
 * Adding support for custom parser for the Field class.
 * Improving doc

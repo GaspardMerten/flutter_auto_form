@@ -23,15 +23,15 @@ class AFWidget<T extends TemplateForm> extends StatefulWidget {
       submitButton;
 
   @override
-  _AFWidgetState<T> createState() => _AFWidgetState<T>(
+  AFWidgetState<T> createState() => AFWidgetState<T>(
         formBuilder(),
         handleErrorOnSubmit: handleErrorOnSubmit,
       );
 }
 
-class _AFWidgetState<T extends TemplateForm>
-    extends AFWidgetState<AFWidget<T>, T> {
-  _AFWidgetState(T model, {ValueChanged<String>? handleErrorOnSubmit})
+class AFWidgetState<T extends TemplateForm>
+    extends AFFormState<AFWidget<T>, T> {
+  AFWidgetState(T model, {ValueChanged<String>? handleErrorOnSubmit})
       : super(model: model, handleErrorOnSubmit: handleErrorOnSubmit);
 
   @override

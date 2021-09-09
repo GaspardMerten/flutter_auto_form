@@ -6,14 +6,14 @@ import 'package:flutter_auto_form/src/models/field/field.dart';
 import 'package:flutter_auto_form/src/models/form.dart';
 import 'package:flutter_auto_form/src/widgets/theme.dart';
 
-/// The [AFWidgetState] allows to override and customize even more the behavior
+/// The [AFFormState] allows to override and customize even more the behavior
 /// of the form widget's logic.
 ///
 /// Before considering extending this class, make sure that the [AFWidget] class
 /// does not satisfy your requirements!
-abstract class AFWidgetState<T extends StatefulWidget, G extends TemplateForm>
+abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
     extends State<T> {
-  AFWidgetState({
+  AFFormState({
     required this.model,
     this.enableFinalAction = true,
     this.handleErrorOnSubmit,
