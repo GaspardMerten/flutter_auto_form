@@ -11,9 +11,16 @@ class OrderForm extends TemplateForm {
       validators: [NotNullValidator('Please enter a valid integer')],
     ),
     AFSearchModelField<Book>(
-        id: 'book',
-        name: 'Book',
-        validators: [NotNullValidator('Please select a book')],
-        search: searchBook)
+      id: 'book',
+      name: 'Book',
+      validators: [NotNullValidator('Please select a book')],
+      search: searchBook,
+    ),
+    AFBooleanField(
+      id: 'payed',
+      name: 'Is payed',
+      validators: [],
+      value: false,
+    )
   ];
 }

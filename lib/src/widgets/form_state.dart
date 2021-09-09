@@ -129,12 +129,22 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
 
   Padding buildBooleanField(AFBooleanField field) => Padding(
         padding: const EdgeInsets.only(top: 16),
-        child: SwitchListTile(
-          value: field.value ?? false,
-          onChanged: (e) => setState(() => field.value = e),
-          title: Text(
-            field.name,
-            style: Theme.of(context).inputDecorationTheme.hintStyle,
+        child: InputDecorator(
+          decoration: InputDecoration(
+                  errorText: forceDisplayFieldsError
+                      ? field.validate(field.value)
+                      : null,
+                  contentPadding: EdgeInsets.zero,
+                  border: InputBorder.none)
+              .applyDefaults(Theme.of(context).inputDecorationTheme),
+          child: SwitchListTile(
+            value: field.value ?? false,
+            contentPadding: EdgeInsets.zero,
+            onChanged: (e) => setState(() => field.value = e),
+            title: Text(
+              field.name,
+              style: Theme.of(context).inputDecorationTheme.hintStyle,
+            ),
           ),
         ),
       );

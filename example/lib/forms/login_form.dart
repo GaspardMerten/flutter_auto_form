@@ -24,6 +24,12 @@ class LoginForm extends TemplateForm {
         )
       ],
       type: AFTextFieldType.PASSWORD,
-    )
+    ),
+    AFBooleanField(
+      id: 'accept-condition',
+      name: 'Accept terms',
+      validators: [ShouldBeTrueValidator('Please accept terms')],
+      value: false,
+    ),
   ];
 }

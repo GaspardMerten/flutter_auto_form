@@ -25,9 +25,18 @@ dependencies:
 * Platforms: **All platforms currently supported**
 * Autofill hints: **Automatic support through AFTextFieldType**
 * Validators: **Email, Url, Hex colour, Not null, Minimum string length, Same as another field, Alphanumeric.**
-* Password field: **Auto obscure text button**
+* Fields: **Password _(auto obscure toggle)_, Text, Number, Model _(built-in support for search through an api)_,
+  Boolean**
 * Custom code: **You can customize and create new fields, validators, widgets as you please without even touching the
   source code of this package !**
+
+## Example
+
+The following gif illustrates some things you can realize with this package.
+
+The source code is located in the example folder.
+
+<img src='https://raw.githubusercontent.com/GaspardMerten/flutter_auto_form/master/demo.gif' height='350px'></img>
 
 ## Usage
 
@@ -62,6 +71,12 @@ class LoginForm extends TemplateForm {
         )
       ],
       type: AFTextFieldType.PASSWORD,
+    ),
+    AFBooleanField(
+      id: 'accept-condition',
+      name: 'Accept terms',
+      validators: [ShouldBeTrueValidator('Please accept terms to continue?')],
+      value: false,
     )
   ];
 }

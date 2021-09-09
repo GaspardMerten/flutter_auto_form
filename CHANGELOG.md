@@ -1,4 +1,12 @@
-## [0.2.0] - 09-09-2021
+## [0.2.2] - 09-09-2021
+
+* Adding AFSearchModelField
+* Adding AFBooleanField
+* Improving example
+* Improving README.md
+* Adding dropdown_search as a dependency
+
+## [0.2.1] - 09-09-2021
 
 * AFWidgetState is now a public api.
 

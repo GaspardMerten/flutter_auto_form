@@ -84,11 +84,14 @@ class AFBooleanField extends Field<bool> {
     required String id,
     required String name,
     required List<Validator<Object?>> validators,
+    bool value = false,
   }) : super(
           id,
           name,
           validators,
-        );
+        ) {
+    super.value = value;
+  }
 
   @override
   bool? parser(bool unparsedValue) => unparsedValue;

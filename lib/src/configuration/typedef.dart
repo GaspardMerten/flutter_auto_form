@@ -27,8 +27,8 @@ typedef FutureLoadingWidget<T> = FutureOr<T> Function({
 
 /// The generic interface for field widget builder.
 typedef FieldWidgetBuilder<T> = Widget Function(
-    BuildContext context, {
-    Field? field,
-    String? nextFieldId,
-    bool? isFinal,
+  BuildContext context, {
+  Field? field,
+  String? nextFieldId,
+  bool? isFinal,
 });
