@@ -90,6 +90,6 @@ the Field class. Then override the buildField method of the AFThemeData class an
 a AFTheme widget to which you give your customized AFThemeData as argument.
 
 
-## ---------------------------------------------------------------------
+##   
 
 <i>This package is still under construction ! Do not hesitate to create an issue on the GitHub page if you find any bug or if you would like to see a new type of validator, field coming. And if you are that motivated if you would gladly review & accept your PR !

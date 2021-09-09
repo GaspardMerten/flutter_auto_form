@@ -19,7 +19,8 @@ class AFWidget<T extends TemplateForm> extends StatefulWidget {
 
   final ValueChanged<String>? handleErrorOnSubmit;
 
-  final Widget Function(Function({bool showLoadingDialog}) submit)? submitButton;
+  final Widget Function(Function({bool showLoadingDialog}) submit)?
+      submitButton;
 
   @override
   _AFWidgetState<T> createState() => _AFWidgetState<T>(
