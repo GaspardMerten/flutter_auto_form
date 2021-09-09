@@ -20,11 +20,19 @@ abstract class Field<T extends Object> {
   final List<Validator> validators;
 
   /// The current value of the field.
-  T? value;
+  T? _value;
+
+  /// The current value of the field.
+  T? get value => _value;
+
+  /// The current value of the field.
+  set value(T? value) {
+    _value = parser(value);
+  }
 
   /// This method returns null if the field is valid. Otherwhise it will
   /// return the error's string specified in the validator (see [Validator]).
-  String? validate(dynamic value) {
+  String? validate(T? value) {
     for (final Validator validator in validators) {
       final String? error = validator.validate(value);
 
@@ -33,4 +41,6 @@ abstract class Field<T extends Object> {
 
     return null;
   }
+
+  T? parser(covariant Object? unparsedValue);
 }

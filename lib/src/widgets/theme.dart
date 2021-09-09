@@ -35,7 +35,8 @@ class AFThemeData {
   final TextFieldWidgetBuilder textFieldWidgetBuilder;
   final FutureLoadingWidget showFutureLoadingWidget;
 
-  Widget buildField(String? nextFocusName, Field<Object> field, bool isFinal) {
+  Widget buildCustomField(
+      String? nextFocusName, Field<Object> field, bool isFinal) {
     throw UnimplementedError(
         'Override the buildField method to render custom Field !');
   }

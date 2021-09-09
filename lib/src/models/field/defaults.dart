@@ -4,34 +4,60 @@ import 'field.dart';
 
 /// The default [Field] extended class used to represent a form's text field.
 class AFTextField<T extends Object> extends Field<T> {
-  AFTextField(
-    String id,
-    String name,
-    List<Validator<T>> validators,
-    this.type,
-  ) : super(id, name, validators);
+  AFTextField({
+    required String id,
+    required String name,
+    required List<Validator<T>> validators,
+    required this.type,
+    T? value,
+  }) : super(id, name, validators) {
+    super.value = value;
+  }
 
   /// Depending on the value of this field, the widget's related instance will act differently.
   ///(For instance, if you choose the password option it will display a hide/display icon).
   final AFTextFieldType type;
 
   @override
-  set value(T? _value) {
+  T? parser(T? unparsedValue) {
     if (type == AFTextFieldType.EMAIL) {
-      super.value = (_value as String?)?.trim() as T;
+      return (unparsedValue as String?)?.trim() as T;
     } else {
-      super.value = _value;
+      return unparsedValue;
     }
   }
 }
 
 /// The default [Field] extended class used to represent a form's text field.
 class AFNumberField<T extends num> extends AFTextField<T> {
-  AFNumberField(
-    String id,
-    String name,
-    List<Validator<T>> validators,
-  ) : super(id, name, validators, AFTextFieldType.NUMBER);
+  AFNumberField({
+    required String id,
+    required String name,
+    required List<Validator<T>> validators,
+    T? value,
+  }) : super(
+            id: id,
+            name: name,
+            validators: validators,
+            type: AFTextFieldType.NUMBER,
+            value: value);
+
+  @override
+  T? parser(Object? unparsedValue) {
+    if (unparsedValue.runtimeType == String) {
+      unparsedValue = num.tryParse(unparsedValue as String);
+    }
+
+    final num? unparsedValueAsNum = unparsedValue as num;
+
+    if (T == int) {
+      return unparsedValueAsNum?.toInt() as T?;
+    } else if (T == double) {
+      return unparsedValueAsNum?.toDouble() as T?;
+    }
+
+    return unparsedValueAsNum as T?;
+  }
 }
 
 /// The different types of field for the [AFTextField].

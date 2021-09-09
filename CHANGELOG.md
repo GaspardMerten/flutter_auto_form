@@ -1,3 +1,9 @@
+## [0.2.0] - 09-09-2021
+
+* Moving from positional to named parameters for AFTextField.
+* Adding support for custom parser for the Field class.
+* Improving doc
+
 ## [0.1.1] - 09-08-2021.
 
 * Fixing documentation

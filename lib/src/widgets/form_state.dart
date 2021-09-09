@@ -50,18 +50,16 @@ abstract class AFWidgetState<T extends StatefulWidget, G extends TemplateForm>
   void initState() {
     super.initState();
 
-    for (final Field e in model.fields) {
-      if (e is AFTextField) {
-        // Populate the [textEditingControllers] map for the given field.
-        textEditingControllers[e.id] =
-            TextEditingController(text: e.value as String?)
-              ..addListener(
-                () => e.value = textEditingControllers[e.id]!.text,
-              );
+    for (final Field e in model.fields.whereType<AFTextField>()) {
+      // Populate the [textEditingControllers] map for the given field.
+      textEditingControllers[e.id] = TextEditingController(
+        text: e.value?.toString(),
+      )..addListener(
+          () => e.value = textEditingControllers[e.id]!.text,
+        );
 
-        // Populate the [focusNodes] map for the given field.
-        focusNodes[e.id] = FocusNode();
-      }
+      // Populate the [focusNodes] map for the given field.
+      focusNodes[e.id] = FocusNode();
     }
   }
 
@@ -112,7 +110,7 @@ abstract class AFWidgetState<T extends StatefulWidget, G extends TemplateForm>
       return buildTextField(nextFocusName, field, isFinal);
     }
 
-    return theme.buildField(nextFocusName, field, isFinal);
+    return theme.buildCustomField(nextFocusName, field, isFinal);
   }
 
   Widget buildTextField(

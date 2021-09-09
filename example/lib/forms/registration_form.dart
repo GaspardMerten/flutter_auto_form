@@ -2,39 +2,40 @@ import 'package:flutter_auto_form/flutter_auto_form.dart';
 
 class RegistrationForm extends TemplateForm {
   final Field passwordField = AFTextField(
-    'password',
-    'Password',
-    [
+    id: 'password',
+    name: 'Password',
+    validators: [
       MinimumStringLengthValidator(
         6,
         (e) => 'Min 6 cara. Currently: ${e?.length ?? 0}',
       )
     ],
-    AFTextFieldType.NEW_PASSWORD,
+    type: AFTextFieldType.NEW_PASSWORD,
   );
 
   @override
   late List<Field> fields = [
     AFTextField(
-        'email',
-        'E-mail address',
-        [
-          EmailValidator(
-            'Invalid email',
-          ),
-        ],
-        AFTextFieldType.EMAIL),
+      id: 'email',
+      name: 'E-mail address',
+      validators: [
+        EmailValidator(
+          'Invalid email',
+        ),
+      ],
+      type: AFTextFieldType.EMAIL,
+    ),
     passwordField,
     AFTextField(
-      'verify',
-      'Confirm password',
-      [
+      id: 'verify',
+      name: 'Confirm password',
+      validators: [
         SameAsFieldValidator(
           'Passwords not matching',
           passwordField,
         ),
       ],
-      AFTextFieldType.NEW_PASSWORD,
+      type: AFTextFieldType.NEW_PASSWORD,
     ),
   ];
 }

@@ -4,26 +4,26 @@ class LoginForm extends TemplateForm {
   @override
   final List<Field> fields = [
     AFTextField(
-      'identifier',
-      'Identifier',
-      [
+      id: 'identifier',
+      name: 'Identifier',
+      validators: [
         MinimumStringLengthValidator(
           5,
           (e) => 'Min 5 characters, currently ${e?.length ?? 0} ',
         )
       ],
-      AFTextFieldType.USERNAME,
+      type: AFTextFieldType.USERNAME,
     ),
     AFTextField(
-      'password',
-      'Password',
-      [
+      id: 'password',
+      name: 'Password',
+      validators: [
         MinimumStringLengthValidator(
           6,
           (e) => 'Min 6 characters, currently ${e?.length ?? 0} ',
         )
       ],
-      AFTextFieldType.PASSWORD,
+      type: AFTextFieldType.PASSWORD,
     )
   ];
 }

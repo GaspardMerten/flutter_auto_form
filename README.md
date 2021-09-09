@@ -2,7 +2,7 @@
 
 ## [![pub package](https://img.shields.io/pub/v/flutter_auto_form.svg)](https://pub.dev/packages/flutter_auto_form)
 
-<i><b>The easiest way to create fully customizable forms with only a tiny amount of code.</b></i>
+<i>**The easiest way to create fully customizable forms with only a tiny amount of code.**</i>
 
 ## Installation
 
@@ -14,11 +14,21 @@ To use this plugin, add `flutter_auto_form` as a [dependency in your pubspec.yam
 dependencies:
   flutter:
     sdk: flutter
-  
+
   # Your other packages  ...
-  
-  flutter_auto_form: ^0.1.1
+
+  flutter_auto_form: ^0.2.0
 ```
+
+## Support
+
+* Platforms: **All platforms currently supported**
+* Autofill hints: **Automatic support through AFTextFieldType**
+* Validators: **Email, Url, Hex colour, Not null, Minimum string length, Same as another field, Alphanumeric.**
+* Password field: **Auto obscure text button**
+* Custom code: **You can customize and create new fields, validators, widgets as you please without even touching the
+  source code of this package !**
+
 ## Usage
 
 The first step in creating a form with Flutter Auto Form is to create a class inheriting from the TemplateForm class.
@@ -26,43 +36,39 @@ The first step in creating a form with Flutter Auto Form is to create a class in
 import 'package:flutter_auto_form/flutter_auto_form.dart';
 
 ```dart
-import 'package:flutter_auto_form/flutter_auto_form.dart'; // import the Flutter Auto Form package previously installed
+import 'package:flutter_auto_form/flutter_auto_form.dart';
 
-/// A representation of the login form you wish to display.
 class LoginForm extends TemplateForm {
-
-  
-  /// The 'fields' field is the only one you should override, it allows you to specify all the fields
-  /// you want. 
   @override
   final List<Field> fields = [
     AFTextField(
-      'identifier',
-      'Identifier',
-      [
+      id: 'identifier',
+      name: 'Identifier',
+      validators: [
         MinimumStringLengthValidator(
           5,
               (e) => 'Min 5 characters, currently ${e?.length ?? 0} ',
         )
       ],
-      AFTextFieldType.USERNAME,
+      type: AFTextFieldType.USERNAME,
     ),
     AFTextField(
-      'password',
-      'Password',
-      [
+      id: 'password',
+      name: 'Password',
+      validators: [
         MinimumStringLengthValidator(
           6,
               (e) => 'Min 6 characters, currently ${e?.length ?? 0} ',
         )
       ],
-      AFTextFieldType.PASSWORD,
+      type: AFTextFieldType.PASSWORD,
     )
   ];
 }
+
 ```
 
-The second & last step is to add the AFWidget wherever you would like to display a form.
+The second & (already) last step is to add the AFWidget wherever you would like to display a form.
 
 
 ```dart
@@ -76,6 +82,7 @@ AFWidget<RegistrationForm>(
     ),
   ),
   onSubmitted: (RegistrationForm form) {
+    // do whatever you want when the form is submitted
     print(form.toMap());
   },
 );
