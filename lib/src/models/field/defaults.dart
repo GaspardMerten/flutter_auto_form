@@ -21,14 +21,14 @@ class AFTextField<T extends Object> extends Field<T> {
   @override
   T? parser(T? unparsedValue) {
     if (type == AFTextFieldType.EMAIL) {
-      return (unparsedValue as String?)?.trim() as T;
+      return (unparsedValue as String?)?.trim() as T?;
     } else {
       return unparsedValue;
     }
   }
 }
 
-/// The default [Field] extended class used to represent a form's text field.
+/// The default [Field] extended class used to represent a form's number field.
 class AFNumberField<T extends num> extends AFTextField<T> {
   AFNumberField({
     required String id,
@@ -36,11 +36,12 @@ class AFNumberField<T extends num> extends AFTextField<T> {
     required List<Validator<T>> validators,
     T? value,
   }) : super(
-            id: id,
-            name: name,
-            validators: validators,
-            type: AFTextFieldType.NUMBER,
-            value: value);
+          id: id,
+          name: name,
+          validators: validators,
+          type: AFTextFieldType.NUMBER,
+          value: value,
+        );
 
   @override
   T? parser(Object? unparsedValue) {
@@ -48,7 +49,7 @@ class AFNumberField<T extends num> extends AFTextField<T> {
       unparsedValue = num.tryParse(unparsedValue as String);
     }
 
-    final num? unparsedValueAsNum = unparsedValue as num;
+    final num? unparsedValueAsNum = unparsedValue as num?;
 
     if (T == int) {
       return unparsedValueAsNum?.toInt() as T?;
@@ -58,6 +59,39 @@ class AFNumberField<T extends num> extends AFTextField<T> {
 
     return unparsedValueAsNum as T?;
   }
+}
+
+class AFSearchModelField<T extends Object> extends Field<T> {
+  AFSearchModelField({
+    required String id,
+    required String name,
+    required List<Validator<Object?>> validators,
+    required this.search,
+  }) : super(
+          id,
+          name,
+          validators,
+        );
+
+  final Future<List<T>> Function(String? query) search;
+
+  @override
+  T? parser(T? unparsedValue) => unparsedValue;
+}
+
+class AFBooleanField extends Field<bool> {
+  AFBooleanField({
+    required String id,
+    required String name,
+    required List<Validator<Object?>> validators,
+  }) : super(
+          id,
+          name,
+          validators,
+        );
+
+  @override
+  bool? parser(bool unparsedValue) => unparsedValue;
 }
 
 /// The different types of field for the [AFTextField].

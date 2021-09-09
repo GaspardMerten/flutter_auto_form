@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:smarter_text_field/smarter_text_field.dart';
 
@@ -42,7 +44,7 @@ Widget kTextFieldWidgetBuilder(
 /// compatible with the requirement of the [AFTheme].
 Future<T> kShowFutureLoadingWidget<T>({
   required BuildContext context,
-  required Future<T> future,
+  required FutureOr<T> future,
 }) async {
   showDialog<dynamic>(
     context: context,

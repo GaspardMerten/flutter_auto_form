@@ -6,6 +6,8 @@ import 'package:flutter_auto_form/src/models/field/field.dart';
 import 'package:flutter_auto_form/src/models/form.dart';
 import 'package:flutter_auto_form/src/widgets/theme.dart';
 
+import 'fields/fields.dart';
+
 /// The [AFFormState] allows to override and customize even more the behavior
 /// of the form widget's logic.
 ///
@@ -108,9 +110,53 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
   }) {
     if (field is AFTextField) {
       return buildTextField(nextFocusName, field, isFinal);
+    } else if (field is AFSearchModelField) {
+      final AutovalidateMode validateMode;
+
+      if (forceDisplayFieldsError) {
+        validateMode = AutovalidateMode.always;
+      } else {
+        validateMode = AutovalidateMode.onUserInteraction;
+      }
+
+      return buildSearchModelField(field, validateMode);
+    } else if (field is AFBooleanField) {
+      return buildBooleanField(field);
     }
 
     return theme.buildCustomField(nextFocusName, field, isFinal);
+  }
+
+  Padding buildBooleanField(AFBooleanField field) => Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: SwitchListTile(
+          value: field.value ?? false,
+          onChanged: (e) => setState(() => field.value = e),
+          title: Text(
+            field.name,
+            style: Theme.of(context).inputDecorationTheme.hintStyle,
+          ),
+        ),
+      );
+
+  Padding buildSearchModelField(
+    AFSearchModelField<Object> field,
+    AutovalidateMode validateMode,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Container(
+        height: 64,
+        child: SearchModelField(
+          search: field.search,
+          validator: field.validate,
+          autoValidateMode: validateMode,
+          onSelected: (e) => setState(() => field.value = e),
+          label: field.name,
+          selectedValue: field.value,
+        ),
+      ),
+    );
   }
 
   Widget buildTextField(
@@ -132,7 +178,7 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
     return theme.textFieldWidgetBuilder(
       context,
       labelText: field.name,
-      validator: field.validate,
+      validator: (e) => field.validate(field.parser(e)),
       controller: textEditingControllers[field.id]!,
       action: isFinal ? TextInputAction.done : TextInputAction.next,
       autoFillHints: getAutoFillHintsFromFieldType(field),
@@ -187,7 +233,7 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
       if (showLoading && enableFinalAction) {
         await theme.showFutureLoadingWidget(
           context: context,
-          future: submit(model) as Future<dynamic>,
+          future: submit(model),
         );
       } else {
         await submit(model);

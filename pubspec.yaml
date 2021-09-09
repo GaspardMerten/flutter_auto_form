@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   smarter_text_field: ^0.0.4
+  dropdown_search: ^1.0.0
 
   flutter:
     sdk: flutter

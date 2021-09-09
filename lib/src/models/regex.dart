@@ -4,3 +4,5 @@ const String emailRegex =
 const String hexRegex = r'^[a-fA-F0-9]+$';
 
 const String alphaNumericRegex = r'^[a-zA-Z0-9]+$';
+
+const String numericRegex = r'^[0-9]+$';

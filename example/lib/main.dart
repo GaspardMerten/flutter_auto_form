@@ -1,3 +1,4 @@
+import 'package:auto_form_example/forms/order_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auto_form/flutter_auto_form.dart';
 
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
     return AFTheme(
       child: MaterialApp(
         title: 'Auto Form Demo',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -34,62 +36,91 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        body: Column(
-          children: [
-            Expanded(
-              child: TabBarView(
+    return Scaffold(
+      body: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height - 50,
+              child: Column(
                 children: [
-                  FormShowcaseTile(
-                    title: 'Login form',
-                    child: AFWidget<LoginForm>(
-                      handleErrorOnSubmit: print,
-                      formBuilder: () => LoginForm(),
-                      submitButton:
-                          (Function({bool showLoadingDialog}) submit) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 32),
-                          child: MaterialButton(
-                            child: const Text('Submit'),
-                            onPressed: () => submit(showLoadingDialog: true),
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        FormShowcaseTile(
+                          title: 'Login form',
+                          child: AFWidget<LoginForm>(
+                            handleErrorOnSubmit: print,
+                            formBuilder: () => LoginForm(),
+                            submitButton:
+                                (Function({bool showLoadingDialog}) submit) {
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 32),
+                                child: ElevatedButton(
+                                  child: const Text('Submit'),
+                                  onPressed: () =>
+                                      submit(showLoadingDialog: true),
+                                ),
+                              );
+                            },
+                            onSubmitted: (LoginForm form) async {
+                              await Future.delayed(const Duration(seconds: 2));
+                              print(form.toMap());
+                            },
                           ),
-                        );
-                      },
-                      onSubmitted: (LoginForm form) async {
-                        await Future.delayed(const Duration(seconds: 2));
-                        print(form.toMap());
-                      },
+                        ),
+                        FormShowcaseTile(
+                          title: 'Registration form',
+                          child: AFWidget<RegistrationForm>(
+                            formBuilder: () => RegistrationForm(),
+                            submitButton:
+                                (Function({bool showLoadingDialog}) submit) {
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 32),
+                                child: ElevatedButton(
+                                  child: const Text('Submit'),
+                                  onPressed: () =>
+                                      submit(showLoadingDialog: true),
+                                ),
+                              );
+                            },
+                            onSubmitted: (RegistrationForm form) {
+                              print(form.toMap());
+                            },
+                          ),
+                        ),
+                        FormShowcaseTile(
+                          title: 'Order form',
+                          child: AFWidget<OrderForm>(
+                            formBuilder: () => OrderForm(),
+                            submitButton:
+                                (Function({bool showLoadingDialog}) submit) {
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 32),
+                                child: ElevatedButton(
+                                  child: const Text('Submit'),
+                                  onPressed: () =>
+                                      submit(showLoadingDialog: true),
+                                ),
+                              );
+                            },
+                            onSubmitted: (OrderForm form) {
+                              print(form.toMap());
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  FormShowcaseTile(
-                    title: 'Registration form',
-                    child: AFWidget<RegistrationForm>(
-                      formBuilder: () => RegistrationForm(),
-                      submitButton:
-                          (Function({bool showLoadingDialog}) submit) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 32),
-                          child: MaterialButton(
-                            child: const Text('Submit'),
-                            onPressed: () => submit(showLoadingDialog: true),
-                          ),
-                        );
-                      },
-                      onSubmitted: (RegistrationForm form) {
-                        print(form.toMap());
-                      },
-                    ),
-                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(16),
+                    child: TabPageSelector(),
+                  )
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(16),
-              child: TabPageSelector(),
-            )
-          ],
+          ),
         ),
       ),
     );
@@ -130,7 +161,7 @@ class FormShowcaseTile extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                   color: Colors.blueAccent,
                 ),
               ),

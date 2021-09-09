@@ -26,7 +26,7 @@ abstract class Field<T extends Object> {
   T? get value => _value;
 
   /// The current value of the field.
-  set value(T? value) {
+  set value(covariant Object? value) {
     _value = parser(value);
   }
 
