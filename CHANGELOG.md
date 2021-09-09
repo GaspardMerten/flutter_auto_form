@@ -1,3 +1,7 @@
+## [0.2.3] - 09-09-2021
+
+* Moving to a MIT license
+
 ## [0.2.2] - 09-09-2021
 
 * Adding AFSearchModelField
