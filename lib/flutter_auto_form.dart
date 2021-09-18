@@ -1,5 +1,6 @@
 library auto_form;
 
+export 'src/json_schema/form.dart';
 export 'src/models/field/field.dart';
 export 'src/models/form.dart';
 export 'src/models/validator/defaults.dart';

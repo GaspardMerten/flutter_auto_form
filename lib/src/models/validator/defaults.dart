@@ -1,5 +1,5 @@
 import 'package:flutter_auto_form/src/models/field/field.dart';
-import 'package:flutter_auto_form/src/models/regex.dart';
+import 'package:flutter_auto_form/src/models/validator/regex.dart';
 import 'package:flutter_auto_form/src/models/validator/validator.dart';
 
 class URLValidator extends ValidatorWithStaticError<String> {

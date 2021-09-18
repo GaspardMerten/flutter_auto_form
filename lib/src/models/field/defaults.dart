@@ -1,3 +1,4 @@
+import 'package:flutter_auto_form/flutter_auto_form.dart';
 import 'package:flutter_auto_form/src/models/validator/validator.dart';
 
 import 'field.dart';
@@ -36,12 +37,12 @@ class AFNumberField<T extends num> extends AFTextField<T> {
     required List<Validator<T>> validators,
     T? value,
   }) : super(
-          id: id,
-          name: name,
-          validators: validators,
-          type: AFTextFieldType.NUMBER,
-          value: value,
-        );
+    id: id,
+    name: name,
+    validators: validators,
+    type: AFTextFieldType.NUMBER,
+    value: value,
+  );
 
   @override
   T? parser(Object? unparsedValue) {
@@ -61,6 +62,42 @@ class AFNumberField<T extends num> extends AFTextField<T> {
   }
 }
 
+class AFFormField<T extends Object> extends Field<T> {
+  AFFormField({
+    required String id,
+    required String name,
+    required List<Validator<T>> validators,
+    required this.parseForm,
+    required this.form,
+    T? value,
+  }) : super(id, name, validators) {
+    super.value = value;
+  }
+
+  final T? Function(Map<String, dynamic>) parseForm;
+
+  final TemplateForm form;
+
+  @override
+  T? parser(T? unparsedValue) {
+    return parseForm(form.toMap());
+  }
+}
+
+class AFListField<A extends Object> extends Field<List<A>> {
+  AFListField({
+    required String id,
+    required String name,
+    required List<Validator<List<A>>> validators,
+    List<A> value = const [],
+  }) : super(id, name, validators) {
+    super.value = value;
+  }
+
+  @override
+  List<A> parser(List<A> unparsedValue) => unparsedValue;
+}
+
 class AFSearchModelField<T extends Object> extends Field<T> {
   AFSearchModelField({
     required String id,
@@ -71,7 +108,7 @@ class AFSearchModelField<T extends Object> extends Field<T> {
           id,
           name,
           validators,
-        );
+  );
 
   final Future<List<T>> Function(String? query) search;
 
@@ -86,10 +123,10 @@ class AFBooleanField extends Field<bool> {
     required List<Validator<Object?>> validators,
     bool value = false,
   }) : super(
-          id,
-          name,
-          validators,
-        ) {
+    id,
+    name,
+    validators,
+  ) {
     super.value = value;
   }
 

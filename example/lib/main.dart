@@ -2,6 +2,7 @@ import 'package:auto_form_example/forms/order_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auto_form/flutter_auto_form.dart';
 
+import 'entities/json_schema.dart';
 import 'forms/login_form.dart';
 import 'forms/registration_form.dart';
 
@@ -38,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           body: SingleChildScrollView(
             child: SizedBox(
@@ -106,6 +107,27 @@ class _MyHomePageState extends State<MyHomePage> {
                               );
                             },
                             onSubmitted: (OrderForm form) {
+                              print(form.toMap());
+                            },
+                          ),
+                        ),
+                        FormShowcaseTile(
+                          title: 'Json Schema Form',
+                          child: AFWidget<JsonSchemaForm>(
+                            formBuilder: () =>
+                                JsonSchemaForm.fromJson(jsonSchema),
+                            submitButton:
+                                (Function({bool showLoadingDialog}) submit) {
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 32),
+                                child: ElevatedButton(
+                                  child: const Text('Submit'),
+                                  onPressed: () =>
+                                      submit(showLoadingDialog: true),
+                                ),
+                              );
+                            },
+                            onSubmitted: (JsonSchemaForm form) {
                               print(form.toMap());
                             },
                           ),
