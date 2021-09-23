@@ -1,3 +1,7 @@
+## [0.2.4] - 09-23-2021
+
+* Exporting the validator.dart file inside the library main file.
+
 ## [0.2.3] - 09-09-2021
 
 * Moving to a MIT license
