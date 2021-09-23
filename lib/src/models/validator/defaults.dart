@@ -37,7 +37,7 @@ class HexColorValidator extends ValidatorWithStaticError<String> {
         break;
     }
 
-    return value != null && value.length == 6 && RegExp(regex).hasMatch(value);
+    return value != null && RegExp(regex).hasMatch(value);
   }
 }
 

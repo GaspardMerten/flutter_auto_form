@@ -1,3 +1,7 @@
+## [0.2.6] - 09-23-2021
+
+* Fixing hex color validator
+
 ## [0.2.5] - 09-23-2021
 
 * Updating the hex color validator. The validation mode can now be specified (with #, without or both).
