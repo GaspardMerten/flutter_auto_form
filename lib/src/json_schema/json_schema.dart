@@ -109,6 +109,8 @@ JsonSchemaType _parseType(String type) {
       return JsonSchemaType.string;
     case 'number':
       return JsonSchemaType.number;
+    case 'integer':
+      return JsonSchemaType.integer;
     case 'object':
       return JsonSchemaType.object;
     case 'array':
@@ -120,4 +122,12 @@ JsonSchemaType _parseType(String type) {
   }
 }
 
-enum JsonSchemaType { string, number, object, array, boolean, undefined }
+enum JsonSchemaType {
+  string,
+  integer,
+  number,
+  object,
+  array,
+  boolean,
+  undefined
+}
