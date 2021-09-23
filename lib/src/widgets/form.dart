@@ -11,11 +11,14 @@ class AFWidget<T extends TemplateForm> extends StatefulWidget {
     required this.onSubmitted,
     this.submitButton,
     this.handleErrorOnSubmit,
+    this.enableFinalAction = true,
   }) : super(key: key);
 
   final T Function() formBuilder;
 
   final Function(T form) onSubmitted;
+
+  final bool enableFinalAction;
 
   final ValueChanged<String>? handleErrorOnSubmit;
 
@@ -26,13 +29,20 @@ class AFWidget<T extends TemplateForm> extends StatefulWidget {
   AFWidgetState<T> createState() => AFWidgetState<T>(
         formBuilder(),
         handleErrorOnSubmit: handleErrorOnSubmit,
+        enableFinalAction: enableFinalAction,
       );
 }
 
 class AFWidgetState<T extends TemplateForm>
     extends AFFormState<AFWidget<T>, T> {
-  AFWidgetState(T model, {ValueChanged<String>? handleErrorOnSubmit})
-      : super(model: model, handleErrorOnSubmit: handleErrorOnSubmit);
+  AFWidgetState(T model,
+      {ValueChanged<String>? handleErrorOnSubmit,
+      required bool enableFinalAction})
+      : super(
+          model: model,
+          handleErrorOnSubmit: handleErrorOnSubmit,
+          enableFinalAction: enableFinalAction,
+        );
 
   @override
   Widget build(BuildContext context) {

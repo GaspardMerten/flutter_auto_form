@@ -11,14 +11,33 @@ class URLValidator extends ValidatorWithStaticError<String> {
   }
 }
 
+enum HexColorValidatorMode { both, withHashtag, withoutHashtag }
+
 class HexColorValidator extends ValidatorWithStaticError<String> {
-  HexColorValidator(String error) : super(error);
+  HexColorValidator(
+    String error, {
+    this.mode = HexColorValidatorMode.withHashtag,
+  }) : super(error);
+
+  final HexColorValidatorMode mode;
 
   @override
   bool innerValidate(String? value) {
-    return value != null &&
-        value.length == 6 &&
-        RegExp(hexRegex).hasMatch(value);
+    final String regex;
+
+    switch (mode) {
+      case HexColorValidatorMode.both:
+        regex = hexRegexWithBoth;
+        break;
+      case HexColorValidatorMode.withHashtag:
+        regex = hexRegexWithHashtag;
+        break;
+      case HexColorValidatorMode.withoutHashtag:
+        regex = hexRegexWithoutHashtag;
+        break;
+    }
+
+    return value != null && value.length == 6 && RegExp(regex).hasMatch(value);
   }
 }
 
