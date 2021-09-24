@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_auto_form/src/models/validator/validator.dart';
 
 import 'field.dart';
@@ -59,6 +61,57 @@ class AFNumberField<T extends num> extends AFTextField<T> {
 
     return unparsedValueAsNum as T?;
   }
+}
+
+class AFSelectField<T extends Object> extends Field<T> {
+  AFSelectField({
+    required String id,
+    required String name,
+    required List<Validator<Object?>> validators,
+    required this.values,
+    required this.textBuilder,
+    required T value,
+  }) : super(
+          id,
+          name,
+          validators,
+        ) {
+    super.value = value;
+  }
+
+  final List<T> values;
+
+  final String Function(T value) textBuilder;
+
+  @override
+  T? parser(T? unparsedValue) {
+    assert(unparsedValue != null);
+
+    return unparsedValue;
+  }
+}
+
+class SimpleFile {
+  SimpleFile(this.name, this.bytes);
+
+  final String name;
+  final Uint8List? bytes;
+}
+
+class AFFileField extends Field<SimpleFile> {
+  AFFileField({
+    required String id,
+    required String name,
+    required List<Validator<SimpleFile>> validators,
+    SimpleFile? value,
+  }) : super(id, name, validators) {
+    super.value = value;
+  }
+
+  String? fileName;
+
+  @override
+  SimpleFile? parser(SimpleFile? unparsedValue) => unparsedValue;
 }
 
 class AFSearchModelField<T extends Object> extends Field<T> {

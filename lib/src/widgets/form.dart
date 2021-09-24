@@ -53,9 +53,12 @@ class AFWidgetState<T extends TemplateForm>
       child = Column(
         children: [
           child,
-          widget.submitButton!(
-            ({bool showLoadingDialog = false}) => submitForm(
-              showLoading: showLoadingDialog,
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: widget.submitButton!(
+              ({bool showLoadingDialog = false}) => submitForm(
+                showLoading: showLoadingDialog,
+              ),
             ),
           )
         ],

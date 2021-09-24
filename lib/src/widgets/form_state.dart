@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auto_form/flutter_auto_form.dart';
 import 'package:flutter_auto_form/src/models/field/field.dart';
 import 'package:flutter_auto_form/src/models/form.dart';
+import 'package:flutter_auto_form/src/widgets/fields/boolean_field.dart';
+import 'package:flutter_auto_form/src/widgets/fields/file_field.dart';
+import 'package:flutter_auto_form/src/widgets/fields/select_field.dart';
 import 'package:flutter_auto_form/src/widgets/theme.dart';
 
 import 'fields/fields.dart';
@@ -120,6 +123,28 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
       }
 
       return buildSearchModelField(field, validateMode);
+    } else if (field is AFSelectField) {
+      return SelectField<Object>(
+        textBuilder: field.textBuilder,
+        onChanged: (value) => setState(() {
+          if (value != null) {
+            field.value = value;
+          }
+        }),
+        value: field.value!,
+        values: field.values,
+      );
+    } else if (field is AFFileField) {
+      return FileField(
+        label: field.name,
+        errorText: getErrorText(field),
+        onChanged: (e) {
+          setState(() {
+            field.value = e;
+          });
+        },
+        value: field.value,
+      );
     } else if (field is AFBooleanField) {
       return buildBooleanField(field);
     }
@@ -127,29 +152,19 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
     return theme.buildCustomField(nextFocusName, field, isFinal);
   }
 
-  Padding buildBooleanField(AFBooleanField field) => Padding(
+  Widget buildBooleanField(AFBooleanField field) => Padding(
         padding: const EdgeInsets.only(top: 16),
-        child: InputDecorator(
-          decoration: InputDecoration(
-                  errorText: forceDisplayFieldsError
-                      ? field.validate(field.value)
-                      : null,
-                  contentPadding: EdgeInsets.zero,
-                  border: InputBorder.none)
-              .applyDefaults(Theme.of(context).inputDecorationTheme),
-          child: SwitchListTile(
-            value: field.value ?? false,
-            contentPadding: EdgeInsets.zero,
-            onChanged: (e) => setState(() => field.value = e),
-            title: Text(
-              field.name,
-              style: Theme.of(context).inputDecorationTheme.hintStyle,
-            ),
-          ),
+        child: BooleanField(
+          onChanged: (e) {
+            setState(() => field.value = e);
+          },
+          label: field.name,
+          value: field.value,
+          errorText: getErrorText(field),
         ),
       );
 
-  Padding buildSearchModelField(
+  Widget buildSearchModelField(
     AFSearchModelField<Object> field,
     AutovalidateMode validateMode,
   ) {
@@ -250,6 +265,12 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
       }
     } else {
       handleErrorOnSubmit?.call(model.getFirstError()!);
+    }
+  }
+
+  String? getErrorText(Field field) {
+    if (forceDisplayFieldsError) {
+      return field.validate(field.value);
     }
   }
 }

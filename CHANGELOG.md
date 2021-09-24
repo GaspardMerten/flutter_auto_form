@@ -1,3 +1,9 @@
+## [0.2.7] - 09-23-2021
+
+* Adding FileField & SelectField
+* Moving boolean field to a widget of its own
+* Adding default padding on submit button
+
 ## [0.2.6] - 09-23-2021
 
 * Fixing hex color validator
