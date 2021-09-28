@@ -1,3 +1,7 @@
+## [0.2.8] - 09-28-2021
+
+* Adding SearchMultipleModelsField, AFSearchMultipleModelsField
+
 ## [0.2.7] - 09-23-2021
 
 * Adding FileField & SelectField

@@ -111,31 +111,32 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
     String? nextFocusName,
     bool isFinal = false,
   }) {
+    final AutovalidateMode validateMode;
+
+    if (forceDisplayFieldsError) {
+      validateMode = AutovalidateMode.always;
+    } else {
+      validateMode = AutovalidateMode.onUserInteraction;
+    }
+
     if (field is AFTextField) {
       return buildTextField(nextFocusName, field, isFinal);
     } else if (field is AFSearchModelField) {
-      final AutovalidateMode validateMode;
-
-      if (forceDisplayFieldsError) {
-        validateMode = AutovalidateMode.always;
-      } else {
-        validateMode = AutovalidateMode.onUserInteraction;
-      }
-
       return buildSearchModelField(field, validateMode);
+    } else if (field is AFSearchMultipleModelsField) {
+      return buildSearchMultipleModelsField(field, validateMode);
     } else if (field is AFSelectField) {
-      return SelectField<Object>(
-        textBuilder: field.textBuilder,
-        onChanged: (value) => setState(() {
-          if (value != null) {
-            field.value = value;
-          }
-        }),
-        value: field.value!,
-        values: field.values,
-      );
+      return buildSelectField(field);
     } else if (field is AFFileField) {
-      return FileField(
+      return buildFileField(field);
+    } else if (field is AFBooleanField) {
+      return buildBooleanField(field);
+    }
+
+    return theme.buildCustomField(nextFocusName, field, isFinal);
+  }
+
+  FileField buildFileField(AFFileField field) => FileField(
         label: field.name,
         errorText: getErrorText(field),
         onChanged: (e) {
@@ -145,12 +146,18 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
         },
         value: field.value,
       );
-    } else if (field is AFBooleanField) {
-      return buildBooleanField(field);
-    }
 
-    return theme.buildCustomField(nextFocusName, field, isFinal);
-  }
+  SelectField<Object> buildSelectField(AFSelectField<Object> field) =>
+      SelectField<Object>(
+        textBuilder: field.textBuilder,
+        onChanged: (value) => setState(() {
+          if (value != null) {
+            field.value = value;
+          }
+        }),
+        value: field.value!,
+        values: field.values,
+      );
 
   Widget buildBooleanField(AFBooleanField field) => Padding(
         padding: const EdgeInsets.only(top: 16),
@@ -167,19 +174,35 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
   Widget buildSearchModelField(
     AFSearchModelField<Object> field,
     AutovalidateMode validateMode,
+  ) =>
+      Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: Container(
+          height: 64,
+          child: SearchModelField(
+            search: field.search,
+            validator: field.validate,
+            autoValidateMode: validateMode,
+            onSelected: (e) => setState(() => field.value = e),
+            label: field.name,
+            selectedValue: field.value,
+          ),
+        ),
+      );
+
+  Widget buildSearchMultipleModelsField(
+    AFSearchMultipleModelsField<Object> field,
+    AutovalidateMode validateMode,
   ) {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
-      child: Container(
-        height: 64,
-        child: SearchModelField(
-          search: field.search,
-          validator: field.validate,
-          autoValidateMode: validateMode,
-          onSelected: (e) => setState(() => field.value = e),
-          label: field.name,
-          selectedValue: field.value,
-        ),
+      child: SearchMultipleModelsField<Object>(
+        search: field.search,
+        validator: field.validate,
+        autoValidateMode: validateMode,
+        onSelected: (e) => setState(() => field.value = e),
+        label: field.name,
+        selectedValues: field.value ?? [],
       ),
     );
   }

@@ -132,6 +132,26 @@ class AFSearchModelField<T extends Object> extends Field<T> {
   T? parser(T? unparsedValue) => unparsedValue;
 }
 
+class AFSearchMultipleModelsField<T extends Object> extends Field<List<T>> {
+  AFSearchMultipleModelsField({
+    required String id,
+    required String name,
+    required List<Validator<List<Object?>>> validators,
+    required this.search,
+  }) : super(
+          id,
+          name,
+          validators,
+        );
+
+  final Future<List<T>> Function(String? query) search;
+
+  @override
+  List<T>? parser(covariant List<Object>? unparsedValue) {
+    return unparsedValue?.cast<T>();
+  }
+}
+
 class AFBooleanField extends Field<bool> {
   AFBooleanField({
     required String id,

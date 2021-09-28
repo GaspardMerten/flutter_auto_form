@@ -38,9 +38,15 @@ abstract class TemplateForm {
     return fields.singleWhere((e) => e.id == id, orElse: null).value = value;
   }
 
-  Map<String, dynamic> toMap() => Map.fromIterable(
-        fields,
-        key: (a) => a.id,
-        value: (field) => field.value,
-      );
+  Map<String, dynamic> toMap() {
+    for (final Field field in fields) {
+      print(field.value);
+    }
+
+    return Map.fromIterable(
+      fields,
+      key: (a) => a.id,
+      value: (field) => field.value,
+    );
+  }
 }

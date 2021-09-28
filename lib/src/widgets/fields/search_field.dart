@@ -47,3 +47,49 @@ class SearchModelField<T extends Object> extends StatelessWidget {
     );
   }
 }
+
+class SearchMultipleModelsField<T extends Object> extends StatelessWidget {
+  const SearchMultipleModelsField({
+    Key? key,
+    required this.label,
+    required this.search,
+    required this.onSelected,
+    this.validator,
+    required this.selectedValues,
+    this.autoValidateMode = AutovalidateMode.onUserInteraction,
+  }) : super(key: key);
+
+  final String label;
+
+  final Future<List<T>> Function(String? query) search;
+
+  final Function(List<T>? value) onSelected;
+
+  final FormFieldValidator<List<T>>? validator;
+
+  final List<T> selectedValues;
+
+  final AutovalidateMode autoValidateMode;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownSearch.multiSelection(
+      label: label,
+      autoValidateMode: autoValidateMode,
+      onFind: search,
+      selectedItems: selectedValues,
+      mode: Mode.MENU,
+      onChange: onSelected,
+      dropdownBuilder: (context, List<T>? values) {
+        return Text(values?.join(',') ?? '');
+      },
+      clearButton: const SizedBox(),
+      isFilteredOnline: true,
+      showClearButton: true,
+      showSearchBox: true,
+      dropdownSearchDecoration: const InputDecoration().applyDefaults(
+        Theme.of(context).inputDecorationTheme,
+      ),
+    );
+  }
+}
