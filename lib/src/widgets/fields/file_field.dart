@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auto_form/src/models/field/defaults.dart';
@@ -21,8 +23,11 @@ class FileField extends StatelessWidget {
 
     if (result != null) {
       final PlatformFile file = result.files.first;
-
-      onChanged(SimpleFile(file.name, file.bytes));
+      if (file.bytes != null) {
+        onChanged(SimpleFile(file.name, file.bytes));
+      } else if (file.path != null) {
+        onChanged(SimpleFile(file.name, await File(file.path!).readAsBytes()));
+      }
     } else {
       // User canceled the picker
     }

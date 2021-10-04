@@ -1,3 +1,7 @@
+## [0.2.9] - 10-04-2021
+
+* An issue with the SimpleFile bytes property has been fixed.
+
 ## [0.2.8] - 09-28-2021
 
 * Adding SearchMultipleModelsField, AFSearchMultipleModelsField

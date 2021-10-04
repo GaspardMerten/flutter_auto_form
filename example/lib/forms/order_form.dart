@@ -21,6 +21,7 @@ class OrderForm extends TemplateForm {
       name: 'Is payed',
       validators: [],
       value: false,
-    )
+    ),
+    AFFileField(id: 'file', name: 'File', validators: [])
   ];
 }
