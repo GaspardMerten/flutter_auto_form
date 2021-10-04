@@ -38,7 +38,7 @@ abstract class TemplateForm {
     return fields.singleWhere((e) => e.id == id, orElse: null).value = value;
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, Object?> toMap() {
     for (final Field field in fields) {
       print(field.value);
     }

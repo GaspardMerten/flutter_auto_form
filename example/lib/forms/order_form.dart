@@ -22,6 +22,14 @@ class OrderForm extends TemplateForm {
       validators: [],
       value: false,
     ),
-    AFFileField(id: 'file', name: 'File', validators: [])
+    AFFileField(id: 'file', name: 'File', validators: []),
+    AFSelectField(
+      id: 'select',
+      name: 'Select',
+      validators: [],
+      values: [1, 2],
+      textBuilder: (e) => e.toString(),
+      value: 1,
+    ),
   ];
 }

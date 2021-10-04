@@ -6,6 +6,7 @@ import 'package:flutter_auto_form/src/models/field/field.dart';
 import 'package:flutter_auto_form/src/models/form.dart';
 import 'package:flutter_auto_form/src/widgets/fields/boolean_field.dart';
 import 'package:flutter_auto_form/src/widgets/fields/file_field.dart';
+import 'package:flutter_auto_form/src/widgets/fields/form_field.dart';
 import 'package:flutter_auto_form/src/widgets/fields/select_field.dart';
 import 'package:flutter_auto_form/src/widgets/theme.dart';
 
@@ -50,6 +51,10 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
   /// A map linking each [AFTextField]'id to its respective [FocusNode]
   /// that will be populated inside the [initState] method.
   Map<String, FocusNode> focusNodes = {};
+
+  Map<String, GlobalKey<AFWidgetState>> formsState = {};
+  Map<String, GlobalKey<AFMultipleFormFieldWidgetState>> multipleFormsState =
+      {};
 
   @override
   void initState() {
@@ -131,6 +136,21 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
       return buildFileField(field);
     } else if (field is AFBooleanField) {
       return buildBooleanField(field);
+    } else if (field is AFFormField) {
+      formsState[field.id] ??= GlobalKey<AFWidgetState>();
+
+      return AFFormFieldWidget(
+        formKey: formsState[field.id]!,
+        field: field,
+      );
+    } else if (field is AFMultipleFormField) {
+      multipleFormsState[field.id] ??=
+          GlobalKey<AFMultipleFormFieldWidgetState>();
+
+      return AFMultipleFormFieldWidget(
+        field: field,
+        key: multipleFormsState[field.id],
+      );
     }
 
     return theme.buildCustomField(nextFocusName, field, isFinal);
@@ -277,17 +297,31 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
       forceDisplayFieldsError = true;
     });
 
-    if (model.isComplete()) {
-      if (showLoading && enableFinalAction) {
-        await theme.showFutureLoadingWidget(
-          context: context,
-          future: submit(model),
-        );
+    bool shouldStop = false;
+
+    formsState.forEach((key, value) {
+      value.currentState?.submitForm();
+
+      shouldStop |= !value.currentState!.model.isComplete();
+    });
+
+    multipleFormsState.forEach((key, value) {
+      shouldStop |= !value.currentState!.save();
+    });
+
+    if (!shouldStop) {
+      if (model.isComplete()) {
+        if (showLoading && enableFinalAction) {
+          await theme.showFutureLoadingWidget(
+            context: context,
+            future: submit(model),
+          );
+        } else {
+          await submit(model);
+        }
       } else {
-        await submit(model);
+        handleErrorOnSubmit?.call(model.getFirstError()!);
       }
-    } else {
-      handleErrorOnSubmit?.call(model.getFirstError()!);
     }
   }
 

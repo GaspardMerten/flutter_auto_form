@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:flutter_auto_form/src/models/form.dart';
 import 'package:flutter_auto_form/src/models/validator/validator.dart';
 
 import 'field.dart';
@@ -156,7 +157,7 @@ class AFBooleanField extends Field<bool> {
   AFBooleanField({
     required String id,
     required String name,
-    required List<Validator<Object?>> validators,
+    required List<Validator<bool?>> validators,
     bool value = false,
   }) : super(
           id,
@@ -168,6 +169,47 @@ class AFBooleanField extends Field<bool> {
 
   @override
   bool? parser(bool unparsedValue) => unparsedValue;
+}
+
+class AFFormField<T extends TemplateForm> extends Field<Map<String, Object?>> {
+  AFFormField({
+    required String id,
+    required String name,
+    required this.formGenerator,
+    this.required = true,
+  }) : super(
+          id,
+          name,
+          [],
+        );
+
+  final bool required;
+
+  final T Function() formGenerator;
+
+  @override
+  Map<String, Object?>? parser(Map<String, Object?>? unparsedValue) =>
+      unparsedValue;
+}
+
+class AFMultipleFormField<T extends TemplateForm>
+    extends Field<List<Map<String, Object?>>> {
+  AFMultipleFormField({
+    required String id,
+    required String name,
+    required this.formGenerator,
+  }) : super(
+          id,
+          name,
+          [],
+        );
+
+  final T Function() formGenerator;
+
+  @override
+  List<Map<String, Object?>> parser(List<Map<String, Object?>>? unparsedValue) {
+    return unparsedValue ?? [];
+  }
 }
 
 /// The different types of field for the [AFTextField].

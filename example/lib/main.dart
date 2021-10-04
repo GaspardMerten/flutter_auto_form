@@ -48,26 +48,29 @@ class _MyHomePageState extends State<MyHomePage> {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        FormShowcaseTile(
-                          title: 'Login form',
-                          child: AFWidget<LoginForm>(
-                            handleErrorOnSubmit: print,
-                            formBuilder: () => LoginForm(),
-                            submitButton:
-                                (Function({bool showLoadingDialog}) submit) {
-                              return Padding(
-                                padding: const EdgeInsets.only(top: 32),
-                                child: ElevatedButton(
-                                  child: const Text('Submit'),
-                                  onPressed: () =>
-                                      submit(showLoadingDialog: true),
-                                ),
-                              );
-                            },
-                            onSubmitted: (LoginForm form) async {
-                              await Future.delayed(const Duration(seconds: 2));
-                              print(form.toMap());
-                            },
+                        SingleChildScrollView(
+                          child: FormShowcaseTile(
+                            title: 'Login form',
+                            child: AFWidget<LoginForm>(
+                              handleErrorOnSubmit: print,
+                              formBuilder: () => LoginForm(),
+                              submitButton:
+                                  (Function({bool showLoadingDialog}) submit) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 32),
+                                  child: ElevatedButton(
+                                    child: const Text('Submit'),
+                                    onPressed: () =>
+                                        submit(showLoadingDialog: true),
+                                  ),
+                                );
+                              },
+                              onSubmitted: (LoginForm form) async {
+                                await Future.delayed(
+                                    const Duration(seconds: 2));
+                                print(form.toMap());
+                              },
+                            ),
                           ),
                         ),
                         FormShowcaseTile(

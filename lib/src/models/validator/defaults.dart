@@ -1,3 +1,4 @@
+import 'package:flutter_auto_form/flutter_auto_form.dart';
 import 'package:flutter_auto_form/src/models/field/field.dart';
 import 'package:flutter_auto_form/src/models/regex.dart';
 import 'package:flutter_auto_form/src/models/validator/validator.dart';
@@ -7,15 +8,14 @@ class URLValidator extends ValidatorWithStaticError<String> {
 
   @override
   bool innerValidate(String? value) {
-    return value == null || RegExp(emailRegex).allMatches(value).isNotEmpty;
+    return value == null || RegExp(urlRegex).allMatches(value).isNotEmpty;
   }
 }
 
 enum HexColorValidatorMode { both, withHashtag, withoutHashtag }
 
 class HexColorValidator extends ValidatorWithStaticError<String> {
-  HexColorValidator(
-    String error, {
+  HexColorValidator(String error, {
     this.mode = HexColorValidatorMode.withHashtag,
   }) : super(error);
 
@@ -85,7 +85,7 @@ class EmailValidator extends ValidatorWithStaticError<String> {
 
   @override
   bool innerValidate(String? value) {
-    return value != null && RegExp(emailRegex).hasMatch(value.trim());
+    return value != null && RegExp(urlRegex).hasMatch(value.trim());
   }
 }
 
@@ -95,5 +95,12 @@ class ShouldBeTrueValidator extends ValidatorWithStaticError<bool> {
   @override
   bool innerValidate(bool? value) {
     return value ?? false;
+  }
+}
+
+class FormValidator extends Validator<TemplateForm> {
+  @override
+  String? validate(TemplateForm value) {
+    return value.isComplete() ? null : 'ERROR';
   }
 }
