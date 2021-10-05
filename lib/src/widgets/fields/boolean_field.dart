@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-class BooleanField extends StatelessWidget {
-  const BooleanField({
+/// Displays a switch list tile in the form of a field.
+class BooleanFieldWidget extends StatelessWidget {
+  const BooleanFieldWidget({
     Key? key,
     this.errorText,
     this.value,
@@ -18,10 +19,10 @@ class BooleanField extends StatelessWidget {
   Widget build(BuildContext context) {
     return InputDecorator(
       decoration: InputDecoration(
-              errorText: errorText,
-              contentPadding: EdgeInsets.zero,
-              border: InputBorder.none)
-          .applyDefaults(
+        errorText: errorText,
+        contentPadding: EdgeInsets.zero,
+        border: InputBorder.none,
+      ).applyDefaults(
         Theme.of(context).inputDecorationTheme,
       ),
       child: SwitchListTile(

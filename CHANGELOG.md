@@ -1,3 +1,12 @@
+## [0.3.0] - 10-05-2021
+
+* Adding a Widget suffix to each internal field's widget.
+* Adding support for AFFormField and AFMultipleFormField to allow sub-form system. (you now create infinite forms in a
+  cascade)
+* Fixing dart:io import (for web)
+* Adding some documentation to internal widgets
+* Fixing the email validator regex
+
 ## [0.2.9] - 10-04-2021
 
 * An issue with the SimpleFile bytes property has been fixed.

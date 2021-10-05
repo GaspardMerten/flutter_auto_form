@@ -1,6 +1,6 @@
 name: flutter_auto_form
 description: A package simplifying the process of creating user friendly forms in Flutter
-version: 0.2.9
+version: 0.3.0
 homepage: https://github.com/GaspardMerten/flutter_auto_form
 
 environment:

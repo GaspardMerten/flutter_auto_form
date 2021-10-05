@@ -1,4 +1,3 @@
-import 'package:auto_form_example/forms/order_form.dart';
 import 'package:flutter_auto_form/flutter_auto_form.dart';
 
 class LoginForm extends TemplateForm {
@@ -32,10 +31,5 @@ class LoginForm extends TemplateForm {
       validators: [ShouldBeTrueValidator('Please accept terms')],
       value: false,
     ),
-    AFMultipleFormField(
-      id: 'form',
-      name: 'Form',
-      formGenerator: () => OrderForm(),
-    )
   ];
 }

@@ -1,8 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
-class SearchModelField<T extends Object> extends StatelessWidget {
-  const SearchModelField({
+class SearchModelFieldWidget<T extends Object> extends StatelessWidget {
+  const SearchModelFieldWidget({
     Key? key,
     required this.label,
     required this.search,

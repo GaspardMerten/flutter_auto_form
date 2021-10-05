@@ -46,15 +46,25 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
 
   /// A map linking each [AFTextField]'id to its respective [TextEditingController]
   /// that will be populated inside the [initState] method.
-  Map<String, TextEditingController> textEditingControllers = {};
+  final Map<String, TextEditingController> textEditingControllers = {};
 
   /// A map linking each [AFTextField]'id to its respective [FocusNode]
   /// that will be populated inside the [initState] method.
-  Map<String, FocusNode> focusNodes = {};
+  final Map<String, FocusNode> focusNodes = {};
 
-  Map<String, GlobalKey<AFWidgetState>> formsState = {};
-  Map<String, GlobalKey<AFMultipleFormFieldWidgetState>> multipleFormsState =
-      {};
+  /// A map linking each form field [AFFormField] to its counterpart [AFFormState] instance.
+  /// allowing this very widget to validate (display errors) and retrieve data from
+  /// the sub-form.
+  final Map<String, GlobalKey<AFWidgetState>> formsState = {};
+
+  /// A map linking each form field [AFMultipleFormField] to its counterpart
+  /// [AFMultipleFormFieldWidgetState] instance.
+  ///
+  /// The [AFMultipleFormFieldWidgetState] exposes a save method which when
+  /// called, validate the data and saves it (if valid) inside the value attribute
+  /// of the [AFMultipleFormField] object.
+  final Map<String, GlobalKey<AFMultipleFormFieldWidgetState>>
+      multipleFormsState = {};
 
   @override
   void initState() {
@@ -137,26 +147,35 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
     } else if (field is AFBooleanField) {
       return buildBooleanField(field);
     } else if (field is AFFormField) {
-      formsState[field.id] ??= GlobalKey<AFWidgetState>();
-
-      return AFFormFieldWidget(
-        formKey: formsState[field.id]!,
-        field: field,
-      );
+      return buildFormFieldWidget(field);
     } else if (field is AFMultipleFormField) {
-      multipleFormsState[field.id] ??=
-          GlobalKey<AFMultipleFormFieldWidgetState>();
-
-      return AFMultipleFormFieldWidget(
-        field: field,
-        key: multipleFormsState[field.id],
-      );
+      return buildMultipleFormFieldWidget(field);
     }
 
     return theme.buildCustomField(nextFocusName, field, isFinal);
   }
 
-  FileField buildFileField(AFFileField field) => FileField(
+  AFMultipleFormFieldWidget buildMultipleFormFieldWidget(
+      AFMultipleFormField<TemplateForm> field) {
+    multipleFormsState[field.id] ??=
+        GlobalKey<AFMultipleFormFieldWidgetState>();
+
+    return AFMultipleFormFieldWidget(
+      field: field,
+      key: multipleFormsState[field.id],
+    );
+  }
+
+  FormFieldWidget buildFormFieldWidget(AFFormField<TemplateForm> field) {
+    formsState[field.id] ??= GlobalKey<AFWidgetState>();
+
+    return FormFieldWidget(
+      formKey: formsState[field.id]!,
+      field: field,
+    );
+  }
+
+  FileFieldWidget buildFileField(AFFileField field) => FileFieldWidget(
         label: field.name,
         errorText: getErrorText(field),
         onChanged: (e) {
@@ -167,8 +186,8 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
         value: field.value,
       );
 
-  SelectField<Object> buildSelectField(AFSelectField<Object> field) =>
-      SelectField<Object>(
+  SelectFieldWidget<Object> buildSelectField(AFSelectField<Object> field) =>
+      SelectFieldWidget<Object>(
         textBuilder: field.textBuilder,
         onChanged: (value) => setState(() {
           if (value != null) {
@@ -181,7 +200,7 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
 
   Widget buildBooleanField(AFBooleanField field) => Padding(
         padding: const EdgeInsets.only(top: 16),
-        child: BooleanField(
+    child: BooleanFieldWidget(
           onChanged: (e) {
             setState(() => field.value = e);
           },
@@ -199,7 +218,7 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
         padding: const EdgeInsets.only(top: 16),
         child: Container(
           height: 64,
-          child: SearchModelField(
+          child: SearchModelFieldWidget(
             search: field.search,
             validator: field.validate,
             autoValidateMode: validateMode,

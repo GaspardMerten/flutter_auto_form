@@ -15,7 +15,8 @@ class URLValidator extends ValidatorWithStaticError<String> {
 enum HexColorValidatorMode { both, withHashtag, withoutHashtag }
 
 class HexColorValidator extends ValidatorWithStaticError<String> {
-  HexColorValidator(String error, {
+  HexColorValidator(
+    String error, {
     this.mode = HexColorValidatorMode.withHashtag,
   }) : super(error);
 

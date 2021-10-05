@@ -17,7 +17,7 @@ dependencies:
 
   # Your other packages  ...
 
-  flutter_auto_form: ^0.2.7
+  flutter_auto_form: ^0.3.0
 ```
 
 ## Support
@@ -26,7 +26,7 @@ dependencies:
 * Autofill hints: **Automatic support through AFTextFieldType**
 * Validators: **Email, Url, Hex colour, Not null, Minimum string length, Same as another field, Alphanumeric.**
 * Fields: **Password _(auto obscure toggle)_, Text, Number, Model _(built-in support for search through an api)_,
-  Boolean**
+  Boolean, Sub-form _(cascading forms)_, Select _(dropdown field allowing only predefined values)_**
 * Custom code: **You can customize and create new fields, validators, widgets as you please without even touching the
   source code of this package !**
 

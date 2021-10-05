@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SelectField<T> extends StatelessWidget {
-  const SelectField({
+class SelectFieldWidget<T> extends StatelessWidget {
+  const SelectFieldWidget({
     Key? key,
     required this.value,
     required this.textBuilder,
