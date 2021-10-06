@@ -18,12 +18,11 @@ class AFMultipleFormFieldWidget extends StatefulWidget {
 }
 
 class AFMultipleFormFieldWidgetState extends State<AFMultipleFormFieldWidget> {
-  final List<TemplateForm> forms = [];
+  List<TemplateForm> get forms => widget.field.forms;
+
   final List<GlobalKey<AFWidgetState>> formsWidgetState = [];
 
   bool save() {
-    final List<Map<String, Object?>> data = [];
-
     for (final formState in formsWidgetState) {
       formState.currentState!.submitForm();
     }
@@ -32,10 +31,7 @@ class AFMultipleFormFieldWidgetState extends State<AFMultipleFormFieldWidget> {
 
     for (final form in forms) {
       isComplete &= form.isComplete();
-      data.add(form.toMap());
     }
-
-    widget.field.value = data;
 
     return isComplete;
   }
@@ -48,6 +44,7 @@ class AFMultipleFormFieldWidgetState extends State<AFMultipleFormFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(top: 16),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
           Radius.circular(8),
@@ -65,8 +62,8 @@ class AFMultipleFormFieldWidgetState extends State<AFMultipleFormFieldWidget> {
               decoration: index + 1 == forms.length
                   ? null
                   : const BoxDecoration(
-                      border:
-                          Border(bottom: BorderSide(color: Colors.black12))),
+                  border:
+                  Border(bottom: BorderSide(color: Colors.black12))),
               padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: Column(
                 children: [

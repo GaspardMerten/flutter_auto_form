@@ -187,6 +187,11 @@ class AFFormField<T extends TemplateForm> extends Field<Map<String, Object?>> {
 
   final T Function() formGenerator;
 
+  T? form;
+
+  @override
+  Map<String, Object?>? get value => form?.toMap();
+
   @override
   Map<String, Object?>? parser(Map<String, Object?>? unparsedValue) =>
       unparsedValue;
@@ -205,6 +210,11 @@ class AFMultipleFormField<T extends TemplateForm>
         );
 
   final T Function() formGenerator;
+
+  final List<T> forms = [];
+
+  @override
+  List<Map<String, Object?>> get value => forms.map((e) => e.toMap()).toList();
 
   @override
   List<Map<String, Object?>> parser(List<Map<String, Object?>>? unparsedValue) {

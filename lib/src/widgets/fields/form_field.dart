@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auto_form/src/models/field/field.dart';
-import 'package:flutter_auto_form/src/models/form.dart';
 import 'package:flutter_auto_form/src/widgets/form.dart';
 
 /// Displays a sub form intended to be placed inside an [AFFormState] build method.
@@ -21,20 +20,19 @@ class FormFieldWidget extends StatefulWidget {
 }
 
 class _FormFieldWidgetState extends State<FormFieldWidget> {
-  TemplateForm? form;
-
   @override
   void initState() {
     super.initState();
 
     if (widget.field.required) {
-      form = widget.field.formGenerator();
+      widget.field.form = widget.field.formGenerator();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(top: 16),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
           Radius.circular(8),
@@ -47,15 +45,13 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           buildTitleRow(),
-          if (form != null)
+          if (widget.field.form != null)
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: AFWidget(
                 key: widget.formKey,
-                formBuilder: () => form!,
-                onSubmitted: (TemplateForm? form) {
-                  widget.field.value = form!.toMap();
-                },
+                formBuilder: () => widget.field.form!,
+                onSubmitted: (_) {},
               ),
             ),
         ],
@@ -77,18 +73,18 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
       final Widget action;
       final Function() onPressed;
 
-      if (form == null) {
+      if (widget.field.form == null) {
         action = const Icon(Icons.add);
         onPressed = () => setState(
               () {
-                form = widget.field.formGenerator();
+                widget.field.form = widget.field.formGenerator();
               },
             );
       } else {
         action = const Icon(Icons.remove);
         onPressed = () => setState(
               () {
-                form = null;
+                widget.field.form = null;
               },
             );
       }

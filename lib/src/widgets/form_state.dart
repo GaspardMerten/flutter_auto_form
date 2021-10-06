@@ -200,7 +200,7 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
 
   Widget buildBooleanField(AFBooleanField field) => Padding(
         padding: const EdgeInsets.only(top: 16),
-    child: BooleanFieldWidget(
+        child: BooleanFieldWidget(
           onChanged: (e) {
             setState(() => field.value = e);
           },

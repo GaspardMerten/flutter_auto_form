@@ -1,3 +1,7 @@
+## [0.3.1] - 10-05-2021
+
+* Improving the way sub-forms work
+
 ## [0.3.0] - 10-05-2021
 
 * Adding a Widget suffix to each internal field's widget.

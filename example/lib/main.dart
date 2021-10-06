@@ -93,24 +93,26 @@ class _MyHomePageState extends State<MyHomePage> {
                             },
                           ),
                         ),
-                        FormShowcaseTile(
-                          title: 'Order form',
-                          child: AFWidget<OrderForm>(
-                            formBuilder: () => OrderForm(),
-                            submitButton:
-                                (Function({bool showLoadingDialog}) submit) {
-                              return Padding(
-                                padding: const EdgeInsets.only(top: 32),
-                                child: ElevatedButton(
-                                  child: const Text('Submit'),
-                                  onPressed: () =>
-                                      submit(showLoadingDialog: true),
-                                ),
-                              );
-                            },
-                            onSubmitted: (OrderForm form) {
-                              print(form.toMap());
-                            },
+                        SingleChildScrollView(
+                          child: FormShowcaseTile(
+                            title: 'Order form',
+                            child: AFWidget<OrderForm>(
+                              formBuilder: () => OrderForm(),
+                              submitButton:
+                                  (Function({bool showLoadingDialog}) submit) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 32),
+                                  child: ElevatedButton(
+                                    child: const Text('Submit'),
+                                    onPressed: () =>
+                                        submit(showLoadingDialog: true),
+                                  ),
+                                );
+                              },
+                              onSubmitted: (OrderForm form) {
+                                print(form.toMap());
+                              },
+                            ),
                           ),
                         ),
                       ],

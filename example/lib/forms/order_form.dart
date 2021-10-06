@@ -31,5 +31,10 @@ class OrderForm extends TemplateForm {
       textBuilder: (e) => e.toString(),
       value: 1,
     ),
+    AFMultipleFormField(
+      id: 'other_orders',
+      name: 'Other orders (no meaning..)',
+      formGenerator: () => OrderForm(),
+    )
   ];
 }
