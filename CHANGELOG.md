@@ -1,3 +1,7 @@
+## [0.3.2] - 10-05-2021
+
+* The multiple form field can now be instantiated with already existing form instances
+
 ## [0.3.1] - 10-05-2021
 
 * Improving the way sub-forms work

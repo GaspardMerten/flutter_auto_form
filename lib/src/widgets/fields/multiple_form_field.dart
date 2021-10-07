@@ -39,6 +39,10 @@ class AFMultipleFormFieldWidgetState extends State<AFMultipleFormFieldWidget> {
   @override
   void initState() {
     super.initState();
+
+    for (final _ in forms) {
+      formsWidgetState.add(GlobalKey<AFWidgetState>());
+    }
   }
 
   @override
@@ -62,8 +66,8 @@ class AFMultipleFormFieldWidgetState extends State<AFMultipleFormFieldWidget> {
               decoration: index + 1 == forms.length
                   ? null
                   : const BoxDecoration(
-                  border:
-                  Border(bottom: BorderSide(color: Colors.black12))),
+                      border:
+                          Border(bottom: BorderSide(color: Colors.black12))),
               padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: Column(
                 children: [
