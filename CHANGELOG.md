@@ -1,3 +1,7 @@
+## [0.3.3] - 10-12-2021
+
+* Fixing email validator
+
 ## [0.3.2] - 10-05-2021
 
 * The multiple form field can now be instantiated with already existing form instances
