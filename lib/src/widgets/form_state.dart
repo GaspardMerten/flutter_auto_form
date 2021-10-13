@@ -23,6 +23,7 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
     required this.model,
     this.enableFinalAction = true,
     this.handleErrorOnSubmit,
+    this.enableSubmitFormWrapper,
   });
 
   /// The [TemplateForm] that will be used as the blueprint of this class.
@@ -30,6 +31,11 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
 
   /// Whether to submit the form when the user clicks on the last field's [TextInputAction].
   final bool enableFinalAction;
+
+  /// Whether to use wrap the submit function inside the [AFThemeData.submitFormWrapper]
+  /// function. This can be useful to display a loading dialog while submitting
+  /// the data.
+  final bool? enableSubmitFormWrapper;
 
   /// A callback that will be triggered whenever the [submitForm] method is called
   /// while the form is invalid. It exposes the first error returned by one of the
@@ -274,7 +280,7 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
       forceError: forceDisplayFieldsError,
       completeAction: () async {
         if (isFinal && enableFinalAction) {
-          await submitForm(showLoading: true);
+          await submitForm();
         } else if (nextFocusNode != null) {
           focusNode.unfocus();
           FocusScope.of(context).requestFocus(nextFocusNode);
@@ -311,7 +317,7 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
 
   FutureOr<void> submit(G form);
 
-  Future<void> submitForm({bool showLoading = false}) async {
+  Future<void> submitForm() async {
     setState(() {
       forceDisplayFieldsError = true;
     });
@@ -330,8 +336,11 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
 
     if (!shouldStop) {
       if (model.isComplete()) {
-        if (showLoading && enableFinalAction) {
-          await theme.showFutureLoadingWidget(
+        final bool _enabledSubmitFormWrapper = enableSubmitFormWrapper ??
+            AFTheme.of(context).enableSubmitFormWrapper;
+
+        if (_enabledSubmitFormWrapper && enableFinalAction) {
+          await theme.submitFormWrapper(
             context: context,
             future: submit(model),
           );

@@ -54,14 +54,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: AFWidget<LoginForm>(
                               handleErrorOnSubmit: print,
                               formBuilder: () => LoginForm(),
-                              submitButton:
-                                  (Function({bool showLoadingDialog}) submit) {
+                              submitButton: (Function() submit) {
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 32),
                                   child: ElevatedButton(
                                     child: const Text('Submit'),
-                                    onPressed: () =>
-                                        submit(showLoadingDialog: true),
+                                    onPressed: () => submit(),
                                   ),
                                 );
                               },
@@ -77,14 +75,14 @@ class _MyHomePageState extends State<MyHomePage> {
                           title: 'Registration form',
                           child: AFWidget<RegistrationForm>(
                             formBuilder: () => RegistrationForm(),
-                            submitButton:
-                                (Function({bool showLoadingDialog}) submit) {
+                            submitButton: (Function() submit) {
                               return Padding(
                                 padding: const EdgeInsets.only(top: 32),
                                 child: ElevatedButton(
                                   child: const Text('Submit'),
-                                  onPressed: () =>
-                                      submit(showLoadingDialog: true),
+                                  onPressed: () {
+                                    submit();
+                                  },
                                 ),
                               );
                             },
@@ -98,14 +96,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             title: 'Order form',
                             child: AFWidget<OrderForm>(
                               formBuilder: () => OrderForm(),
-                              submitButton:
-                                  (Function({bool showLoadingDialog}) submit) {
+                              submitButton: (Function() submit) {
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 32),
                                   child: ElevatedButton(
                                     child: const Text('Submit'),
-                                    onPressed: () =>
-                                        submit(showLoadingDialog: true),
+                                    onPressed: () => submit(),
                                   ),
                                 );
                               },

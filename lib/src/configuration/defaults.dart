@@ -42,7 +42,7 @@ Widget kTextFieldWidgetBuilder(
 /// The default loading dialog builder used by the [AFTheme] widget.
 /// See [FutureLoadingWidget] if you want to create your own loading dialog
 /// compatible with the requirement of the [AFTheme].
-Future<T> kShowFutureLoadingWidget<T>({
+Future<T> kShowFutureLoadingDialog<T>({
   required BuildContext context,
   required FutureOr<T> future,
 }) async {
@@ -59,7 +59,7 @@ Future<T> kShowFutureLoadingWidget<T>({
   return response;
 }
 
-/// The widget that is displayed by the [kShowFutureLoadingWidget].
+/// The widget that is displayed by the [kShowFutureLoadingDialog].
 class _KLoadingWidget extends StatelessWidget {
   const _KLoadingWidget({
     Key? key,

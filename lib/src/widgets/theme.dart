@@ -29,11 +29,19 @@ class AFTheme extends InheritedWidget {
 class AFThemeData {
   const AFThemeData({
     this.textFieldWidgetBuilder = kTextFieldWidgetBuilder,
-    this.showFutureLoadingWidget = kShowFutureLoadingWidget,
+    this.submitFormWrapper = kShowFutureLoadingDialog,
+    this.enableSubmitFormWrapper = true,
   });
 
   final TextFieldWidgetBuilder textFieldWidgetBuilder;
-  final FutureLoadingWidget showFutureLoadingWidget;
+
+  /// A function that will be called by the [AFFormState] state whenever
+  /// the form submitted by the user. It has the responsibility to await
+  /// the future received as an argument which is returned by the
+  /// [AFFormState.onSubmitted]
+  final FutureWrapper submitFormWrapper;
+
+  final bool enableSubmitFormWrapper;
 
   Widget buildCustomField(
       String? nextFocusName, Field<Object> field, bool isFinal) {
