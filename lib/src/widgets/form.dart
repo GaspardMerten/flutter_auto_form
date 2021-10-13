@@ -12,6 +12,7 @@ class AFWidget<T extends TemplateForm> extends StatefulWidget {
     this.submitButton,
     this.handleErrorOnSubmit,
     this.enableFinalAction = true,
+    this.enableSubmitFormWrapper,
   }) : super(key: key);
 
   final T Function() formBuilder;
@@ -20,33 +21,37 @@ class AFWidget<T extends TemplateForm> extends StatefulWidget {
 
   final bool enableFinalAction;
 
+  final bool? enableSubmitFormWrapper;
+
   final ValueChanged<String>? handleErrorOnSubmit;
 
-  final Widget Function(Function({bool showLoadingDialog}) submit)?
-      submitButton;
+  final Widget Function(Function() submit)? submitButton;
 
   @override
   AFWidgetState<T> createState() => AFWidgetState<T>(
         formBuilder(),
         handleErrorOnSubmit: handleErrorOnSubmit,
         enableFinalAction: enableFinalAction,
+        enableSubmitFormWrapper: enableSubmitFormWrapper,
       );
 }
 
 class AFWidgetState<T extends TemplateForm>
     extends AFFormState<AFWidget<T>, T> {
-  AFWidgetState(T model,
-      {ValueChanged<String>? handleErrorOnSubmit,
-      required bool enableFinalAction})
-      : super(
+  AFWidgetState(
+    T model, {
+    ValueChanged<String>? handleErrorOnSubmit,
+    required bool enableFinalAction,
+    bool? enableSubmitFormWrapper,
+  }) : super(
           model: model,
           handleErrorOnSubmit: handleErrorOnSubmit,
           enableFinalAction: enableFinalAction,
+          enableSubmitFormWrapper: enableSubmitFormWrapper,
         );
 
   @override
   Widget build(BuildContext context) {
-    widget;
     Widget child = form();
 
     if (widget.submitButton != null) {
@@ -56,9 +61,7 @@ class AFWidgetState<T extends TemplateForm>
           Padding(
             padding: const EdgeInsets.only(top: 16),
             child: widget.submitButton!(
-              ({bool showLoadingDialog = false}) => submitForm(
-                showLoading: showLoadingDialog,
-              ),
+                  () => submitForm(),
             ),
           )
         ],

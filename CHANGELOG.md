@@ -1,3 +1,9 @@
+## [0.4.0] - 10-13-2021
+
+* <b>Breaking Changes</b>: the submitButton doesn't allow the showFutureDialog parameter. You should now use the
+  enableSubmitFormWrapper argument of the AFWidget, AFFormState or if you want to specify the global behavior, use the
+  AFTheme widget.
+
 ## [0.3.3] - 10-12-2021
 
 * Fixing email validator

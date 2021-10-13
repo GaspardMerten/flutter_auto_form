@@ -20,7 +20,7 @@ typedef TextFieldWidgetBuilder<T> = Widget Function(
 
 /// An interface for the future loader. See [kShowFutureLoadingWidget] for
 /// an example of a working implementation.
-typedef FutureLoadingWidget<T> = FutureOr<T> Function({
+typedef FutureWrapper<T> = FutureOr<T> Function({
   required BuildContext context,
   required FutureOr<T> future,
 });
