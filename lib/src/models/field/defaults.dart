@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter_auto_form/src/models/form.dart';
-import 'package:flutter_auto_form/src/models/validator/validator.dart';
+import 'package:flutter_auto_form/src/models/validators/validator.dart';
 
 import 'field.dart';
 

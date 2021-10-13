@@ -31,8 +31,8 @@ class RegistrationForm extends TemplateForm {
       name: 'Confirm password',
       validators: [
         SameAsFieldValidator(
-          'Passwords not matching',
           passwordField,
+          'Passwords not matching',
         ),
       ],
       type: AFTextFieldType.NEW_PASSWORD,

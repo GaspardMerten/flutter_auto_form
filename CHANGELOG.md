@@ -1,3 +1,8 @@
+## [0.4.1] - 10-13-2021
+
+* Adding unit test for each validator
+* Normalizing the SameAsFieldValidator (constructor argument position was inverted)
+
 ## [0.4.0] - 10-13-2021
 
 * <b>Breaking Changes</b>: the submitButton doesn't allow the showFutureDialog parameter. You should now use the

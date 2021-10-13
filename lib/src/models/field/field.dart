@@ -1,4 +1,4 @@
-import 'package:flutter_auto_form/src/models/validator/validator.dart';
+import 'package:flutter_auto_form/src/models/validators/validator.dart';
 
 export 'defaults.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter_auto_form/flutter_auto_form.dart';
 import 'package:flutter_auto_form/src/models/field/field.dart';
 import 'package:flutter_auto_form/src/models/regex.dart';
-import 'package:flutter_auto_form/src/models/validator/validator.dart';
+import 'package:flutter_auto_form/src/models/validators/validator.dart';
 
 class URLValidator extends ValidatorWithStaticError<String> {
   URLValidator(String error) : super(error);
@@ -65,7 +65,7 @@ class MinimumStringLengthValidator extends Validator<String> {
 }
 
 class SameAsFieldValidator<T> extends ValidatorWithStaticError<T> {
-  SameAsFieldValidator(String error, this.field) : super(error);
+  SameAsFieldValidator(this.field, String error) : super(error);
 
   final Field field;
 
