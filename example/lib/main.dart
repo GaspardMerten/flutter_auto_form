@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AFTheme(
+      data: const AFThemeData(),
       child: MaterialApp(
         title: 'Auto Form Demo',
         debugShowCheckedModeBanner: false,

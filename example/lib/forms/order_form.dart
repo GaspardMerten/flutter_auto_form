@@ -35,6 +35,6 @@ class OrderForm extends TemplateForm {
       id: 'other_orders',
       name: 'Other orders (no meaning..)',
       formGenerator: () => OrderForm(),
-    )
+    ),
   ];
 }

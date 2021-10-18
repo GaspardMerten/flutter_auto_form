@@ -112,7 +112,7 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
 
       fieldWidgets.add(fieldWidget(
         _field,
-        nextFocusName: nextFocusId,
+        nextFieldId: nextFocusId,
         isFinal: isFinal,
       ));
 
@@ -129,7 +129,7 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
   /// Returns the matching widget for a given [Field]
   Widget fieldWidget(
     Field field, {
-    String? nextFocusName,
+    String? nextFieldId,
     bool isFinal = false,
   }) {
     final AutovalidateMode validateMode;
@@ -140,8 +140,17 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
       validateMode = AutovalidateMode.onUserInteraction;
     }
 
+    if (theme.customBuilders.containsKey(field.runtimeType)) {
+      return theme.customBuilders[field.runtimeType]!(
+        context,
+        field: field,
+        isFinal: isFinal,
+        nextFieldId: nextFieldId,
+      );
+    }
+
     if (field is AFTextField) {
-      return buildTextField(nextFocusName, field, isFinal);
+      return buildTextField(nextFieldId, field, isFinal);
     } else if (field is AFSearchModelField) {
       return buildSearchModelField(field, validateMode);
     } else if (field is AFSearchMultipleModelsField) {
@@ -158,7 +167,8 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
       return buildMultipleFormFieldWidget(field);
     }
 
-    return theme.buildCustomField(nextFocusName, field, isFinal);
+    throw Exception(
+        'No builder found for field ${field.name} of type ${field.runtimeType}');
   }
 
   AFMultipleFormFieldWidget buildMultipleFormFieldWidget(

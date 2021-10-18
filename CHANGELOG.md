@@ -1,3 +1,7 @@
+## [0.4.2] - 10-18-2021
+
+* Improving the custom field system
+
 ## [0.4.1] - 10-13-2021
 
 * Adding unit test for each validator

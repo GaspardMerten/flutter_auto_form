@@ -31,6 +31,7 @@ class AFThemeData {
     this.textFieldWidgetBuilder = kTextFieldWidgetBuilder,
     this.submitFormWrapper = kShowFutureLoadingDialog,
     this.enableSubmitFormWrapper = true,
+    this.customBuilders = const {},
   });
 
   final TextFieldWidgetBuilder textFieldWidgetBuilder;
@@ -43,9 +44,5 @@ class AFThemeData {
 
   final bool enableSubmitFormWrapper;
 
-  Widget buildCustomField(
-      String? nextFocusName, Field<Object> field, bool isFinal) {
-    throw UnimplementedError(
-        'Override the buildField method to render custom Field !');
-  }
+  final Map<Type, FieldWidgetBuilder> customBuilders;
 }

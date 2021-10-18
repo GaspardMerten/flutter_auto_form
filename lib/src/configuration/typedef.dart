@@ -26,9 +26,9 @@ typedef FutureWrapper<T> = FutureOr<T> Function({
 });
 
 /// The generic interface for field widget builder.
-typedef FieldWidgetBuilder<T> = Widget Function(
+typedef FieldWidgetBuilder = Widget Function(
   BuildContext context, {
-  Field? field,
+  dynamic field,
   String? nextFieldId,
   bool? isFinal,
 });

@@ -61,7 +61,7 @@ class AFWidgetState<T extends TemplateForm>
           Padding(
             padding: const EdgeInsets.only(top: 16),
             child: widget.submitButton!(
-                  () => submitForm(),
+              () => submitForm(),
             ),
           )
         ],
