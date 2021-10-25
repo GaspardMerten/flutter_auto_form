@@ -1,6 +1,7 @@
 ## [0.4.3] - 10-25-2021
 
 * Adding const constructors for default validators
+* Updating dependencies to their latest version
 
 ## [0.4.2] - 10-18-2021
 
