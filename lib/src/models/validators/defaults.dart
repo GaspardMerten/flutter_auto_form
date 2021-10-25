@@ -4,7 +4,7 @@ import 'package:flutter_auto_form/src/models/regex.dart';
 import 'package:flutter_auto_form/src/models/validators/validator.dart';
 
 class URLValidator extends ValidatorWithStaticError<String> {
-  URLValidator(String error) : super(error);
+  const URLValidator(String error) : super(error);
 
   @override
   bool innerValidate(String? value) {
@@ -15,7 +15,7 @@ class URLValidator extends ValidatorWithStaticError<String> {
 enum HexColorValidatorMode { both, withHashtag, withoutHashtag }
 
 class HexColorValidator extends ValidatorWithStaticError<String> {
-  HexColorValidator(
+  const HexColorValidator(
     String error, {
     this.mode = HexColorValidatorMode.withHashtag,
   }) : super(error);
@@ -43,14 +43,14 @@ class HexColorValidator extends ValidatorWithStaticError<String> {
 }
 
 class NotNullValidator<T> extends ValidatorWithStaticError<T> {
-  NotNullValidator(String error) : super(error);
+  const NotNullValidator(String error) : super(error);
 
   @override
   bool innerValidate(T? value) => value != null;
 }
 
 class MinimumStringLengthValidator extends Validator<String> {
-  MinimumStringLengthValidator(this.minStringLength, this.error);
+  const MinimumStringLengthValidator(this.minStringLength, this.error);
 
   final String Function(String? value) error;
 
@@ -65,7 +65,7 @@ class MinimumStringLengthValidator extends Validator<String> {
 }
 
 class SameAsFieldValidator<T> extends ValidatorWithStaticError<T> {
-  SameAsFieldValidator(this.field, String error) : super(error);
+  const SameAsFieldValidator(this.field, String error) : super(error);
 
   final Field field;
 
@@ -74,7 +74,7 @@ class SameAsFieldValidator<T> extends ValidatorWithStaticError<T> {
 }
 
 class AlphanumericValidator extends ValidatorWithStaticError<String> {
-  AlphanumericValidator(String error) : super(error);
+  const AlphanumericValidator(String error) : super(error);
 
   @override
   bool innerValidate(String? value) =>
@@ -82,7 +82,7 @@ class AlphanumericValidator extends ValidatorWithStaticError<String> {
 }
 
 class EmailValidator extends ValidatorWithStaticError<String> {
-  EmailValidator(String error) : super(error);
+  const EmailValidator(String error) : super(error);
 
   @override
   bool innerValidate(String? value) {
@@ -91,7 +91,7 @@ class EmailValidator extends ValidatorWithStaticError<String> {
 }
 
 class ShouldBeTrueValidator extends ValidatorWithStaticError<bool> {
-  ShouldBeTrueValidator(String error) : super(error);
+  const ShouldBeTrueValidator(String error) : super(error);
 
   @override
   bool innerValidate(bool? value) {
@@ -100,6 +100,8 @@ class ShouldBeTrueValidator extends ValidatorWithStaticError<bool> {
 }
 
 class FormValidator extends Validator<TemplateForm> {
+  const FormValidator();
+
   @override
   String? validate(TemplateForm value) {
     return value.isComplete() ? null : 'ERROR';
