@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+import 'package:flutter_auto_form/src/models/field/field_context.dart';
 import 'package:flutter_auto_form/src/models/validators/validator.dart';
 
 export 'defaults.dart';
@@ -43,4 +45,6 @@ abstract class Field<T extends Object> {
   }
 
   T? parser(covariant Object? unparsedValue);
+
+  Widget build(FieldContext fieldContext);
 }

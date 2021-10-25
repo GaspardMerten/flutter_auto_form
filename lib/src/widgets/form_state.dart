@@ -299,32 +299,6 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
     );
   }
 
-  List<String> getAutoFillHintsFromFieldType(AFTextField field) {
-    String? autoFillHint;
-
-    switch (field.type) {
-      case AFTextFieldType.PASSWORD:
-        autoFillHint = AutofillHints.password;
-        break;
-      case AFTextFieldType.EMAIL:
-        autoFillHint = AutofillHints.email;
-        break;
-      case AFTextFieldType.USERNAME:
-        autoFillHint = AutofillHints.username;
-        break;
-      case AFTextFieldType.NEW_PASSWORD:
-        autoFillHint = AutofillHints.newPassword;
-        break;
-      case AFTextFieldType.NEW_USERNAME:
-        autoFillHint = AutofillHints.newUsername;
-        break;
-      default:
-        break;
-    }
-
-    return [if (autoFillHint != null) autoFillHint];
-  }
-
   FutureOr<void> submit(G form);
 
   Future<void> submitForm() async {

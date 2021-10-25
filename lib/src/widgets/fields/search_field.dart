@@ -29,7 +29,6 @@ class SearchModelFieldWidget<T extends Object> extends StatelessWidget {
     return SizedBox(
       height: 50,
       child: DropdownSearch<T>(
-        label: label,
         onChanged: onSelected,
         selectedItem: selectedValue,
         validator: validator,
@@ -40,7 +39,8 @@ class SearchModelFieldWidget<T extends Object> extends StatelessWidget {
         isFilteredOnline: true,
         showClearButton: true,
         showSearchBox: true,
-        dropdownSearchDecoration: const InputDecoration().applyDefaults(
+        dropdownSearchDecoration:
+            InputDecoration(label: Text(label)).applyDefaults(
           Theme.of(context).inputDecorationTheme,
         ),
       ),
@@ -74,7 +74,6 @@ class SearchMultipleModelsField<T extends Object> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownSearch.multiSelection(
-      label: label,
       autoValidateMode: autoValidateMode,
       onFind: search,
       selectedItems: selectedValues,
@@ -87,7 +86,9 @@ class SearchMultipleModelsField<T extends Object> extends StatelessWidget {
       isFilteredOnline: true,
       showClearButton: true,
       showSearchBox: true,
-      dropdownSearchDecoration: const InputDecoration().applyDefaults(
+      dropdownSearchDecoration: InputDecoration(
+        label: Text(label),
+      ).applyDefaults(
         Theme.of(context).inputDecorationTheme,
       ),
     );

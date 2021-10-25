@@ -1,7 +1,11 @@
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_auto_form/src/models/field/field_context.dart';
 import 'package:flutter_auto_form/src/models/form.dart';
 import 'package:flutter_auto_form/src/models/validators/validator.dart';
+import 'package:smarter_text_field/smarter_text_field.dart';
 
 import 'field.dart';
 
@@ -29,6 +33,93 @@ class AFTextField<T extends Object> extends Field<T> {
       return unparsedValue;
     }
   }
+
+  @override
+  Widget build(FieldContext fieldContext) {
+    return AFTextFieldWidget(field: this, fieldContext: fieldContext);
+  }
+}
+
+class AFTextFieldWidget extends StatefulWidget {
+  const AFTextFieldWidget({
+    Key? key,
+    required this.field,
+    required this.fieldContext,
+  }) : super(key: key);
+
+  final AFTextField field;
+  final FieldContext fieldContext;
+
+  @override
+  State<AFTextFieldWidget> createState() => _AFTextFieldWidgetState();
+}
+
+class _AFTextFieldWidgetState extends State<AFTextFieldWidget> {
+  late final TextEditingController controller = TextEditingController(
+    text: widget.field.value?.toString(),
+  );
+
+  final FocusNode focusNode = FocusNode();
+
+  @override
+  Widget build(BuildContext context) {
+    final InputDecoration decoration = InputDecoration(
+      labelText: widget.field.name,
+    ).applyDefaults(Theme.of(context).inputDecorationTheme);
+
+    final bool obscureText = widget.field.type == AFTextFieldType.PASSWORD ||
+        widget.field.type == AFTextFieldType.NEW_PASSWORD;
+
+    final TextInputAction keyboardAction;
+
+    if (widget.fieldContext.isLast) {
+      keyboardAction = TextInputAction.done;
+    } else {
+      keyboardAction = TextInputAction.next;
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: SmartTextFormField(
+        decoration: decoration,
+        validator: widget.field.validate,
+        controller: controller,
+        autoFillHints: getAutoFillHintsFromFieldType(widget.field),
+        focusNode: focusNode,
+        obscureText: obscureText,
+        action: keyboardAction,
+        forceError: widget.fieldContext.forceErrorDisplay,
+        completeAction: widget.fieldContext.completeAction,
+        displayObscureTextToggle: obscureText,
+      ),
+    );
+  }
+}
+
+List<String> getAutoFillHintsFromFieldType(AFTextField field) {
+  String? autoFillHint;
+
+  switch (field.type) {
+    case AFTextFieldType.PASSWORD:
+      autoFillHint = AutofillHints.password;
+      break;
+    case AFTextFieldType.EMAIL:
+      autoFillHint = AutofillHints.email;
+      break;
+    case AFTextFieldType.USERNAME:
+      autoFillHint = AutofillHints.username;
+      break;
+    case AFTextFieldType.NEW_PASSWORD:
+      autoFillHint = AutofillHints.newPassword;
+      break;
+    case AFTextFieldType.NEW_USERNAME:
+      autoFillHint = AutofillHints.newUsername;
+      break;
+    default:
+      break;
+  }
+
+  return [if (autoFillHint != null) autoFillHint];
 }
 
 /// The default [Field] extended class used to represent a form's number field.
@@ -90,6 +181,11 @@ class AFSelectField<T extends Object> extends Field<T> {
 
     return unparsedValue;
   }
+
+  @override
+  Widget build(FieldContext<Object> fieldContext) {
+    return const SizedBox();
+  }
 }
 
 class SimpleFile {
@@ -113,6 +209,11 @@ class AFFileField extends Field<SimpleFile> {
 
   @override
   SimpleFile? parser(SimpleFile? unparsedValue) => unparsedValue;
+
+  @override
+  Widget build(FieldContext<Object> fieldContext) {
+    return const SizedBox();
+  }
 }
 
 class AFSearchModelField<T extends Object> extends Field<T> {
@@ -131,6 +232,11 @@ class AFSearchModelField<T extends Object> extends Field<T> {
 
   @override
   T? parser(T? unparsedValue) => unparsedValue;
+
+  @override
+  Widget build(FieldContext<Object> fieldContext) {
+    return const SizedBox();
+  }
 }
 
 class AFSearchMultipleModelsField<T extends Object> extends Field<List<T>> {
@@ -151,6 +257,11 @@ class AFSearchMultipleModelsField<T extends Object> extends Field<List<T>> {
   List<T>? parser(covariant List<Object>? unparsedValue) {
     return unparsedValue?.cast<T>();
   }
+
+  @override
+  Widget build(FieldContext<Object> fieldContext) {
+    return const SizedBox();
+  }
 }
 
 class AFBooleanField extends Field<bool> {
@@ -169,6 +280,11 @@ class AFBooleanField extends Field<bool> {
 
   @override
   bool? parser(bool unparsedValue) => unparsedValue;
+
+  @override
+  Widget build(FieldContext<Object> fieldContext) {
+    return const SizedBox();
+  }
 }
 
 class AFFormField<T extends TemplateForm> extends Field<Map<String, Object?>> {
@@ -195,6 +311,11 @@ class AFFormField<T extends TemplateForm> extends Field<Map<String, Object?>> {
   @override
   Map<String, Object?>? parser(Map<String, Object?>? unparsedValue) =>
       unparsedValue;
+
+  @override
+  Widget build(FieldContext<Object> fieldContext) {
+    return const SizedBox();
+  }
 }
 
 class AFMultipleFormField<T extends TemplateForm>
@@ -219,6 +340,11 @@ class AFMultipleFormField<T extends TemplateForm>
   @override
   List<Map<String, Object?>> parser(List<Map<String, Object?>>? unparsedValue) {
     return unparsedValue ?? [];
+  }
+
+  @override
+  Widget build(FieldContext<Object> fieldContext) {
+    return const SizedBox();
   }
 }
 

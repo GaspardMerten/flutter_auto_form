@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_auto_form/flutter_auto_form.dart';
 
 /// An interface for the text field builder. See [kTextFieldWidgetBuilder] for
 /// an example of a working implementation.
