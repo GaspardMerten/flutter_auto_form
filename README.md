@@ -17,7 +17,7 @@ dependencies:
 
   # Your other packages  ...
 
-  flutter_auto_form: ^0.4.1
+  flutter_auto_form: ^0.4.3
 ```
 
 ## Support
@@ -107,10 +107,7 @@ The AFTextField and AFNumberField are the only two fields available by defaults 
 
 ## Advanced usage
 
-If you need to create your own field (date field, color field, ...) you can always create it by overriding
-the Field class. Then override the buildField method of the AFThemeData class and wrap your top level widget with
-a AFTheme widget to which you give your customized AFThemeData as argument.
-
+_DOCUMENTATION COMING SOON_
 
 ##   
 

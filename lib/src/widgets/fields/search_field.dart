@@ -79,7 +79,7 @@ class SearchMultipleModelsField<T extends Object> extends StatelessWidget {
       onFind: search,
       selectedItems: selectedValues,
       mode: Mode.MENU,
-      onChange: onSelected,
+      onChanged: onSelected,
       dropdownBuilder: (context, List<T>? values) {
         return Text(values?.join(',') ?? '');
       },
