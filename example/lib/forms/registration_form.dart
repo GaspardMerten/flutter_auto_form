@@ -19,6 +19,7 @@ class RegistrationForm extends TemplateForm {
       id: 'email',
       name: 'E-mail address',
       validators: [
+        NotNullValidator('This field cannot be empty'),
         EmailValidator(
           'Invalid email',
         ),
