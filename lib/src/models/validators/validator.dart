@@ -1,10 +1,9 @@
-
 export 'defaults.dart';
 
 /// The [Validator] class is used by the [Field] class to validate its input.
 abstract class Validator<T extends Object?> {
   /// This method should return null if the field is valid, a string corresponding
-  /// to the error otherwhise.
+  /// to the error otherwise.
   String? validate(T value);
 }
 
@@ -25,5 +24,8 @@ abstract class ValidatorWithStaticError<T extends Object?>
     }
   }
 
+  /// Returns true or false depending on the validation process. This method
+  /// is then used by the [ValidatorWithStaticError.validate] method to return
+  /// a static error if the result is false.
   bool innerValidate(T? value);
 }

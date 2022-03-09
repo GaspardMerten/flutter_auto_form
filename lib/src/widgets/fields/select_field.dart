@@ -24,6 +24,10 @@ class _SelectFieldWidgetState<T extends Object>
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<T>(
+      validator: field.validate,
+      autovalidateMode: widget.fieldContext.forceErrorDisplay
+          ? AutovalidateMode.always
+          : AutovalidateMode.onUserInteraction,
       value: field.value,
       onChanged: (e) {
         setState(() {

@@ -145,15 +145,6 @@ void main() {
     );
   });
 
-  test('Form validator validates properly', () {
-    final _AlwaysCompleteForm _alwaysCompleteForm = _AlwaysCompleteForm();
-
-    expect(FormValidator().validate(_alwaysCompleteForm), equals(null));
-
-    final _NeverCompleteForm _neverCompleteForm = _NeverCompleteForm();
-    expect(FormValidator().validate(_neverCompleteForm), equals('ERROR'));
-  });
-
   test('URL Validator validates properly', () {
     const String properURL = 'https://www.merten.be';
 

@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_auto_form/flutter_auto_form.dart';
+import 'package:flutter_auto_form/src/models/error.dart';
 import 'package:flutter_auto_form/src/models/field/field_context.dart';
-
-import 'fields/fields.dart';
 
 /// The [AFFormState] allows to override and customize even more the behavior
 /// of the form widget's logic.
@@ -44,20 +43,6 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
   /// called inside the [initState].
   AFThemeData get theme => AFTheme.of(context);
 
-  /// A map linking each form field [AFFormField] to its counterpart [AFFormState] instance.
-  /// allowing this very widget to validate (display errors) and retrieve data from
-  /// the sub-form.
-  final Map<String, GlobalKey<AFWidgetState>> formsState = {};
-
-  /// A map linking each form field [AFMultipleFormField] to its counterpart
-  /// [AFMultipleFormFieldWidgetState] instance.
-  ///
-  /// The [AFMultipleFormFieldWidgetState] exposes a save method which when
-  /// called, validate the data and saves it (if valid) inside the value attribute
-  /// of the [AFMultipleFormField] object.
-  final Map<String, GlobalKey<AFMultipleFormFieldWidgetState>>
-      multipleFormsState = {};
-
   final Map<String, FieldContext> _fieldContexts = {};
 
   @override
@@ -74,15 +59,14 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
       final fieldContext = FieldContext(
         field: field,
         forceErrorDisplay: forceDisplayFieldsError,
-        completeAction: () {},
-        isLast: isLast,
-        previousFieldContext: previousFieldContext,
+        completeAction: isLast && enableFinalAction ? submitForm : null,
+        previous: previousFieldContext,
       );
 
-      previousFieldContext?.nextFieldContext = fieldContext;
+      previousFieldContext?.next = fieldContext;
 
       if (isLast) {
-        fieldContext.nextFieldContext = null;
+        fieldContext.next = null;
       }
 
       _fieldContexts[field.id] = fieldContext;
@@ -97,7 +81,12 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
   Widget form() {
     final List<Widget> fieldWidgets = [
       for (Field field in model.fields)
-        field.widgetConstructor(fieldContext: _fieldContexts[field.id]!)
+        field.widgetConstructor(
+          fieldContext: _fieldContexts[field.id]!
+            ..updateWith(
+              forceErrorDisplay: forceDisplayFieldsError,
+            ),
+        )
     ];
 
     return AutofillGroup(
@@ -114,23 +103,11 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
       forceDisplayFieldsError = true;
     });
 
-    bool shouldStop = false;
+    if (model.isComplete()) {
+      final bool _enabledSubmitFormWrapper = enableSubmitFormWrapper ??
+          AFTheme.of(context).enableSubmitFormWrapper;
 
-    formsState.forEach((key, value) {
-      value.currentState?.submitForm();
-
-      shouldStop |= !value.currentState!.model.isComplete();
-    });
-
-    multipleFormsState.forEach((key, value) {
-      shouldStop |= !value.currentState!.save();
-    });
-
-    if (!shouldStop) {
-      if (model.isComplete()) {
-        final bool _enabledSubmitFormWrapper = enableSubmitFormWrapper ??
-            AFTheme.of(context).enableSubmitFormWrapper;
-
+      try {
         if (_enabledSubmitFormWrapper && enableFinalAction) {
           await theme.submitFormWrapper(
             context: context,
@@ -139,16 +116,11 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
         } else {
           await submit(model);
         }
-      } else {
-        handleErrorOnSubmit?.call(model.getFirstError()!);
+      } on SubmitException catch (exception) {
+        handleErrorOnSubmit?.call(exception.errorMessage);
       }
+    } else {
+      handleErrorOnSubmit?.call(model.getFirstError()!);
     }
-  }
-
-  String? getErrorText(Field field) {
-    if (forceDisplayFieldsError) {
-      return field.validate(field.value);
-    }
-    return null;
   }
 }

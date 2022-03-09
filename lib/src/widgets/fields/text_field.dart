@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_auto_form/src/models/field/field.dart';
 import 'package:flutter_auto_form/src/models/field/field_context.dart';
+import 'package:flutter_auto_form/src/models/field/utils.dart';
 import 'package:flutter_auto_form/src/widgets/fields/interface.dart';
 import 'package:smarter_text_field/smarter_text_field.dart';
-
-import '../../models/field/field.dart';
 
 abstract class AFTextFieldWidgetStateFocusHelper<T extends FieldStatefulWidget>
     extends State<T> {
@@ -86,13 +86,11 @@ class _AFTextFieldWidgetState
         autoFillHints: getAutoFillHintsFromFieldType(field),
         focusNode: focusNode,
         obscureText: obscureText,
+        keyboardType: getTextInputType(field),
         action: keyboardAction,
         forceError: widget.fieldContext.forceErrorDisplay,
-        completeAction: () {
-          print('Next');
-          print(widget.fieldContext.nextFieldContext);
-          widget.fieldContext.nextFieldContext?.sendRequestFocusEvent();
-        },
+        completeAction: widget.fieldContext.next?.sendRequestFocusEvent ??
+            widget.fieldContext.completeAction,
         displayObscureTextToggle: obscureText,
       ),
     );

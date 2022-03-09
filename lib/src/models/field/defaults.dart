@@ -1,13 +1,6 @@
-import 'dart:typed_data';
-
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_auto_form/src/configuration/typedef.dart';
-import 'package:flutter_auto_form/src/models/field/field_context.dart';
-import 'package:flutter_auto_form/src/models/form.dart';
 import 'package:flutter_auto_form/src/models/validators/validator.dart';
 import 'package:flutter_auto_form/src/widgets/fields/fields.dart';
-import 'package:flutter_auto_form/src/widgets/fields/text_field.dart';
 
 import 'field.dart';
 
@@ -18,8 +11,8 @@ class AFTextField<T extends Object> extends Field<T> {
     required String name,
     required List<Validator<T>> validators,
     required this.type,
-    T? value,
     this.maxLines = 1,
+    T? value,
   }) : super(id, name, validators) {
     super.value = value;
   }
@@ -42,32 +35,6 @@ class AFTextField<T extends Object> extends Field<T> {
 
   @override
   final FieldWidgetConstructor widgetConstructor = AFTextFieldWidget.new;
-}
-
-List<String> getAutoFillHintsFromFieldType(AFTextField field) {
-  String? autoFillHint;
-
-  switch (field.type) {
-    case AFTextFieldType.PASSWORD:
-      autoFillHint = AutofillHints.password;
-      break;
-    case AFTextFieldType.EMAIL:
-      autoFillHint = AutofillHints.email;
-      break;
-    case AFTextFieldType.USERNAME:
-      autoFillHint = AutofillHints.username;
-      break;
-    case AFTextFieldType.NEW_PASSWORD:
-      autoFillHint = AutofillHints.newPassword;
-      break;
-    case AFTextFieldType.NEW_USERNAME:
-      autoFillHint = AutofillHints.newUsername;
-      break;
-    default:
-      break;
-  }
-
-  return [if (autoFillHint != null) autoFillHint];
 }
 
 /// The default [Field] extended class used to represent a form's number field.
@@ -134,58 +101,6 @@ class AFSelectField<T extends Object> extends Field<T> {
   final FieldWidgetConstructor widgetConstructor = SelectFieldWidget.new;
 }
 
-class SimpleFile {
-  SimpleFile(this.name, this.bytes);
-
-  final String name;
-  final Uint8List? bytes;
-}
-
-class AFSearchModelField<T extends Object> extends Field<T> {
-  AFSearchModelField({
-    required String id,
-    required String name,
-    required List<Validator<Object?>> validators,
-    required this.search,
-  }) : super(
-          id,
-          name,
-          validators,
-        );
-
-  final Future<List<T>> Function(String? query) search;
-
-  @override
-  T? parser(T? unparsedValue) => unparsedValue;
-
-  @override
-  final FieldWidgetConstructor widgetConstructor = SearchModelFieldWidget.new;
-}
-
-class AFSearchMultipleModelsField<T extends Object> extends Field<List<T>> {
-  AFSearchMultipleModelsField({
-    required String id,
-    required String name,
-    required List<Validator<List<Object?>>> validators,
-    required this.search,
-  }) : super(
-          id,
-          name,
-          validators,
-        );
-
-  final Future<List<T>> Function(String? query) search;
-
-  @override
-  List<T>? parser(covariant List<Object>? unparsedValue) {
-    return unparsedValue?.cast<T>();
-  }
-
-  @override
-  final FieldWidgetConstructor widgetConstructor =
-      SearchMultipleModelsField.new;
-}
-
 class AFBooleanField extends Field<bool> {
   AFBooleanField({
     required String id,
@@ -205,64 +120,6 @@ class AFBooleanField extends Field<bool> {
 
   @override
   final FieldWidgetConstructor widgetConstructor = BooleanFieldWidget.new;
-}
-
-class AFFormField<T extends TemplateForm> extends Field<Map<String, Object?>> {
-  AFFormField({
-    required String id,
-    required String name,
-    required this.formGenerator,
-    this.required = true,
-  }) : super(
-          id,
-          name,
-          [],
-        );
-
-  final bool required;
-
-  final T Function() formGenerator;
-
-  T? form;
-
-  @override
-  Map<String, Object?>? get value => form?.toMap();
-
-  @override
-  Map<String, Object?>? parser(Map<String, Object?>? unparsedValue) =>
-      unparsedValue;
-
-  @override
-  final FieldWidgetConstructor widgetConstructor = AFTextFieldWidget.new;
-}
-
-class AFMultipleFormField<T extends TemplateForm>
-    extends Field<List<Map<String, Object?>>> {
-  AFMultipleFormField({
-    required String id,
-    required String name,
-    required this.formGenerator,
-  }) : super(
-          id,
-          name,
-          [],
-        );
-
-  final T Function() formGenerator;
-
-  final List<T> forms = [];
-
-  @override
-  List<Map<String, Object?>> get value => forms.map((e) => e.toMap()).toList();
-
-  @override
-  List<Map<String, Object?>> parser(List<Map<String, Object?>>? unparsedValue) {
-    return unparsedValue ?? [];
-  }
-
-  @override
-  final FieldWidgetConstructor widgetConstructor =
-      AFMultipleFormFieldWidget.new;
 }
 
 /// The different types of field for the [AFTextField].

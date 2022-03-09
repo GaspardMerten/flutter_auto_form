@@ -28,13 +28,9 @@ class AFTheme extends InheritedWidget {
 
 class AFThemeData {
   const AFThemeData({
-    this.textFieldWidgetBuilder = kTextFieldWidgetBuilder,
     this.submitFormWrapper = kShowFutureLoadingDialog,
     this.enableSubmitFormWrapper = true,
-    this.customBuilders = const {},
   });
-
-  final TextFieldWidgetBuilder textFieldWidgetBuilder;
 
   /// A function that will be called by the [AFFormState] state whenever
   /// the form submitted by the user. It has the responsibility to await
@@ -43,6 +39,4 @@ class AFThemeData {
   final FutureWrapper submitFormWrapper;
 
   final bool enableSubmitFormWrapper;
-
-  final Map<Type, FieldWidgetBuilder> customBuilders;
 }
