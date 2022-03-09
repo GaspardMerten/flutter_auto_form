@@ -81,7 +81,7 @@ class _AFTextFieldWidgetState
       child: SmartTextFormField(
         decoration: decoration,
         maxLines: field.maxLines,
-        validator: field.validate,
+        validator: field.validator,
         controller: controller,
         autoFillHints: getAutoFillHintsFromFieldType(field),
         focusNode: focusNode,

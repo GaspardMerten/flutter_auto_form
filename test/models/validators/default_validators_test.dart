@@ -1,19 +1,6 @@
 import 'package:flutter_auto_form/flutter_auto_form.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-class _AlwaysCompleteForm extends TemplateForm {
-  @override
-  bool isComplete() => true;
-
-  @override
-  List<Field<Object>> get fields => [];
-}
-
-class _NeverCompleteForm extends _AlwaysCompleteForm {
-  @override
-  bool isComplete() => false;
-}
-
 void main() {
   test('Not null validator validates properly', () {
     const String? propreValue = 'value';

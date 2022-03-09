@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_auto_form/src/models/field/field_context.dart';
 
-/// The interface for the [Field.widgetConstructor] method which builds
+/// The interface for the [Field.widgetBuilder] method which builds
 /// a widget from information available in the [FieldContext] instance it receives.
 ///
 /// Any widget that is supposed to represent a [Field] should interface with
@@ -18,12 +18,4 @@ typedef FieldWidgetConstructor = Widget Function({
 typedef FutureWrapper<T> = FutureOr<T> Function({
   required BuildContext context,
   required FutureOr<T> future,
-});
-
-/// The generic interface for field widget builder.
-typedef FieldWidgetBuilder = Widget Function(
-  BuildContext context, {
-  dynamic field,
-  String? nextFieldId,
-  bool? isFinal,
 });

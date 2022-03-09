@@ -11,7 +11,7 @@ abstract class TemplateForm {
 
   bool isComplete() {
     for (final Field field in fields) {
-      if (field.validate(field.value) != null) {
+      if (field.validator(field.value) != null) {
         return false;
       }
     }
@@ -21,7 +21,7 @@ abstract class TemplateForm {
 
   String? getFirstError() {
     for (final Field field in fields) {
-      final String? error = field.validate(field.value);
+      final String? error = field.validator(field.value);
       if (error != null) {
         return error;
       }

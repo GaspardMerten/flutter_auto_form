@@ -6,3 +6,11 @@ abstract class FieldStatefulWidget extends StatefulWidget {
 
   FieldContext get fieldContext;
 }
+
+abstract class FieldState<T extends FieldStatefulWidget> extends State<T> {
+  void onChanged(dynamic value) {
+    setState(() {
+      widget.fieldContext.onChanged(value);
+    });
+  }
+}

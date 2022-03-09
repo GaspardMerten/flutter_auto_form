@@ -81,7 +81,7 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
   Widget form() {
     final List<Widget> fieldWidgets = [
       for (Field field in model.fields)
-        field.widgetConstructor(
+        field.widgetBuilder(
           fieldContext: _fieldContexts[field.id]!
             ..updateWith(
               forceErrorDisplay: forceDisplayFieldsError,

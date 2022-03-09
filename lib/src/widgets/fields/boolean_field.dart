@@ -25,7 +25,7 @@ class _BooleanFieldWidgetState extends State<BooleanFieldWidget> {
     return InputDecorator(
       decoration: InputDecoration(
         errorText: widget.fieldContext.forceErrorDisplay
-            ? field.validate(field.value)
+            ? field.validator(field.value)
             : null,
         contentPadding: EdgeInsets.zero,
         border: InputBorder.none,

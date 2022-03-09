@@ -1,8 +1,22 @@
 import 'package:flutter_auto_form/src/configuration/typedef.dart';
 import 'package:flutter_auto_form/src/models/validators/validator.dart';
 import 'package:flutter_auto_form/src/widgets/fields/fields.dart';
+import 'package:flutter_auto_form/src/widgets/fields/search_field.dart';
 
 import 'field.dart';
+
+/// The different types of field for the [AFTextField].
+enum AFTextFieldType {
+  TEXT,
+  NUMBER,
+  PASSWORD,
+  EMAIL,
+  USERNAME,
+  NEW_PASSWORD,
+  NEW_USERNAME,
+  COLOR,
+  URL
+}
 
 /// The default [Field] extended class used to represent a form's text field.
 class AFTextField<T extends Object> extends Field<T> {
@@ -34,7 +48,7 @@ class AFTextField<T extends Object> extends Field<T> {
   }
 
   @override
-  final FieldWidgetConstructor widgetConstructor = AFTextFieldWidget.new;
+  final FieldWidgetConstructor widgetBuilder = AFTextFieldWidget.new;
 }
 
 /// The default [Field] extended class used to represent a form's number field.
@@ -98,7 +112,7 @@ class AFSelectField<T extends Object> extends Field<T> {
   }
 
   @override
-  final FieldWidgetConstructor widgetConstructor = SelectFieldWidget.new;
+  final FieldWidgetConstructor widgetBuilder = SelectFieldWidget.new;
 }
 
 class AFBooleanField extends Field<bool> {
@@ -119,18 +133,49 @@ class AFBooleanField extends Field<bool> {
   bool? parser(bool unparsedValue) => unparsedValue;
 
   @override
-  final FieldWidgetConstructor widgetConstructor = BooleanFieldWidget.new;
+  final FieldWidgetConstructor widgetBuilder = BooleanFieldWidget.new;
 }
 
-/// The different types of field for the [AFTextField].
-enum AFTextFieldType {
-  TEXT,
-  NUMBER,
-  PASSWORD,
-  EMAIL,
-  USERNAME,
-  NEW_PASSWORD,
-  NEW_USERNAME,
-  COLOR,
-  URL
+class AFSearchModelField<T extends Object> extends Field<T> {
+  AFSearchModelField({
+    required String id,
+    required String name,
+    required List<Validator<Object?>> validators,
+    required this.search,
+  }) : super(
+          id,
+          name,
+          validators,
+        );
+
+  final Future<List<T>> Function(String? query) search;
+
+  @override
+  T? parser(T? unparsedValue) => unparsedValue;
+
+  @override
+  final FieldWidgetConstructor widgetBuilder = SearchModelFieldWidget.new;
+}
+
+class AFSearchMultipleModelsField<T extends Object> extends Field<List<T>> {
+  AFSearchMultipleModelsField({
+    required String id,
+    required String name,
+    required List<Validator<List<Object?>>> validators,
+    required this.search,
+  }) : super(
+          id,
+          name,
+          validators,
+        );
+
+  final Future<List<T>> Function(String? query) search;
+
+  @override
+  List<T>? parser(covariant List<Object>? unparsedValue) {
+    return unparsedValue?.cast<T>();
+  }
+
+  @override
+  final FieldWidgetConstructor widgetBuilder = SearchMultipleModelsField.new;
 }

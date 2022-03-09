@@ -33,7 +33,7 @@ abstract class Field<T extends Object> {
 
   /// This method returns null if the field is valid. Otherwhise it will
   /// return the error's string specified in the validator (see [Validator]).
-  String? validate([Object? _]) {
+  String? validator([Object? _]) {
     for (final Validator validator in validators) {
       final String? error = validator.validate(value);
 
@@ -46,5 +46,5 @@ abstract class Field<T extends Object> {
   /// Parses a value into an instance of T.
   T? parser(covariant Object? unparsedValue);
 
-  FieldWidgetConstructor get widgetConstructor;
+  FieldWidgetConstructor get widgetBuilder;
 }

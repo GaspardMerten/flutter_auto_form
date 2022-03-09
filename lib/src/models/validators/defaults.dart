@@ -59,6 +59,22 @@ class NotNullValidator<T> extends ValidatorWithStaticError<T> {
   bool innerValidate(T? value) => value != null;
 }
 
+/// Checks whether a given string isn't empty.
+class NotEmptyStringValidator extends ValidatorWithStaticError<String> {
+  NotEmptyStringValidator(String error) : super(error);
+
+  @override
+  bool innerValidate(String? value) => value != null && value.isNotEmpty;
+}
+
+/// Checks whether a given value isn't empty.
+class NotEmptyListValidator extends ValidatorWithStaticError<List> {
+  NotEmptyListValidator(String error) : super(error);
+
+  @override
+  bool innerValidate(List? value) => value != null && value.isNotEmpty;
+}
+
 /// Checks whether a given string possess a minimum length.
 class MinimumStringLengthValidator extends Validator<String> {
   MinimumStringLengthValidator(this.minStringLength, this.error);

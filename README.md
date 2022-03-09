@@ -107,10 +107,9 @@ The AFTextField and AFNumberField are the only two fields available by defaults 
 
 ## Advanced usage
 
-If you need to create your own field (date field, color field, ...) you can always create it by overriding
-the Field class. Then override the buildField method of the AFThemeData class and wrap your top level widget with
-a AFTheme widget to which you give your customized AFThemeData as argument.
-
+If you need to create your own field (date field, color field, ...) you can always create it by overriding the Field
+class. Then to display a custom widget, create a stateful widget that extends the FieldStatefulWidget and of which the
+state extends the FieldState class.
 
 ##   
 

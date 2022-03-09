@@ -1,5 +1,12 @@
-## [1.0.0] - 03-09-2022
+## [1.0.0-dev.1] - 03-09-2022
 
+* <b>Breaking changes</b>:
+  * Dart 2.15
+  * The AFTheme widget does not allow you to change the text field builder anymore. To do such a thing you should now
+    extend the AFTextField and replace the widgetBuilder property by the one of your choice.
+  * The AFFileField was removed due to too strong dependencies need (dart:io...).
+  * Validators now accept null value by default. To prevent a field from being null, you should use the NotNullValidator
+    or the NotEmptyValidator in the case of a string.
 * Adding new build system
 * Adding the possibility to make a AFTextField widget multiline
 
