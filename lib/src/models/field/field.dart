@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_auto_form/src/configuration/typedef.dart';
 import 'package:flutter_auto_form/src/models/field/field_context.dart';
 import 'package:flutter_auto_form/src/models/validators/validator.dart';
 
@@ -34,7 +35,7 @@ abstract class Field<T extends Object> {
 
   /// This method returns null if the field is valid. Otherwhise it will
   /// return the error's string specified in the validator (see [Validator]).
-  String? validate(T? value) {
+  String? validate([Object? _]) {
     for (final Validator validator in validators) {
       final String? error = validator.validate(value);
 
@@ -46,5 +47,5 @@ abstract class Field<T extends Object> {
 
   T? parser(covariant Object? unparsedValue);
 
-  Widget build(FieldContext fieldContext);
+  FieldWidgetConstructor get widgetConstructor;
 }

@@ -1,3 +1,8 @@
+## [1.0.0] - 03-09-2022
+
+* Adding new build system
+* Adding the possibility to make a AFTextField widget multiline
+
 ## [0.4.2] - 10-18-2021
 
 * Improving the custom field system

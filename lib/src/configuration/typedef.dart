@@ -1,6 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_auto_form/src/models/field/field_context.dart';
+
+typedef FieldWidgetConstructor = Widget Function({
+  Key? key,
+  required FieldContext fieldContext,
+});
 
 /// An interface for the text field builder. See [kTextFieldWidgetBuilder] for
 /// an example of a working implementation.

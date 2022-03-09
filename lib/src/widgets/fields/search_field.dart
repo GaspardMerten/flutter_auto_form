@@ -1,84 +1,83 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auto_form/flutter_auto_form.dart';
+import 'package:flutter_auto_form/src/models/field/field_context.dart';
+import 'package:flutter_auto_form/src/widgets/fields/interface.dart';
 
-class SearchModelFieldWidget<T extends Object> extends StatelessWidget {
+class SearchModelFieldWidget<T extends Object> extends FieldStatefulWidget {
   const SearchModelFieldWidget({
     Key? key,
-    required this.label,
-    required this.search,
-    required this.onSelected,
-    this.validator,
-    required this.selectedValue,
-    this.autoValidateMode = AutovalidateMode.onUserInteraction,
+    required this.fieldContext,
   }) : super(key: key);
 
-  final String label;
+  @override
+  final FieldContext fieldContext;
 
-  final Future<List<T>> Function(String? query) search;
+  @override
+  State<SearchModelFieldWidget> createState() =>
+      _SearchModelFieldWidgetState<T>();
+}
 
-  final Function(T? value) onSelected;
-
-  final FormFieldValidator? validator;
-
-  final T? selectedValue;
-
-  final AutovalidateMode autoValidateMode;
+class _SearchModelFieldWidgetState<T extends Object>
+    extends State<SearchModelFieldWidget<T>> {
+  late final AFSearchModelField<T> field =
+      widget.fieldContext.field as AFSearchModelField<T>;
 
   @override
   Widget build(BuildContext context) {
+    final defaultDecoration = Theme.of(context).inputDecorationTheme;
+
     return SizedBox(
-      height: 50,
+      height: 80,
       child: DropdownSearch<T>(
-        onChanged: onSelected,
-        selectedItem: selectedValue,
-        validator: validator,
-        autoValidateMode: autoValidateMode,
-        onFind: search,
+        onChanged: (newValue) => setState(() {
+          widget.fieldContext.onChanged(newValue);
+        }),
+        selectedItem: field.value,
+        validator: field.validate,
+        onFind: field.search,
         mode: Mode.MENU,
         clearButton: const SizedBox(),
         isFilteredOnline: true,
         showClearButton: true,
         showSearchBox: true,
         dropdownSearchDecoration:
-            InputDecoration(label: Text(label)).applyDefaults(
-          Theme.of(context).inputDecorationTheme,
+            InputDecoration(label: Text(field.name)).applyDefaults(
+          defaultDecoration,
         ),
       ),
     );
   }
 }
 
-class SearchMultipleModelsField<T extends Object> extends StatelessWidget {
+class SearchMultipleModelsField<T extends Object> extends FieldStatefulWidget {
   const SearchMultipleModelsField({
     Key? key,
-    required this.label,
-    required this.search,
-    required this.onSelected,
-    this.validator,
-    required this.selectedValues,
-    this.autoValidateMode = AutovalidateMode.onUserInteraction,
+    required this.fieldContext,
   }) : super(key: key);
 
-  final String label;
+  @override
+  final FieldContext fieldContext;
 
-  final Future<List<T>> Function(String? query) search;
+  @override
+  State<SearchMultipleModelsField> createState() =>
+      _SearchMultipleModelsFieldState<T>();
+}
 
-  final Function(List<T>? value) onSelected;
-
-  final FormFieldValidator<List<T>>? validator;
-
-  final List<T> selectedValues;
-
-  final AutovalidateMode autoValidateMode;
+class _SearchMultipleModelsFieldState<T extends Object>
+    extends State<SearchMultipleModelsField<T>> {
+  late final AFSearchMultipleModelsField<T> field =
+      widget.fieldContext.field as AFSearchMultipleModelsField<T>;
 
   @override
   Widget build(BuildContext context) {
     return DropdownSearch.multiSelection(
-      autoValidateMode: autoValidateMode,
-      onFind: search,
-      selectedItems: selectedValues,
+      onFind: field.search,
+      selectedItems: field.value ?? <T>[],
       mode: Mode.MENU,
-      onChange: onSelected,
+      onChanged: (newValue) => setState(() {
+        field.value = newValue;
+      }),
       dropdownBuilder: (context, List<T>? values) {
         return Text(values?.join(',') ?? '');
       },
@@ -87,7 +86,7 @@ class SearchMultipleModelsField<T extends Object> extends StatelessWidget {
       showClearButton: true,
       showSearchBox: true,
       dropdownSearchDecoration: InputDecoration(
-        label: Text(label),
+        label: Text(field.name),
       ).applyDefaults(
         Theme.of(context).inputDecorationTheme,
       ),

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auto_form/src/models/field/field.dart';
+import 'package:flutter_auto_form/src/models/field/field_context.dart';
 import 'package:flutter_auto_form/src/models/form.dart';
+import 'package:flutter_auto_form/src/widgets/fields/interface.dart';
 import 'package:flutter_auto_form/src/widgets/form.dart';
 
-class AFMultipleFormFieldWidget extends StatefulWidget {
+class AFMultipleFormFieldWidget extends FieldStatefulWidget {
   const AFMultipleFormFieldWidget({
     Key? key,
-    required this.field,
+    required this.fieldContext,
   }) : super(key: key);
 
-  final AFMultipleFormField field;
+  @override
+  final FieldContext fieldContext;
 
   @override
   State<AFMultipleFormFieldWidget> createState() {
@@ -18,7 +21,10 @@ class AFMultipleFormFieldWidget extends StatefulWidget {
 }
 
 class AFMultipleFormFieldWidgetState extends State<AFMultipleFormFieldWidget> {
-  List<TemplateForm> get forms => widget.field.forms;
+  late final AFMultipleFormField field =
+      widget.fieldContext.field as AFMultipleFormField;
+
+  List<TemplateForm> get forms => field.forms;
 
   final List<GlobalKey<AFWidgetState>> formsWidgetState = [];
 
@@ -112,7 +118,7 @@ class AFMultipleFormFieldWidgetState extends State<AFMultipleFormFieldWidget> {
       child: InkWell(
         onTap: () {
           setState(() {
-            forms.add(widget.field.formGenerator());
+            forms.add(field.formGenerator());
             formsWidgetState.add(GlobalKey<AFWidgetState>());
           });
         },

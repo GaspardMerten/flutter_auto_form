@@ -70,7 +70,9 @@ class SameAsFieldValidator<T> extends ValidatorWithStaticError<T> {
   final Field field;
 
   @override
-  bool innerValidate(T? value) => value == field.value;
+  bool innerValidate(T? value) {
+    return value == field.value;
+  }
 }
 
 class AlphanumericValidator extends ValidatorWithStaticError<String> {

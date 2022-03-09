@@ -22,7 +22,6 @@ class OrderForm extends TemplateForm {
       validators: [],
       value: false,
     ),
-    AFFileField(id: 'file', name: 'File', validators: []),
     AFSelectField(
       id: 'select',
       name: 'Select',
