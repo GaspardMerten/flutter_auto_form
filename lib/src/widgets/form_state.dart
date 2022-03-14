@@ -99,9 +99,7 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
   FutureOr<void> submit(G form);
 
   Future<void> submitForm() async {
-    setState(() {
-      forceDisplayFieldsError = true;
-    });
+    enableForceDisplayError();
 
     if (model.isComplete()) {
       final bool _enabledSubmitFormWrapper = enableSubmitFormWrapper ??
@@ -122,5 +120,11 @@ abstract class AFFormState<T extends StatefulWidget, G extends TemplateForm>
     } else {
       handleErrorOnSubmit?.call(model.getFirstError()!);
     }
+  }
+
+  void enableForceDisplayError() {
+    setState(() {
+      forceDisplayFieldsError = true;
+    });
   }
 }

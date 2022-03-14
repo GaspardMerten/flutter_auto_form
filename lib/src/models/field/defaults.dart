@@ -1,6 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_auto_form/flutter_auto_form.dart';
 import 'package:flutter_auto_form/src/configuration/typedef.dart';
+import 'package:flutter_auto_form/src/models/field/field_context.dart';
 import 'package:flutter_auto_form/src/models/validators/validator.dart';
 import 'package:flutter_auto_form/src/widgets/fields/fields.dart';
+import 'package:flutter_auto_form/src/widgets/fields/form_field.dart';
 import 'package:flutter_auto_form/src/widgets/fields/search_field.dart';
 
 import 'field.dart';
@@ -59,12 +63,12 @@ class AFNumberField<T extends num> extends AFTextField<T> {
     required List<Validator<T>> validators,
     T? value,
   }) : super(
-          id: id,
-          name: name,
-          validators: validators,
-          type: AFTextFieldType.NUMBER,
-          value: value,
-        );
+    id: id,
+    name: name,
+    validators: validators,
+    type: AFTextFieldType.NUMBER,
+    value: value,
+  );
 
   @override
   T? parser(Object? unparsedValue) {
@@ -93,10 +97,10 @@ class AFSelectField<T extends Object> extends Field<T> {
     required this.textBuilder,
     required T value,
   }) : super(
-          id,
-          name,
-          validators,
-        ) {
+    id,
+    name,
+    validators,
+  ) {
     super.value = value;
   }
 
@@ -122,10 +126,10 @@ class AFBooleanField extends Field<bool> {
     required List<Validator<bool?>> validators,
     bool value = false,
   }) : super(
-          id,
-          name,
-          validators,
-        ) {
+    id,
+    name,
+    validators,
+  ) {
     super.value = value;
   }
 
@@ -143,10 +147,10 @@ class AFSearchModelField<T extends Object> extends Field<T> {
     required List<Validator<Object?>> validators,
     required this.search,
   }) : super(
-          id,
-          name,
-          validators,
-        );
+    id,
+    name,
+    validators,
+  );
 
   final Future<List<T>> Function(String? query) search;
 
@@ -164,10 +168,10 @@ class AFSearchMultipleModelsField<T extends Object> extends Field<List<T>> {
     required List<Validator<List<Object?>>> validators,
     required this.search,
   }) : super(
-          id,
-          name,
-          validators,
-        );
+    id,
+    name,
+    validators,
+  );
 
   final Future<List<T>> Function(String? query) search;
 
@@ -178,4 +182,109 @@ class AFSearchMultipleModelsField<T extends Object> extends Field<List<T>> {
 
   @override
   final FieldWidgetConstructor widgetBuilder = SearchMultipleModelsField.new;
+}
+
+class AFFormFieldController extends ChangeNotifier {
+  void validate() {
+    notifyListeners();
+  }
+}
+
+class AFFormField<T extends TemplateForm> extends Field<Map> {
+  AFFormField(
+    String id,
+    String name,
+    List<Validator<Object?>> validators,
+    this.form,
+  ) : super(id, name, validators);
+
+  final T form;
+
+  final AFFormFieldController controller = AFFormFieldController();
+
+  @override
+  Map? get value => form.toMap();
+
+  @override
+  String? validator([Object? _]) {
+    controller.validate();
+    return form.getFirstError();
+  }
+
+  @override
+  Map? parser(covariant Object? unparsedValue) => form.toMap();
+
+  @override
+  FieldWidgetConstructor get widgetBuilder {
+    return ({
+      Key? key,
+      required FieldContext fieldContext,
+    }) {
+      print('XXX $name ${fieldContext.field.name}');
+      return FormFieldWidget(
+        fieldContext: fieldContext,
+        key: key,
+        controller: controller,
+      );
+    };
+  }
+}
+
+class AFMultipleFormField<T extends TemplateForm> extends Field<List<Map>> {
+  AFMultipleFormField(
+    String id,
+    String name,
+    List<Validator<Object?>> validators,
+    this.formBuilder, {
+    this.maxFormCount,
+    this.initialFormCount = 1,
+  }) : super(id, name, validators);
+
+  final int? maxFormCount;
+  final int initialFormCount;
+
+  final T Function() formBuilder;
+
+  late final List<T> forms = [];
+
+  final AFFormFieldController controller = AFFormFieldController();
+
+  @override
+  List<Map> get value => forms.map((e) => e.toMap()).toList();
+
+  @override
+  String? validator([Object? _]) {
+    controller.validate();
+
+    for (final T form in forms) {
+      final error = form.getFirstError();
+      if (error != null) {
+        return error;
+      }
+    }
+
+    return null;
+  }
+
+  @override
+  List<Map>? parser(covariant Object? unparsedValue) => value;
+
+  @override
+  FieldWidgetConstructor get widgetBuilder {
+    return ({
+      Key? key,
+      required FieldContext fieldContext,
+    }) {
+      print('yyy $name');
+      return MultipleFormFieldWidget(
+        fieldContext: fieldContext,
+        key: key,
+        controller: controller,
+      );
+    };
+  }
+
+  void addForm() => forms.add(formBuilder());
+
+  void removeForm(form) => forms.remove(form);
 }

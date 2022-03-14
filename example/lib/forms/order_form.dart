@@ -1,4 +1,5 @@
 import 'package:auto_form_example/api/fake_api.dart';
+import 'package:auto_form_example/forms/registration_form.dart';
 import 'package:flutter_auto_form/flutter_auto_form.dart';
 
 class OrderForm extends TemplateForm {
@@ -28,6 +29,9 @@ class OrderForm extends TemplateForm {
       name: 'Books',
       validators: [NotEmptyListValidator('Please select at least one book')],
       search: searchBook,
-    )
+    ),
+    AFFormField('form', 'Form field', [], RegistrationForm()),
+    AFMultipleFormField(
+        'multiple_form', 'Form field 2', [], () => RegistrationForm()),
   ];
 }

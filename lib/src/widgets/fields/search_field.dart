@@ -73,6 +73,7 @@ class _SearchMultipleModelsFieldState<T extends Object>
     return DropdownSearch.multiSelection(
       selectedItems: field.value ?? <T>[],
       onChanged: onChanged,
+      autoValidateMode: AutovalidateMode.always,
       validator: widget.fieldContext.forceErrorDisplay ? field.validator : null,
       onFind: field.search,
       mode: Mode.MENU,

@@ -7,6 +7,18 @@ import 'package:flutter_auto_form/src/models/field/field.dart';
 ///
 /// See [Field] and [Validator] for more information.
 abstract class TemplateForm {
+  TemplateForm() {
+    final Set<String> ids = {};
+
+    for (final Field field in fields) {
+      if (ids.contains(field.id)) {
+        throw Exception(
+            'Ids are not unique for form $runtimeType (duplicated id: ${field.id})');
+      }
+      ids.add(field.id);
+    }
+  }
+
   List<Field<Object>> get fields;
 
   bool isComplete() {
@@ -38,15 +50,9 @@ abstract class TemplateForm {
     return fields.singleWhere((e) => e.id == id, orElse: null).value = value;
   }
 
-  Map<String, Object?> toMap() {
-    for (final Field field in fields) {
-      print(field.value);
-    }
-
-    return Map.fromIterable(
-      fields,
-      key: (a) => a.id,
-      value: (field) => field.value,
-    );
-  }
+  Map<String, Object?> toMap() => Map.fromIterable(
+        fields,
+        key: (a) => a.id,
+        value: (field) => field.value,
+      );
 }
