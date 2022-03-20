@@ -1,12 +1,14 @@
 const Map<String, dynamic> jsonSchema = {
   '\$schema': 'https://json-schema.org/draft/2020-12/schema',
-  'title': 'Vieux fromages',
   '\$id': '',
+  'title': 'Vieux fromages',
   'description': 'Description',
   'type': 'object',
   'properties': {
     'Age (année)': {
       'type': 'integer',
+      'min': 1900,
+      'max': 2021,
       'default': 2001,
       'examples': [2001]
     },

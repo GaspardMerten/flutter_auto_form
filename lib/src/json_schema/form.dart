@@ -36,22 +36,66 @@ class JsonSchemaForm extends TemplateForm {
             ));
             break;
           case JsonSchemaType.number:
+            final validators = buildValidators<num>(
+              element,
+              schema.isRequired(element),
+            );
+
+            final minimum = element.getOption('min');
+            if (minimum != null) {
+              validators.add(MinValueValidator(
+                'The value should be greater or equal to $minimum',
+                minimum,
+              ));
+            }
+
+            final maximum = element.getOption('max');
+
+            if (maximum != null) {
+              validators.add(MaxValueValidator(
+                'The value should be smaller or equal to $maximum',
+                minimum,
+              ));
+            }
+
             fields.add(AFNumberField(
               id: element.id,
               name: element.name,
               value: element.defaultValue as num?,
-              validators:
-                  buildValidators<num>(element, schema.isRequired(element)),
+              validators: validators,
             ));
             break;
           case JsonSchemaType.integer:
+            final validators = buildValidators<num>(
+              element,
+              schema.isRequired(element),
+            );
+
+            element.properties.forEach(print);
+            final minimum = element.getOption('min');
+            if (minimum != null) {
+              validators.add(MinValueValidator(
+                'The value should be greater or equal to $minimum',
+                minimum,
+              ));
+            }
+
+            final maximum = element.getOption('max');
+
+            if (maximum != null) {
+              validators.add(MaxValueValidator(
+                'The value should be smaller or equal to $maximum',
+                maximum,
+              ));
+            }
+
             fields.add(
               AFNumberField(
                 id: element.id,
                 name: element.name,
                 value: element.defaultValue as int?,
                 validators: [
-                  ...buildValidators<int>(element, schema.isRequired(element)),
+                  ...validators,
                   IsIntegerValidator('Please enter a valid integer')
                 ],
               ),

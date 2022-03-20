@@ -67,6 +67,26 @@ class IsIntegerValidator<T extends num> extends ValidatorWithStaticError<T> {
   bool innerValidate(T? value) => value?.toInt() == value;
 }
 
+/// Checks whether a given num is greater (or equal) than a minimum value.
+class MinValueValidator<T extends num> extends ValidatorWithStaticError<T> {
+  MinValueValidator(String error, this.minimum) : super(error);
+
+  final num minimum;
+
+  @override
+  bool innerValidate(T? value) => value == null || value >= minimum;
+}
+
+/// Checks whether a given num is smaller (or equal) than a maximum value.
+class MaxValueValidator<T extends num> extends ValidatorWithStaticError<T> {
+  MaxValueValidator(String error, this.maximum) : super(error);
+
+  final num maximum;
+
+  @override
+  bool innerValidate(T? value) => value == null || value <= maximum;
+}
+
 /// Checks whether a given string isn't empty.
 class NotEmptyStringValidator extends ValidatorWithStaticError<String> {
   NotEmptyStringValidator(String error) : super(error);

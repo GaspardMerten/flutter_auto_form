@@ -40,7 +40,6 @@ abstract class TemplateForm {
 
   Map<String, Object?> toMap() {
     for (final Field field in fields) {
-      print(field.value);
     }
 
     return Map.fromIterable(

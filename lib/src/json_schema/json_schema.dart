@@ -1,5 +1,3 @@
-import 'package:flutter_auto_form/flutter_auto_form.dart';
-
 abstract class JsonSchemaObject {
   List<JsonSchemaProperty> get properties;
 }
@@ -14,7 +12,7 @@ const Map<JsonSchemaType, Function> _typeToPropertyConstructor = {
   JsonSchemaType.undefined: JsonSchemaProperty<Object>.fromJson,
 };
 
-class JsonSchema implements JsonSchemaObject {
+class JsonSchema extends JsonSchemaObject {
   JsonSchema({
     required this.schema,
     required this.id,
@@ -54,14 +52,13 @@ class JsonSchema implements JsonSchemaObject {
   final List<String> required;
 
   bool isRequired(JsonSchemaProperty<Object> element) {
-    print(element.id + required.toString());
     return required.contains(element.id);
   }
 }
 
 final RegExp exp = RegExp(r'(?<=[a-z])[A-Z]');
 
-class JsonSchemaProperty<T extends Object> implements JsonSchemaObject {
+class JsonSchemaProperty<T extends Object> extends JsonSchemaObject {
   JsonSchemaProperty({
     required this.id,
     required this.description,
@@ -86,7 +83,7 @@ class JsonSchemaProperty<T extends Object> implements JsonSchemaObject {
     if ((json['enum'] ?? []).isNotEmpty) {
       json['enum'].forEach(enumValues.add);
     }
-    print(enumValues);
+
     final List<T> examples = [];
 
     if ((json['examples'] ?? []).isNotEmpty) {
@@ -127,6 +124,16 @@ class JsonSchemaProperty<T extends Object> implements JsonSchemaObject {
 
   String get name {
     return id.replaceAllMapped(exp, (Match m) => ' ' + (m.group(0) ?? ''));
+  }
+
+  dynamic getOption(String name) {
+    final results = options.where(
+      (element) => element.name == name,
+    );
+
+    if (results.isNotEmpty) {
+      return results.first.value;
+    }
   }
 }
 
