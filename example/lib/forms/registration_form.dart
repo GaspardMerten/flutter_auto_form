@@ -19,6 +19,7 @@ class RegistrationForm extends TemplateForm {
       id: 'email',
       name: 'E-mail address',
       validators: [
+        NotNullValidator('This field cannot be empty'),
         EmailValidator(
           'Invalid email',
         ),
@@ -31,8 +32,8 @@ class RegistrationForm extends TemplateForm {
       name: 'Confirm password',
       validators: [
         SameAsFieldValidator(
-          'Passwords not matching',
           passwordField,
+          'Passwords not matching',
         ),
       ],
       type: AFTextFieldType.NEW_PASSWORD,

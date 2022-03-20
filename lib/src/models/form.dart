@@ -11,7 +11,7 @@ abstract class TemplateForm {
 
   bool isComplete() {
     for (final Field field in fields) {
-      if (field.validate(field.value) != null) {
+      if (field.validator(field.value) != null) {
         return false;
       }
     }
@@ -21,7 +21,7 @@ abstract class TemplateForm {
 
   String? getFirstError() {
     for (final Field field in fields) {
-      final String? error = field.validate(field.value);
+      final String? error = field.validator(field.value);
       if (error != null) {
         return error;
       }
@@ -38,9 +38,15 @@ abstract class TemplateForm {
     return fields.singleWhere((e) => e.id == id, orElse: null).value = value;
   }
 
-  Map<String, dynamic> toMap() => Map.fromIterable(
-        fields,
-        key: (a) => a.id,
-        value: (field) => field.value,
-      );
+  Map<String, Object?> toMap() {
+    for (final Field field in fields) {
+      print(field.value);
+    }
+
+    return Map.fromIterable(
+      fields,
+      key: (a) => a.id,
+      value: (field) => field.value,
+    );
+  }
 }

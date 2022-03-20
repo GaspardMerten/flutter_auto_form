@@ -17,7 +17,7 @@ dependencies:
 
   # Your other packages  ...
 
-  flutter_auto_form: ^0.2.0
+  flutter_auto_form: ^0.4.1
 ```
 
 ## Support
@@ -26,7 +26,7 @@ dependencies:
 * Autofill hints: **Automatic support through AFTextFieldType**
 * Validators: **Email, Url, Hex colour, Not null, Minimum string length, Same as another field, Alphanumeric.**
 * Fields: **Password _(auto obscure toggle)_, Text, Number, Model _(built-in support for search through an api)_,
-  Boolean**
+  Boolean, Sub-form _(cascading forms)_, Select _(dropdown field allowing only predefined values)_**
 * Custom code: **You can customize and create new fields, validators, widgets as you please without even touching the
   source code of this package !**
 
@@ -107,10 +107,9 @@ The AFTextField and AFNumberField are the only two fields available by defaults 
 
 ## Advanced usage
 
-If you need to create your own field (date field, color field, ...) you can always create it by overriding
-the Field class. Then override the buildField method of the AFThemeData class and wrap your top level widget with
-a AFTheme widget to which you give your customized AFThemeData as argument.
-
+If you need to create your own field (date field, color field, ...) you can always create it by overriding the Field
+class. Then to display a custom widget, create a stateful widget that extends the FieldStatefulWidget and of which the
+state extends the FieldState class.
 
 ##   
 

@@ -1,36 +1,35 @@
 const Map<String, dynamic> jsonSchema = {
   '\$schema': 'https://json-schema.org/draft/2020-12/schema',
-  '\$id': 'https://example.com/product.schema.json',
-  'title': 'Product',
-  'description': 'A product from Acme\'s catalog',
+  'title': 'Vieux fromages',
+  '\$id': '',
+  'description': 'Description',
   'type': 'object',
   'properties': {
-    'productId': {
-      'description': 'The unique identifier for a product',
-      'type': 'integer'
+    'Age (année)': {
+      'type': 'integer',
+      'default': 2001,
+      'examples': [2001]
     },
-    'productName': {'description': 'Name of the product', 'type': 'string'},
-    'price': {
-      'description': 'The price of the product',
-      'type': 'number',
-      'exclusiveMinimum': 0
+    'Ca': {'type': 'number', 'examples': null},
+    'Type': {
+      'type': 'string',
+      'default': 'Molle',
+      'enum': ['Molle', 'Cremeux', 'Dure', 'Rapé']
     },
-    'tags': {
-      'description': 'Tags for the product',
-      'type': 'array',
-      'items': {'type': 'string'},
-      'minItems': 1,
-      'uniqueItems': true
+    'Type de lait': {
+      'type': 'string',
+      'default': 'Bufflone',
+      'examples': ['Bufflone', 'Vache']
     },
-    'dimensions': {
-      'type': 'object',
-      'properties': {
-        'length': {'type': 'number'},
-        'width': {'type': 'number'},
-        'height': {'type': 'number'}
-      },
-      'required': ['length', 'width', 'height']
-    }
+    'Provenance': {'type': 'string', 'examples': []},
+    'Affinage': {'type': 'string', 'examples': []},
+    'Bio': {'type': 'boolean', 'enum': []},
+    'Conservation': {
+      'type': 'string',
+      'default': '1 semaine frigo',
+      'examples': ['1 semaine frigo']
+    },
+    'name': {'type': 'string'}
   },
-  'required': ['productId', 'productName', 'price']
+  'required': ['Ca']
 };

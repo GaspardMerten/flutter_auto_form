@@ -1,8 +1,18 @@
+import 'package:flutter_auto_form/flutter_auto_form.dart';
+
 abstract class JsonSchemaObject {
   List<JsonSchemaProperty> get properties;
-
-  List<String> get required;
 }
+
+const Map<JsonSchemaType, Function> _typeToPropertyConstructor = {
+  JsonSchemaType.object: JsonSchemaProperty<Map>.fromJson,
+  JsonSchemaType.integer: JsonSchemaProperty<int>.fromJson,
+  JsonSchemaType.number: JsonSchemaProperty<num>.fromJson,
+  JsonSchemaType.array: JsonSchemaProperty<List>.fromJson,
+  JsonSchemaType.boolean: JsonSchemaProperty<bool>.fromJson,
+  JsonSchemaType.string: JsonSchemaProperty<String>.fromJson,
+  JsonSchemaType.undefined: JsonSchemaProperty<Object>.fromJson,
+};
 
 class JsonSchema implements JsonSchemaObject {
   JsonSchema({
@@ -18,7 +28,9 @@ class JsonSchema implements JsonSchemaObject {
     final List<JsonSchemaProperty> properties = [];
 
     json['properties']?.forEach((id, json) {
-      properties.add(JsonSchemaProperty.fromJson(id, json));
+      properties.add(
+        _typeToPropertyConstructor[_parseType(json['type'])]!(id, json),
+      );
     });
 
     return JsonSchema(
@@ -27,7 +39,7 @@ class JsonSchema implements JsonSchemaObject {
       title: json['title'],
       description: json['description'],
       properties: properties,
-      required: json['required'],
+      required: json['required'].map<String>((e) => e.toString()).toList(),
     );
   }
 
@@ -39,20 +51,26 @@ class JsonSchema implements JsonSchemaObject {
   @override
   final List<JsonSchemaProperty> properties;
 
-  @override
   final List<String> required;
+
+  bool isRequired(JsonSchemaProperty<Object> element) {
+    print(element.id + required.toString());
+    return required.contains(element.id);
+  }
 }
 
 final RegExp exp = RegExp(r'(?<=[a-z])[A-Z]');
 
-class JsonSchemaProperty implements JsonSchemaObject {
+class JsonSchemaProperty<T extends Object> implements JsonSchemaObject {
   JsonSchemaProperty({
     required this.id,
     required this.description,
     required this.type,
+    this.defaultValue,
     this.options = const [],
     this.properties = const [],
-    this.required = const [],
+    this.enumValues = const [],
+    this.examples = const [],
   });
 
   factory JsonSchemaProperty.fromJson(String id, Map<String, dynamic> json) {
@@ -62,6 +80,18 @@ class JsonSchemaProperty implements JsonSchemaObject {
     final List<PropertyOption> options = [];
 
     final List<JsonSchemaProperty> properties = [];
+
+    final List<T> enumValues = [];
+
+    if ((json['enum'] ?? []).isNotEmpty) {
+      json['enum'].forEach(enumValues.add);
+    }
+    print(enumValues);
+    final List<T> examples = [];
+
+    if ((json['examples'] ?? []).isNotEmpty) {
+      json['examples'].forEach(examples.add);
+    }
 
     json['properties']?.forEach((id, json) {
       if (id != 'type' && id != 'description') {
@@ -74,22 +104,26 @@ class JsonSchemaProperty implements JsonSchemaObject {
     });
 
     return JsonSchemaProperty(
-        id: id,
-        description: description,
-        type: _parseType(type),
-        options: options,
-        properties: properties,
-        required: json['required'] ?? []);
+      id: id,
+      description: description,
+      type: _parseType(type),
+      options: options,
+      defaultValue: json['default'],
+      properties: properties,
+      enumValues: enumValues,
+      examples: examples,
+    );
   }
 
   final String id;
   final String? description;
   final JsonSchemaType type;
+  final T? defaultValue;
+  final List<T> examples;
+  final List<T> enumValues;
   final List<PropertyOption> options;
   @override
   final List<JsonSchemaProperty> properties;
-  @override
-  final List<String> required;
 
   String get name {
     return id.replaceAllMapped(exp, (Match m) => ' ' + (m.group(0) ?? ''));
