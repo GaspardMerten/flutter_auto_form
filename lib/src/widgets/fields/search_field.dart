@@ -34,12 +34,9 @@ class _SearchModelFieldWidgetState<T extends Object>
       autoValidateMode: widget.fieldContext.forceErrorDisplay
           ? AutovalidateMode.always
           : AutovalidateMode.onUserInteraction,
-      onFind: field.search,
-      mode: Mode.MENU,
-      clearButton: const SizedBox(),
-      isFilteredOnline: true,
-      showClearButton: true,
-      showSearchBox: true,
+      asyncItems: field.search,
+      showClearButton: false,
+      popupProps: const PopupProps.dialog(showSearchBox: true),
       dropdownSearchDecoration: InputDecoration(
         label: Text(widget.fieldContext.field.name),
       ).applyDefaults(decorationTheme),
@@ -74,12 +71,9 @@ class _SearchMultipleModelsFieldState<T extends Object>
       selectedItems: field.value ?? <T>[],
       onChanged: onChanged,
       validator: widget.fieldContext.forceErrorDisplay ? field.validator : null,
-      onFind: field.search,
-      mode: Mode.MENU,
-      clearButton: const SizedBox(),
-      isFilteredOnline: true,
+      asyncItems: field.search,
       showClearButton: true,
-      showSearchBox: true,
+      popupProps: const PopupPropsMultiSelection.menu(showSearchBox: true),
       dropdownSearchDecoration: InputDecoration(
         label: Text(widget.fieldContext.field.name),
       ).applyDefaults(decorationTheme),

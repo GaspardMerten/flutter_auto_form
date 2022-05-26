@@ -1,3 +1,7 @@
+## [1.0.0-dev.2] - 05-26-2022
+
+* Updating the dropdown search package
+
 ## [1.0.0-dev.1] - 03-09-2022
 
 * <b>Breaking changes</b>:

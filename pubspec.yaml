@@ -1,6 +1,6 @@
 name: flutter_auto_form
 description: A package simplifying the process of creating user friendly forms in Flutter
-version: 1.0.0-dev.1
+version: 1.0.0-dev.2
 homepage: https://github.com/GaspardMerten/flutter_auto_form
 
 environment:
@@ -10,7 +10,7 @@ environment:
 dependencies:
   smarter_text_field: ^0.0.7
 
-  dropdown_search: ^2.0.1
+  dropdown_search: ^4.0.1
 
   flutter:
     sdk: flutter
