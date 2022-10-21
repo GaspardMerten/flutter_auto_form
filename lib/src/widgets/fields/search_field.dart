@@ -1,6 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auto_form/flutter_auto_form.dart';
+import 'package:flutter_auto_form/src/models/field/defaults.dart';
 import 'package:flutter_auto_form/src/models/field/field_context.dart';
 import 'package:flutter_auto_form/src/widgets/fields/interface.dart';
 
@@ -35,11 +35,13 @@ class _SearchModelFieldWidgetState<T extends Object>
           ? AutovalidateMode.always
           : AutovalidateMode.onUserInteraction,
       asyncItems: field.search,
-      showClearButton: false,
+      clearButtonProps: const ClearButtonProps(isVisible: true),
       popupProps: const PopupProps.dialog(showSearchBox: true),
-      dropdownSearchDecoration: InputDecoration(
-        label: Text(widget.fieldContext.field.name),
-      ).applyDefaults(decorationTheme),
+      dropdownDecoratorProps: DropDownDecoratorProps(
+        dropdownSearchDecoration: InputDecoration(
+          label: Text(widget.fieldContext.field.name),
+        ).applyDefaults(decorationTheme),
+      ),
     );
   }
 }
@@ -72,11 +74,13 @@ class _SearchMultipleModelsFieldState<T extends Object>
       onChanged: onChanged,
       validator: widget.fieldContext.forceErrorDisplay ? field.validator : null,
       asyncItems: field.search,
-      showClearButton: true,
+      clearButtonProps: const ClearButtonProps(isVisible: true),
       popupProps: const PopupPropsMultiSelection.menu(showSearchBox: true),
-      dropdownSearchDecoration: InputDecoration(
-        label: Text(widget.fieldContext.field.name),
-      ).applyDefaults(decorationTheme),
+      dropdownDecoratorProps: DropDownDecoratorProps(
+        dropdownSearchDecoration: InputDecoration(
+          label: Text(widget.fieldContext.field.name),
+        ).applyDefaults(decorationTheme),
+      ),
     );
   }
 }

@@ -17,7 +17,7 @@ dependencies:
 
   # Your other packages  ...
 
-  flutter_auto_form: ^0.4.1
+  flutter_auto_form: ^1.0.0
 ```
 
 ## Support
