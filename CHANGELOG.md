@@ -1,3 +1,7 @@
+## [1.0.0] - 10-21-2022
+
+* Making some private endpoints public
+
 ## [1.0.0-dev.2] - 05-26-2022
 
 * Updating the dropdown search package
