@@ -73,4 +73,10 @@ class AFWidgetState<T extends TemplateForm>
 
   @override
   FutureOr<void> submit(T form) => widget.onSubmitted(form);
+
+  void updateForceError(bool newValue) {
+    setState(() {
+      forceDisplayFieldsError = newValue;
+    });
+  }
 }

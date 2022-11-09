@@ -8,7 +8,7 @@ typedef FieldValueParser<T> = T Function(String value);
 /// This class is the base class for any type of custom fields you would
 /// want to create. See the [AFTextField] widget to learn more on how
 /// to extend it.
-abstract class Field<T extends Object> {
+abstract class Field<T> {
   Field(this.id, this.name, this.validators);
 
   /// A unique identifier for the field which will be used to retrieve its data.
@@ -33,7 +33,7 @@ abstract class Field<T extends Object> {
 
   /// This method returns null if the field is valid. Otherwhise it will
   /// return the error's string specified in the validator (see [Validator]).
-  String? validator([Object? _]) {
+  String? validator([Object? object]) {
     for (final Validator validator in validators) {
       final String? error = validator.validate(value);
 

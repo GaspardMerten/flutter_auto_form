@@ -1,3 +1,7 @@
+## [1.0.1] - 11-09-2022
+
+* Adding sub forms through the addition of AFMultipleSubFormField, AFSubFormField and the linked default widgets.
+
 ## [1.0.0] - 10-21-2022
 
 * Making some private endpoints public

@@ -14,7 +14,7 @@ class RegistrationForm extends TemplateForm {
   );
 
   @override
-  late List<Field<Object>> fields = [
+  late List<Field> fields = [
     AFTextField(
       id: 'email',
       name: 'E-mail address',

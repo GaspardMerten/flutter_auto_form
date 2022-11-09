@@ -131,6 +131,23 @@ class SameAsFieldValidator<T> extends ValidatorWithStaticError<T> {
   }
 }
 
+/// Checks whether the value of a givGreaterThanFieldValidatorue of another field.
+class GreaterThanFieldValidator<T extends num>
+    extends ValidatorWithStaticError<T> {
+  GreaterThanFieldValidator(this.getValue, String error) : super(error);
+
+  final T? Function() getValue;
+
+  @override
+  bool innerValidate(T? value) {
+    final otherValue = getValue();
+    if (value != null && otherValue != null) {
+      return value >= otherValue;
+    }
+    return false;
+  }
+}
+
 /// Checks whether a given string only comports alphanumerical characters.
 class AlphanumericValidator extends ValidatorWithStaticError<String> {
   AlphanumericValidator(String error) : super(error);

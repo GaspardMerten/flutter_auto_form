@@ -69,18 +69,44 @@ class _SearchMultipleModelsFieldState<T extends Object>
   Widget build(BuildContext context) {
     final decorationTheme = Theme.of(context).inputDecorationTheme;
 
-    return DropdownSearch.multiSelection(
-      selectedItems: field.value ?? <T>[],
-      onChanged: onChanged,
-      validator: widget.fieldContext.forceErrorDisplay ? field.validator : null,
-      asyncItems: field.search,
-      clearButtonProps: const ClearButtonProps(isVisible: true),
-      popupProps: const PopupPropsMultiSelection.menu(showSearchBox: true),
-      dropdownDecoratorProps: DropDownDecoratorProps(
-        dropdownSearchDecoration: InputDecoration(
-          label: Text(widget.fieldContext.field.name),
-        ).applyDefaults(decorationTheme),
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: DropdownSearch.multiSelection(
+        selectedItems: field.value ?? <T>[],
+        onChanged: onChanged,
+        dropdownBuilder:
+            (field.value?.isEmpty ?? true) ? null : _dropdownBuilder,
+        validator:
+            widget.fieldContext.forceErrorDisplay ? field.validator : null,
+        asyncItems: field.search,
+        clearButtonProps: const ClearButtonProps(isVisible: false, iconSize: 0),
+        dropdownButtonProps:
+            const DropdownButtonProps(isVisible: false, iconSize: 0),
+        popupProps: const PopupPropsMultiSelection.menu(showSearchBox: true),
+        dropdownDecoratorProps: DropDownDecoratorProps(
+          dropdownSearchDecoration: InputDecoration(
+            label: Text(widget.fieldContext.field.name),
+          ).applyDefaults(decorationTheme),
+        ),
       ),
     );
   }
+
+  Widget _dropdownBuilder(context, items) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (final item in items)
+            Container(
+              margin: const EdgeInsets.only(top: 4),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Theme.of(context).colorScheme.surface),
+              child: Text(
+                item.toString(),
+                style: const TextStyle(fontSize: 12),
+              ),
+            )
+        ],
+      );
 }

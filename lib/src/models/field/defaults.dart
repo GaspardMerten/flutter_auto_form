@@ -1,7 +1,15 @@
+import 'dart:async';
+
+import 'package:date_field/date_field.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_auto_form/flutter_auto_form.dart';
 import 'package:flutter_auto_form/src/configuration/typedef.dart';
 import 'package:flutter_auto_form/src/models/validators/validator.dart';
+import 'package:flutter_auto_form/src/widgets/fields/date_field.dart';
 import 'package:flutter_auto_form/src/widgets/fields/fields.dart';
+import 'package:flutter_auto_form/src/widgets/fields/multiple_sub_form_field.dart';
 import 'package:flutter_auto_form/src/widgets/fields/search_field.dart';
+import 'package:flutter_auto_form/src/widgets/fields/sub_form_field.dart';
 
 import 'field.dart';
 
@@ -84,6 +92,62 @@ class AFNumberField<T extends num> extends AFTextField<T> {
   }
 }
 
+/// The default [Field] extended class used to represent a form's number field.
+class AFDateField extends Field<DateTime> {
+  AFDateField({
+    required String id,
+    required String name,
+    required List<Validator<DateTime>> validators,
+  }) : super(
+          id,
+          name,
+          validators,
+        );
+
+  @override
+  FieldWidgetConstructor get widgetBuilder => ({
+        Key? key,
+        required FieldContext fieldContext,
+      }) =>
+          DateFieldWidget(
+            fieldContext: fieldContext,
+            mode: DateTimeFieldPickerMode.date,
+          );
+
+  @override
+  DateTime? parser(covariant Object? unparsedValue) {
+    return unparsedValue as DateTime?;
+  }
+}
+
+/// The default [Field] extended class used to represent a form's number field.
+class AFTimeField extends Field<DateTime> {
+  AFTimeField({
+    required String id,
+    required String name,
+    required List<Validator<DateTime>> validators,
+  }) : super(
+          id,
+          name,
+          validators,
+        );
+
+  @override
+  FieldWidgetConstructor get widgetBuilder => ({
+        Key? key,
+        required FieldContext fieldContext,
+      }) =>
+          DateFieldWidget(
+            fieldContext: fieldContext,
+            mode: DateTimeFieldPickerMode.time,
+          );
+
+  @override
+  DateTime? parser(covariant Object? unparsedValue) {
+    return unparsedValue as DateTime?;
+  }
+}
+
 class AFSelectField<T extends Object> extends Field<T> {
   AFSelectField({
     required String id,
@@ -154,14 +218,14 @@ class AFSearchModelField<T extends Object> extends Field<T> {
   T? parser(T? unparsedValue) => unparsedValue;
 
   @override
-  final FieldWidgetConstructor widgetBuilder = SearchModelFieldWidget.new;
+  final FieldWidgetConstructor widgetBuilder = SearchModelFieldWidget<T>.new;
 }
 
 class AFSearchMultipleModelsField<T extends Object> extends Field<List<T>> {
   AFSearchMultipleModelsField({
     required String id,
     required String name,
-    required List<Validator<List<Object?>>> validators,
+    required List<Validator<List<T?>>> validators,
     required this.search,
   }) : super(
           id,
@@ -172,10 +236,97 @@ class AFSearchMultipleModelsField<T extends Object> extends Field<List<T>> {
   final Future<List<T>> Function(String? query) search;
 
   @override
-  List<T>? parser(covariant List<Object>? unparsedValue) {
+  List<T>? parser(covariant List? unparsedValue) {
     return unparsedValue?.cast<T>();
   }
 
   @override
-  final FieldWidgetConstructor widgetBuilder = SearchMultipleModelsField.new;
+  final FieldWidgetConstructor widgetBuilder = SearchMultipleModelsField<T>.new;
+}
+
+class AFSubFormField<T extends TemplateForm> extends Field<Map> {
+  AFSubFormField({
+    required String id,
+    required String name,
+    required this.form,
+  }) : super(
+          id,
+          name,
+          [],
+        );
+
+  final T form;
+
+  @override
+  final FieldWidgetConstructor widgetBuilder = AFSubFormFieldWidget.new;
+
+  final _controller = StreamController<void>();
+
+  Stream<void> get forceErrorStream => _controller.stream;
+
+  @override
+  String? validator([Object? object]) {
+    _controller.add(null);
+
+    if (!form.isComplete()) {
+      return form.getFirstError();
+    }
+
+    return super.validator(object);
+  }
+
+  @override
+  Map get value => form.toMap();
+
+  @override
+  Map? parser(T unparsedValue) {
+    return value;
+  }
+}
+
+class AFMultipleSubFormField<T extends TemplateForm>
+    extends Field<List<Map<String, dynamic>>> {
+  AFMultipleSubFormField({
+    required String id,
+    required String name,
+    required this.formBuilder,
+    required this.forms,
+    List<Validator<List<Map<String, dynamic>>>> validators = const [],
+  }) : super(
+          id,
+          name,
+          validators,
+        );
+
+  final T Function() formBuilder;
+  final List<T> forms;
+
+  @override
+  final FieldWidgetConstructor widgetBuilder = AFMultipleSubFormFieldWidget.new;
+
+  final _controller = StreamController<void>();
+
+  Stream<void> get forceErrorStream => _controller.stream;
+
+  @override
+  String? validator([Object? object]) {
+    _controller.add(null);
+
+    for (final form in forms) {
+      if (!form.isComplete()) {
+        return form.getFirstError();
+      }
+    }
+
+    return super.validator(object);
+  }
+
+  @override
+  List<Map<String, dynamic>>? get value =>
+      [for (final form in forms) form.toMap()];
+
+  @override
+  List<Map<String, dynamic>>? parser(covariant Object? unparsedValue) {
+    return value;
+  }
 }
