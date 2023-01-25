@@ -9,7 +9,7 @@ typedef FieldValueParser<T> = T Function(String value);
 /// want to create. See the [AFTextField] widget to learn more on how
 /// to extend it.
 abstract class Field<T> {
-  Field(this.id, this.name, this.validators);
+  Field({required this.id, required this.name, required this.validators});
 
   /// A unique identifier for the field which will be used to retrieve its data.
   final String id;

@@ -1,6 +1,18 @@
 import 'package:flutter_auto_form/flutter_auto_form.dart';
 import 'package:flutter_auto_form/src/models/validators/regex.dart';
 
+class FuncValidator<T> extends ValidatorWithStaticError<T> {
+  FuncValidator({required String error, required this.isValid}) : super(error);
+
+  final bool Function(T? value) isValid;
+
+  @override
+  bool innerValidate(T? value) {
+    return isValid(value);
+  }
+}
+
+
 /// Checks whether a given url string is valid. Null is deemed as an acceptable
 /// url.
 class URLValidator extends ValidatorWithStaticError<String> {
@@ -96,7 +108,7 @@ class NotEmptyStringValidator extends ValidatorWithStaticError<String> {
 }
 
 /// Checks whether a given value isn't empty.
-class NotEmptyListValidator extends ValidatorWithStaticError<List> {
+class NotEmptyListValidator<T> extends ValidatorWithStaticError<List<T>> {
   NotEmptyListValidator(String error) : super(error);
 
   @override

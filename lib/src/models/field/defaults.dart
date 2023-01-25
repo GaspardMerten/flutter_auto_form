@@ -35,7 +35,7 @@ class AFTextField<T extends Object> extends Field<T> {
     required this.type,
     this.maxLines = 1,
     T? value,
-  }) : super(id, name, validators) {
+  }) : super(id: id, name: name, validators: validators) {
     super.value = value;
   }
 
@@ -99,9 +99,9 @@ class AFDateField extends Field<DateTime> {
     required String name,
     required List<Validator<DateTime>> validators,
   }) : super(
-          id,
-          name,
-          validators,
+          id: id,
+          name: name,
+          validators: validators,
         );
 
   @override
@@ -127,9 +127,9 @@ class AFTimeField extends Field<DateTime> {
     required String name,
     required List<Validator<DateTime>> validators,
   }) : super(
-          id,
-          name,
-          validators,
+          id: id,
+          name: name,
+          validators: validators,
         );
 
   @override
@@ -157,9 +157,9 @@ class AFSelectField<T extends Object> extends Field<T> {
     required this.textBuilder,
     required T value,
   }) : super(
-          id,
-          name,
-          validators,
+          id: id,
+          name: name,
+          validators: validators,
         ) {
     super.value = value;
   }
@@ -186,9 +186,9 @@ class AFBooleanField extends Field<bool> {
     required List<Validator<bool?>> validators,
     bool value = false,
   }) : super(
-          id,
-          name,
-          validators,
+          id: id,
+          name: name,
+          validators: validators,
         ) {
     super.value = value;
   }
@@ -206,11 +206,7 @@ class AFSearchModelField<T extends Object> extends Field<T> {
     required String name,
     required List<Validator<Object?>> validators,
     required this.search,
-  }) : super(
-          id,
-          name,
-          validators,
-        );
+  }) : super(id: id, name: name, validators: validators);
 
   final Future<List<T>> Function(String? query) search;
 
@@ -218,22 +214,21 @@ class AFSearchModelField<T extends Object> extends Field<T> {
   T? parser(T? unparsedValue) => unparsedValue;
 
   @override
-  final FieldWidgetConstructor widgetBuilder = SearchModelFieldWidget<T>.new;
+  FieldWidgetConstructor get widgetBuilder => SearchModelFieldWidget<T>.new;
 }
 
 class AFSearchMultipleModelsField<T extends Object> extends Field<List<T>> {
   AFSearchMultipleModelsField({
     required String id,
     required String name,
-    required List<Validator<List<T?>>> validators,
+    required List<Validator<List<T>>> validators,
     required this.search,
-  }) : super(
-          id,
-          name,
-          validators,
-        );
+  }) : super(id: id, name: name, validators: validators);
 
   final Future<List<T>> Function(String? query) search;
+
+  @override
+  List<T>? get value => super.value;
 
   @override
   List<T>? parser(covariant List? unparsedValue) {
@@ -244,29 +239,33 @@ class AFSearchMultipleModelsField<T extends Object> extends Field<List<T>> {
   final FieldWidgetConstructor widgetBuilder = SearchMultipleModelsField<T>.new;
 }
 
-class AFSubFormField<T extends TemplateForm> extends Field<Map> {
-  AFSubFormField({
-    required String id,
-    required String name,
-    required this.form,
-  }) : super(
-          id,
-          name,
-          [],
-        );
+mixin WithForceErrorStream<T> {
+  final _controller = StreamController<void>.broadcast();
+
+  Stream<void> get forceErrorStream => _controller.stream;
+
+  void sendForceErrorEvent() {
+    _controller.add(null);
+  }
+}
+
+class AFSubFormField<T extends TemplateForm> extends Field<Map>
+    with WithForceErrorStream {
+  AFSubFormField(
+      {required String id,
+      required String name,
+      required List<Validator<Object?>> validators,
+      required this.form})
+      : super(id: id, name: name, validators: validators);
 
   final T form;
 
   @override
   final FieldWidgetConstructor widgetBuilder = AFSubFormFieldWidget.new;
 
-  final _controller = StreamController<void>();
-
-  Stream<void> get forceErrorStream => _controller.stream;
-
   @override
   String? validator([Object? object]) {
-    _controller.add(null);
+    sendForceErrorEvent();
 
     if (!form.isComplete()) {
       return form.getFirstError();
@@ -285,7 +284,7 @@ class AFSubFormField<T extends TemplateForm> extends Field<Map> {
 }
 
 class AFMultipleSubFormField<T extends TemplateForm>
-    extends Field<List<Map<String, dynamic>>> {
+    extends Field<List<Map<String, dynamic>>> with WithForceErrorStream {
   AFMultipleSubFormField({
     required String id,
     required String name,
@@ -293,9 +292,9 @@ class AFMultipleSubFormField<T extends TemplateForm>
     required this.forms,
     List<Validator<List<Map<String, dynamic>>>> validators = const [],
   }) : super(
-          id,
-          name,
-          validators,
+          id: id,
+          name: name,
+          validators: validators,
         );
 
   final T Function() formBuilder;
@@ -304,13 +303,9 @@ class AFMultipleSubFormField<T extends TemplateForm>
   @override
   final FieldWidgetConstructor widgetBuilder = AFMultipleSubFormFieldWidget.new;
 
-  final _controller = StreamController<void>();
-
-  Stream<void> get forceErrorStream => _controller.stream;
-
   @override
   String? validator([Object? object]) {
-    _controller.add(null);
+    sendForceErrorEvent();
 
     for (final form in forms) {
       if (!form.isComplete()) {

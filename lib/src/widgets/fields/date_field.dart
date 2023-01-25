@@ -41,6 +41,7 @@ class _DateFieldWidgetState<T extends Object>
             : AutovalidateMode.onUserInteraction,
         validator: field.validator,
         initialDate: field.value,
+        initialValue: field.value,
       ),
     );
   }

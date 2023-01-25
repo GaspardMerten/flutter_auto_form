@@ -1,4 +1,5 @@
 import 'package:auto_form_example/api/fake_api.dart';
+import 'package:auto_form_example/entities/book.dart';
 import 'package:flutter_auto_form/flutter_auto_form.dart';
 
 class OrderForm extends TemplateForm {
@@ -23,7 +24,7 @@ class OrderForm extends TemplateForm {
       textBuilder: (e) => e.toString(),
       value: 1,
     ),
-    AFSearchMultipleModelsField(
+    AFSearchMultipleModelsField<Book>(
       id: 'books',
       name: 'Books',
       validators: [NotEmptyListValidator('Please select at least one book')],

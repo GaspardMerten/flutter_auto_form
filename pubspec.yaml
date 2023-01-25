@@ -2,6 +2,7 @@ name: flutter_auto_form
 description: A package simplifying the process of creating user friendly forms in Flutter
 version: 1.0.1
 homepage: https://github.com/GaspardMerten/flutter_auto_form
+publish_to: 'none'
 
 environment:
   sdk: '>=2.15.0 <3.0.0'
@@ -9,7 +10,8 @@ environment:
 
 dependencies:
   smarter_text_field: ^0.0.7
-  date_field: ^3.0.2
+  date_field:
+    path: ../date_field
   dropdown_search: ^5.0.3
 
   flutter:

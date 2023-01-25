@@ -4,6 +4,15 @@ import 'package:flutter_auto_form/src/models/field/defaults.dart';
 import 'package:flutter_auto_form/src/models/field/field_context.dart';
 import 'package:flutter_auto_form/src/widgets/fields/interface.dart';
 
+const _kClearButtonsProps = ClearButtonProps(isVisible: false, iconSize: 0);
+const _kPopupsMultiSelectionProp = PopupPropsMultiSelection.menu(
+  showSearchBox: true,
+);
+const _kDropdownButtonProps = DropdownButtonProps(
+  isVisible: false,
+  iconSize: 0,
+);
+
 class SearchModelFieldWidget<T extends Object> extends FieldStatefulWidget {
   const SearchModelFieldWidget({
     Key? key,
@@ -27,20 +36,28 @@ class _SearchModelFieldWidgetState<T extends Object>
   Widget build(BuildContext context) {
     final decorationTheme = Theme.of(context).inputDecorationTheme;
 
-    return DropdownSearch<T>(
-      selectedItem: field.value,
-      onChanged: onChanged,
-      validator: field.validator,
-      autoValidateMode: widget.fieldContext.forceErrorDisplay
-          ? AutovalidateMode.always
-          : AutovalidateMode.onUserInteraction,
-      asyncItems: field.search,
-      clearButtonProps: const ClearButtonProps(isVisible: true),
-      popupProps: const PopupProps.dialog(showSearchBox: true),
-      dropdownDecoratorProps: DropDownDecoratorProps(
-        dropdownSearchDecoration: InputDecoration(
-          label: Text(widget.fieldContext.field.name),
-        ).applyDefaults(decorationTheme),
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: DropdownSearch<T>(
+        selectedItem: field.value,
+        onChanged: onChanged,
+        asyncItems: field.search,
+        validator: field.validator,
+        autoValidateMode: widget.fieldContext.forceErrorDisplay
+            ? AutovalidateMode.always
+            : AutovalidateMode.onUserInteraction,
+        clearButtonProps: _kClearButtonsProps,
+        dropdownButtonProps: _kDropdownButtonProps,
+        dropdownBuilder: field.value == null ? null : (_, __) {
+            return SearchModelFieldSelectedItem(name: field.value.toString());
+        },
+        popupProps: const PopupProps.menu(showSearchBox: true),
+        dropdownDecoratorProps: DropDownDecoratorProps(
+          dropdownSearchDecoration: InputDecoration(
+            errorText: widget.fieldContext.errorText,
+            label: Text(widget.fieldContext.field.name),
+          ).applyDefaults(decorationTheme),
+        ),
       ),
     );
   }
@@ -76,15 +93,13 @@ class _SearchMultipleModelsFieldState<T extends Object>
         onChanged: onChanged,
         dropdownBuilder:
             (field.value?.isEmpty ?? true) ? null : _dropdownBuilder,
-        validator:
-            widget.fieldContext.forceErrorDisplay ? field.validator : null,
         asyncItems: field.search,
-        clearButtonProps: const ClearButtonProps(isVisible: false, iconSize: 0),
-        dropdownButtonProps:
-            const DropdownButtonProps(isVisible: false, iconSize: 0),
-        popupProps: const PopupPropsMultiSelection.menu(showSearchBox: true),
+        clearButtonProps: _kClearButtonsProps,
+        dropdownButtonProps: _kDropdownButtonProps,
+        popupProps: _kPopupsMultiSelectionProp,
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(
+            errorText: widget.fieldContext.errorText,
             label: Text(widget.fieldContext.field.name),
           ).applyDefaults(decorationTheme),
         ),
@@ -96,17 +111,31 @@ class _SearchMultipleModelsFieldState<T extends Object>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           for (final item in items)
-            Container(
-              margin: const EdgeInsets.only(top: 4),
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Theme.of(context).colorScheme.surface),
-              child: Text(
-                item.toString(),
-                style: const TextStyle(fontSize: 12),
-              ),
+            SearchModelFieldSelectedItem(
+              name: item.toString(),
             )
         ],
       );
+}
+
+class SearchModelFieldSelectedItem extends StatelessWidget {
+  const SearchModelFieldSelectedItem({Key? key, required this.name})
+      : super(key: key);
+
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 4),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: Theme.of(context).colorScheme.surface),
+      child: Text(
+        name,
+        style: const TextStyle(fontSize: 12),
+      ),
+    );
+  }
 }
