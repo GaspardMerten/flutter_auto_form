@@ -3,14 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Not null validator validates properly', () {
-    const String? propreValue = 'value';
+    const String propreValue = 'value';
 
-    expect(NotNullValidator('error').validate(propreValue), equals(null));
+    expect(const NotNullValidator('error').validate(propreValue), equals(null));
 
     const String? improperValue = null;
 
     expect(
-      NotNullValidator('error').validate(improperValue),
+      const NotNullValidator('error').validate(improperValue),
       equals('error'),
     );
   });
@@ -67,15 +67,15 @@ void main() {
     const String properAlphanumericWithCapitalizedLetters = 'Gaspard';
 
     expect(
-      AlphanumericValidator('error').validate(properAlphanumeric),
+      const AlphanumericValidator('error').validate(properAlphanumeric),
       equals(null),
     );
     expect(
-      AlphanumericValidator('error').validate(properAlphanumericWithNumber),
+      const AlphanumericValidator('error').validate(properAlphanumericWithNumber),
       equals(null),
     );
     expect(
-      AlphanumericValidator('error')
+      const AlphanumericValidator('error')
           .validate(properAlphanumericWithCapitalizedLetters),
       equals(null),
     );
@@ -85,27 +85,27 @@ void main() {
     const String improperAlphanumericThree = 'gaspard.merten';
 
     expect(
-      AlphanumericValidator('error').validate(improperAlphanumericOne),
+      const AlphanumericValidator('error').validate(improperAlphanumericOne),
       equals('error'),
     );
     expect(
-      AlphanumericValidator('error').validate(improperAlphanumericTwo),
+      const AlphanumericValidator('error').validate(improperAlphanumericTwo),
       equals('error'),
     );
     expect(
-      AlphanumericValidator('error').validate(improperAlphanumericThree),
+      const AlphanumericValidator('error').validate(improperAlphanumericThree),
       equals('error'),
     );
   });
   test('Should be true validator validates properly', () {
     const bool value = true;
 
-    expect(ShouldBeTrueValidator('error').validate(value), equals(null));
+    expect(const ShouldBeTrueValidator('error').validate(value), equals(null));
 
     const bool falseValue = false;
 
     expect(
-      ShouldBeTrueValidator('error').validate(falseValue),
+      const ShouldBeTrueValidator('error').validate(falseValue),
       equals('error'),
     );
   });
@@ -113,9 +113,9 @@ void main() {
     const String properEmail = 'gaspard@merten.be';
     const String properEmailWithCapitalizedLetters = 'GasparD@Merten.BE';
 
-    expect(EmailValidator('error').validate(properEmail), equals(null));
+    expect(const EmailValidator('error').validate(properEmail), equals(null));
     expect(
-      EmailValidator('error').validate(properEmailWithCapitalizedLetters),
+      const EmailValidator('error').validate(properEmailWithCapitalizedLetters),
       equals(null),
     );
 
@@ -123,11 +123,11 @@ void main() {
     const String improperEmailTwo = 'gaspard.merten.be';
 
     expect(
-      EmailValidator('error').validate(improperEmailOne),
+      const EmailValidator('error').validate(improperEmailOne),
       equals('error'),
     );
     expect(
-      EmailValidator('error').validate(improperEmailTwo),
+      const EmailValidator('error').validate(improperEmailTwo),
       equals('error'),
     );
   });
@@ -135,17 +135,17 @@ void main() {
   test('URL Validator validates properly', () {
     const String properURL = 'https://www.merten.be';
 
-    expect(URLValidator('error').validate(properURL), equals(null));
+    expect(const URLValidator('error').validate(properURL), equals(null));
 
     const String improperURLOne = 'gaspard@merten.be';
     const String improperURLTwo = 'gaspard.merten.be';
 
     expect(
-      URLValidator('error').validate(improperURLOne),
+      const URLValidator('error').validate(improperURLOne),
       equals('error'),
     );
     expect(
-      URLValidator('error').validate(improperURLTwo),
+      const URLValidator('error').validate(improperURLTwo),
       equals('error'),
     );
   });
@@ -155,11 +155,11 @@ void main() {
     const String properHexColorTwo = '#F9232F';
 
     expect(
-      HexColorValidator('error').validate(properHexColorOne),
+      const HexColorValidator('error').validate(properHexColorOne),
       equals(null),
     );
     expect(
-      HexColorValidator('error').validate(properHexColorTwo),
+      const HexColorValidator('error').validate(properHexColorTwo),
       equals(null),
     );
 
@@ -168,15 +168,15 @@ void main() {
     const String improperHexColorThree = 'f9232a';
 
     expect(
-      HexColorValidator('error').validate(improperHexColorOne),
+      const HexColorValidator('error').validate(improperHexColorOne),
       equals('error'),
     );
     expect(
-      HexColorValidator('error').validate(improperHexColorTwo),
+      const HexColorValidator('error').validate(improperHexColorTwo),
       equals('error'),
     );
     expect(
-      HexColorValidator('error').validate(improperHexColorThree),
+      const HexColorValidator('error').validate(improperHexColorThree),
       equals('error'),
     );
   });
@@ -185,14 +185,14 @@ void main() {
     const String properHexColorTwo = 'F9232F';
 
     expect(
-      HexColorValidator(
+      const HexColorValidator(
         'error',
         mode: HexColorValidatorMode.withoutHashtag,
       ).validate(properHexColorOne),
       equals(null),
     );
     expect(
-      HexColorValidator(
+      const HexColorValidator(
         'error',
         mode: HexColorValidatorMode.withoutHashtag,
       ).validate(properHexColorTwo),
@@ -204,21 +204,21 @@ void main() {
     const String improperHexColorThree = 'f9232x';
 
     expect(
-      HexColorValidator(
+      const HexColorValidator(
         'error',
         mode: HexColorValidatorMode.withoutHashtag,
       ).validate(improperHexColorOne),
       equals('error'),
     );
     expect(
-      HexColorValidator(
+      const HexColorValidator(
         'error',
         mode: HexColorValidatorMode.withoutHashtag,
       ).validate(improperHexColorTwo),
       equals('error'),
     );
     expect(
-      HexColorValidator(
+      const HexColorValidator(
         'error',
         mode: HexColorValidatorMode.withoutHashtag,
       ).validate(improperHexColorThree),
@@ -233,14 +233,14 @@ void main() {
     const String properHexColorFour = '#F9232F';
 
     expect(
-      HexColorValidator(
+      const HexColorValidator(
         'error',
         mode: HexColorValidatorMode.both,
       ).validate(properHexColorOne),
       equals(null),
     );
     expect(
-      HexColorValidator(
+      const HexColorValidator(
         'error',
         mode: HexColorValidatorMode.both,
       ).validate(properHexColorTwo),
@@ -248,14 +248,14 @@ void main() {
     );
 
     expect(
-      HexColorValidator(
+      const HexColorValidator(
         'error',
         mode: HexColorValidatorMode.both,
       ).validate(properHexColorThree),
       equals(null),
     );
     expect(
-      HexColorValidator(
+      const HexColorValidator(
         'error',
         mode: HexColorValidatorMode.both,
       ).validate(properHexColorFour),
@@ -267,21 +267,21 @@ void main() {
     const String improperHexColorThree = 'f9232x';
 
     expect(
-      HexColorValidator(
+      const HexColorValidator(
         'error',
         mode: HexColorValidatorMode.both,
       ).validate(improperHexColorOne),
       equals('error'),
     );
     expect(
-      HexColorValidator(
+      const HexColorValidator(
         'error',
         mode: HexColorValidatorMode.both,
       ).validate(improperHexColorTwo),
       equals('error'),
     );
     expect(
-      HexColorValidator(
+      const HexColorValidator(
         'error',
         mode: HexColorValidatorMode.both,
       ).validate(improperHexColorThree),
