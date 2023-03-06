@@ -123,7 +123,7 @@ class JsonSchemaProperty<T extends Object> extends JsonSchemaObject {
   final List<JsonSchemaProperty> properties;
 
   String get name {
-    return id.replaceAllMapped(exp, (Match m) => ' ' + (m.group(0) ?? ''));
+    return id.replaceAllMapped(exp, (Match m) => ' ${m.group(0) ?? ''}');
   }
 
   dynamic getOption(String name) {

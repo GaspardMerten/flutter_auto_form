@@ -48,9 +48,12 @@ class _SearchModelFieldWidgetState<T extends Object>
             : AutovalidateMode.onUserInteraction,
         clearButtonProps: _kClearButtonsProps,
         dropdownButtonProps: _kDropdownButtonProps,
-        dropdownBuilder: field.value == null ? null : (_, __) {
-            return SearchModelFieldSelectedItem(name: field.value.toString());
-        },
+        dropdownBuilder: field.value == null
+            ? null
+            : (_, __) {
+                return SearchModelFieldSelectedItem(
+                    name: field.value.toString());
+              },
         popupProps: const PopupProps.menu(showSearchBox: true),
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(

@@ -12,7 +12,6 @@ class FuncValidator<T> extends ValidatorWithStaticError<T> {
   }
 }
 
-
 /// Checks whether a given url string is valid. Null is deemed as an acceptable
 /// url.
 class URLValidator extends ValidatorWithStaticError<String> {
@@ -143,7 +142,7 @@ class SameAsFieldValidator<T> extends ValidatorWithStaticError<T> {
   }
 }
 
-/// Checks whether the value of a givGreaterThanFieldValidatorue of another field.
+/// Checks whether the value of a givGreaterThanFieldValidator of another field.
 class GreaterThanFieldValidator<T extends num>
     extends ValidatorWithStaticError<T> {
   GreaterThanFieldValidator(this.getValue, String error) : super(error);

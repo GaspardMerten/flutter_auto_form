@@ -26,7 +26,8 @@ class FieldContext {
 
   bool get isLast => next == null;
 
-  String? get errorText => forceErrorDisplay ? field.validator(field.value) : null;
+  String? get errorText =>
+      forceErrorDisplay ? field.validator(field.value) : null;
 
   void sendRequestFocusEvent() {
     _focusStreamController.add(Object());

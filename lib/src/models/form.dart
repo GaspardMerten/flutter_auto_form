@@ -36,20 +36,14 @@ abstract class TemplateForm {
   }
 
   T? get<T>(String id) {
-    return fields.singleWhere((e) => e.id == id, orElse: null).value as T?;
+    return fields.singleWhere((e) => e.id == id).value as T?;
   }
 
   dynamic set(String id, dynamic value) {
-    return fields.singleWhere((e) => e.id == id, orElse: null).value = value;
+    return fields.singleWhere((e) => e.id == id).value = value;
   }
 
   Map<String, Object?> toMap() {
-    for (final Field field in fields) {}
-
-    return Map.fromIterable(
-      fields,
-      key: (a) => a.id,
-      value: (field) => field.value,
-    );
+    return { for (var e in fields) e.id : e.value };
   }
 }

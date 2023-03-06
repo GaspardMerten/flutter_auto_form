@@ -71,7 +71,6 @@ class JsonSchemaForm extends TemplateForm {
               schema.isRequired(element),
             );
 
-            element.properties.forEach(print);
             final minimum = element.getOption('min');
             if (minimum != null) {
               validators.add(MinValueValidator(
@@ -129,7 +128,7 @@ List<Validator<T>> buildValidators<T>(
   final List<Validator<T>> validators = [];
 
   if (required) {
-    validators.add(NotNullValidator('This field cannot be null'));
+    validators.add(const NotNullValidator('This field cannot be null'));
   }
 
   return validators;

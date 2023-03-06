@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auto_form/flutter_auto_form.dart';
-import 'package:flutter_auto_form/src/configuration/defaults.dart';
-import 'package:flutter_auto_form/src/configuration/typedef.dart';
 
 const _dTheme = AFThemeData();
 

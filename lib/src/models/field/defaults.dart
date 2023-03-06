@@ -3,15 +3,7 @@ import 'dart:async';
 import 'package:date_field/date_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_auto_form/flutter_auto_form.dart';
-import 'package:flutter_auto_form/src/configuration/typedef.dart';
-import 'package:flutter_auto_form/src/models/validators/validator.dart';
-import 'package:flutter_auto_form/src/widgets/fields/date_field.dart';
 import 'package:flutter_auto_form/src/widgets/fields/fields.dart';
-import 'package:flutter_auto_form/src/widgets/fields/multiple_sub_form_field.dart';
-import 'package:flutter_auto_form/src/widgets/fields/search_field.dart';
-import 'package:flutter_auto_form/src/widgets/fields/sub_form_field.dart';
-
-import 'field.dart';
 
 /// The different types of field for the [AFTextField].
 enum AFTextFieldType {
@@ -227,8 +219,6 @@ class AFSearchMultipleModelsField<T extends Object> extends Field<List<T>> {
 
   final Future<List<T>> Function(String? query) search;
 
-  @override
-  List<T>? get value => super.value;
 
   @override
   List<T>? parser(covariant List? unparsedValue) {

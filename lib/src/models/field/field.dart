@@ -31,7 +31,7 @@ abstract class Field<T> {
     _value = parser(value);
   }
 
-  /// This method returns null if the field is valid. Otherwhise it will
+  /// This method returns null if the field is valid. Otherwise it will
   /// return the error's string specified in the validator (see [Validator]).
   String? validator([Object? object]) {
     for (final Validator validator in validators) {
