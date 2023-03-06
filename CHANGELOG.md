@@ -1,9 +1,7 @@
-<<<<<<< HEAD
-## [0.4.3] - 10-25-2021
+## [1.0.2] - 03-06-2023
 
-* Adding const constructors for default validators
-* Updating dependencies to their latest version
-=======
+* Improving sub forms support
+
 ## [1.0.1] - 11-09-2022
 
 * Adding sub forms through the addition of AFMultipleSubFormField, AFSubFormField and the linked default widgets.
