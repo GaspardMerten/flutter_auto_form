@@ -1,36 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auto_form/flutter_auto_form.dart';
+import 'package:flutter_auto_form/src/models/field/field_context.dart';
+import 'package:flutter_auto_form/src/widgets/fields/interface.dart';
 
-/// Displays a switch list tile in the form of a field.
-class BooleanFieldWidget extends StatelessWidget {
+class BooleanFieldWidget extends FieldStatefulWidget {
   const BooleanFieldWidget({
     Key? key,
-    this.errorText,
-    this.value,
-    required this.onChanged,
-    required this.label,
+    required this.fieldContext,
   }) : super(key: key);
 
-  final String? errorText;
-  final bool? value;
-  final ValueChanged<bool> onChanged;
-  final String label;
+  @override
+  final FieldContext fieldContext;
+
+  @override
+  State<BooleanFieldWidget> createState() => _BooleanFieldWidgetState();
+}
+
+/// Displays a switch list tile in the form of a field.
+class _BooleanFieldWidgetState extends State<BooleanFieldWidget> {
+  late final AFBooleanField field = widget.fieldContext.field as AFBooleanField;
 
   @override
   Widget build(BuildContext context) {
     return InputDecorator(
       decoration: InputDecoration(
-        errorText: errorText,
+        errorText: widget.fieldContext.forceErrorDisplay
+            ? field.validator(field.value)
+            : null,
         contentPadding: EdgeInsets.zero,
         border: InputBorder.none,
       ).applyDefaults(
         Theme.of(context).inputDecorationTheme,
       ),
       child: SwitchListTile(
-        value: value ?? false,
+        value: field.value ?? false,
         contentPadding: EdgeInsets.zero,
-        onChanged: onChanged,
+        onChanged: (newValue) => setState(() {
+          widget.fieldContext.onChanged(newValue);
+        }),
         title: Text(
-          label,
+          field.name,
           style: Theme.of(context).inputDecorationTheme.hintStyle,
         ),
       ),

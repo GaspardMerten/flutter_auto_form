@@ -2,6 +2,7 @@ import 'package:auto_form_example/forms/order_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auto_form/flutter_auto_form.dart';
 
+import 'entities/json_schema.dart';
 import 'forms/login_form.dart';
 import 'forms/registration_form.dart';
 
@@ -39,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           body: SingleChildScrollView(
             child: SizedBox(
@@ -49,6 +50,25 @@ class _MyHomePageState extends State<MyHomePage> {
                   Expanded(
                     child: TabBarView(
                       children: [
+                        FormShowcaseTile(
+                          title: 'Json Schema Form',
+                          child: AFWidget<JsonSchemaForm>(
+                            formBuilder: () =>
+                                JsonSchemaForm.fromJson(jsonSchema),
+                            submitButton: (Function() submit) {
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 32),
+                                child: ElevatedButton(
+                                  child: const Text('Submit'),
+                                  onPressed: () => submit(),
+                                ),
+                              );
+                            },
+                            onSubmitted: (JsonSchemaForm form) {
+                              print(form.toMap());
+                            },
+                          ),
+                        ),
                         SingleChildScrollView(
                           child: FormShowcaseTile(
                             title: 'Login form',
@@ -139,37 +159,39 @@ class FormShowcaseTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 64, horizontal: 24),
-        padding: const EdgeInsets.all(24),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: const [
-              BoxShadow(
-                blurRadius: 16,
-                color: Colors.black12,
-                offset: Offset(0, 10),
-              ),
-            ],
-            color: Colors.white),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueAccent,
+    return SingleChildScrollView(
+      child: Center(
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 64, horizontal: 24),
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: const [
+                BoxShadow(
+                  blurRadius: 16,
+                  color: Colors.black12,
+                  offset: Offset(0, 10),
+                ),
+              ],
+              color: Colors.white),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                  ),
                 ),
               ),
-            ),
-            child,
-          ],
+              child,
+            ],
+          ),
         ),
       ),
     );

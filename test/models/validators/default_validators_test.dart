@@ -1,19 +1,6 @@
 import 'package:flutter_auto_form/flutter_auto_form.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-class _AlwaysCompleteForm extends TemplateForm {
-  @override
-  bool isComplete() => true;
-
-  @override
-  List<Field<Object>> get fields => [];
-}
-
-class _NeverCompleteForm extends _AlwaysCompleteForm {
-  @override
-  bool isComplete() => false;
-}
-
 void main() {
   test('Not null validator validates properly', () {
     const String? propreValue = 'value';
@@ -143,15 +130,6 @@ void main() {
       EmailValidator('error').validate(improperEmailTwo),
       equals('error'),
     );
-  });
-
-  test('Form validator validates properly', () {
-    final _AlwaysCompleteForm _alwaysCompleteForm = _AlwaysCompleteForm();
-
-    expect(FormValidator().validate(_alwaysCompleteForm), equals(null));
-
-    final _NeverCompleteForm _neverCompleteForm = _NeverCompleteForm();
-    expect(FormValidator().validate(_neverCompleteForm), equals('ERROR'));
   });
 
   test('URL Validator validates properly', () {

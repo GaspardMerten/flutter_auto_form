@@ -1,7 +1,33 @@
+<<<<<<< HEAD
 ## [0.4.3] - 10-25-2021
 
 * Adding const constructors for default validators
 * Updating dependencies to their latest version
+=======
+## [1.0.1] - 11-09-2022
+
+* Adding sub forms through the addition of AFMultipleSubFormField, AFSubFormField and the linked default widgets.
+
+## [1.0.0] - 10-21-2022
+
+* Making some private endpoints public
+
+## [1.0.0-dev.2] - 05-26-2022
+
+* Updating the dropdown search package
+
+## [1.0.0-dev.1] - 03-09-2022
+
+* <b>Breaking changes</b>:
+    * Dart 2.15
+    * The AFTheme widget does not allow you to change the text field builder anymore. To do such a thing you should now
+      extend the AFTextField and replace the widgetBuilder property by the one of your choice.
+    * The AFFileField was removed due to too strong dependencies need (dart:io...).
+    * Validators now accept null value by default. To prevent a field from being null, you should use the
+      NotNullValidator or the NotEmptyValidator in the case of a string.
+* Adding new build system
+* Adding the possibility to make a AFTextField widget multiline
+>>>>>>> 49a0ce67aa037e85d7ef317e89507cf62ef52ce3
 
 ## [0.4.2] - 10-18-2021
 

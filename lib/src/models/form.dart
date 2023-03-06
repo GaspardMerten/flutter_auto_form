@@ -7,21 +7,26 @@ import 'package:flutter_auto_form/src/models/field/field.dart';
 ///
 /// See [Field] and [Validator] for more information.
 abstract class TemplateForm {
-  List<Field<Object>> get fields;
+  List<Field> get fields;
 
   bool isComplete() {
+    // It is important to not directly return false in the for boucle because
+    // in the case a subform is present in the fields, it needs this call
+    // to display error.
+    bool isComplete = true;
+
     for (final Field field in fields) {
-      if (field.validate(field.value) != null) {
-        return false;
+      if (field.validator(field.value) != null) {
+        isComplete = false;
       }
     }
 
-    return true;
+    return isComplete;
   }
 
   String? getFirstError() {
     for (final Field field in fields) {
-      final String? error = field.validate(field.value);
+      final String? error = field.validator(field.value);
       if (error != null) {
         return error;
       }
@@ -39,9 +44,7 @@ abstract class TemplateForm {
   }
 
   Map<String, Object?> toMap() {
-    for (final Field field in fields) {
-      print(field.value);
-    }
+    for (final Field field in fields) {}
 
     return Map.fromIterable(
       fields,

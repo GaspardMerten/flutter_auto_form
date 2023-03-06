@@ -17,7 +17,11 @@ dependencies:
 
   # Your other packages  ...
 
+<<<<<<< HEAD
   flutter_auto_form: ^0.4.3
+=======
+  flutter_auto_form: ^1.0.0
+>>>>>>> 49a0ce67aa037e85d7ef317e89507cf62ef52ce3
 ```
 
 ## Support
@@ -107,7 +111,13 @@ The AFTextField and AFNumberField are the only two fields available by defaults 
 
 ## Advanced usage
 
+<<<<<<< HEAD
 _DOCUMENTATION COMING SOON_
+=======
+If you need to create your own field (date field, color field, ...) you can always create it by overriding the Field
+class. Then to display a custom widget, create a stateful widget that extends the FieldStatefulWidget and of which the
+state extends the FieldState class.
+>>>>>>> 49a0ce67aa037e85d7ef317e89507cf62ef52ce3
 
 ##   
 

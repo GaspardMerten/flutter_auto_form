@@ -14,11 +14,12 @@ class RegistrationForm extends TemplateForm {
   );
 
   @override
-  late List<Field<Object>> fields = [
+  late List<Field> fields = [
     AFTextField(
       id: 'email',
       name: 'E-mail address',
       validators: [
+        NotNullValidator('This field cannot be empty'),
         EmailValidator(
           'Invalid email',
         ),

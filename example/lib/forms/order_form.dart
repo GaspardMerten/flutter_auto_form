@@ -10,19 +10,12 @@ class OrderForm extends TemplateForm {
       name: 'Order\'s number',
       validators: [NotNullValidator('Please enter a valid integer')],
     ),
-    AFSearchModelField<Book>(
-      id: 'book',
-      name: 'Book',
-      validators: [NotNullValidator('Please select a book')],
-      search: searchBook,
-    ),
     AFBooleanField(
       id: 'payed',
       name: 'Is payed',
       validators: [],
       value: false,
     ),
-    AFFileField(id: 'file', name: 'File', validators: []),
     AFSelectField(
       id: 'select',
       name: 'Select',
@@ -31,10 +24,11 @@ class OrderForm extends TemplateForm {
       textBuilder: (e) => e.toString(),
       value: 1,
     ),
-    AFMultipleFormField(
-      id: 'other_orders',
-      name: 'Other orders (no meaning..)',
-      formGenerator: () => OrderForm(),
-    ),
+    AFSearchMultipleModelsField<Book>(
+      id: 'books',
+      name: 'Books',
+      validators: [NotEmptyListValidator('Please select at least one book')],
+      search: searchBook,
+    )
   ];
 }
