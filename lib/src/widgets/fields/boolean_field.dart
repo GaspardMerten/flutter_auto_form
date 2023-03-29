@@ -20,25 +20,27 @@ class _BooleanFieldWidgetState extends State<BooleanFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return InputDecorator(
-      decoration: InputDecoration(
-        errorText: widget.fieldContext.forceErrorDisplay
-            ? field.validator(field.value)
-            : null,
-        contentPadding: EdgeInsets.zero,
-        border: InputBorder.none,
-      ).applyDefaults(
-        Theme.of(context).inputDecorationTheme,
-      ),
-      child: SwitchListTile(
-        value: field.value ?? false,
-        contentPadding: EdgeInsets.zero,
-        onChanged: (newValue) => setState(() {
-          widget.fieldContext.onChanged(newValue);
-        }),
-        title: Text(
-          field.name,
-          style: Theme.of(context).inputDecorationTheme.hintStyle,
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: InputDecorator(
+        decoration: InputDecoration(
+          errorText: widget.fieldContext.forceErrorDisplay
+              ? field.validator(field.value)
+              : null,
+          border: InputBorder.none,
+        ).applyDefaults(
+          Theme.of(context).inputDecorationTheme,
+        ),
+        child: SwitchListTile(
+          value: field.value ?? false,
+          contentPadding: EdgeInsets.zero,
+          onChanged: (newValue) => setState(() {
+            widget.fieldContext.onChanged(newValue);
+          }),
+          title: Text(
+            field.name,
+            style: Theme.of(context).inputDecorationTheme.hintStyle,
+          ),
         ),
       ),
     );

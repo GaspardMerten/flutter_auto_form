@@ -7,6 +7,7 @@ import 'package:flutter_auto_form/src/widgets/fields/interface.dart';
 const _kClearButtonsProps = ClearButtonProps(isVisible: false, iconSize: 0);
 const _kPopupsMultiSelectionProp = PopupPropsMultiSelection.menu(
   showSearchBox: true,
+  isFilterOnline: true,
 );
 const _kDropdownButtonProps = DropdownButtonProps(
   isVisible: false,
@@ -54,7 +55,10 @@ class _SearchModelFieldWidgetState<T extends Object>
                 return SearchModelFieldSelectedItem(
                     name: field.value.toString());
               },
-        popupProps: const PopupProps.menu(showSearchBox: true),
+        popupProps: const PopupProps.menu(
+          showSearchBox: true,
+          isFilterOnline: true,
+        ),
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(
             errorText: widget.fieldContext.errorText,

@@ -1,4 +1,12 @@
-## [1.0.2] - 03-06-2023
+## [1.0.4] - 03-29-2023
+
+* Improving the boolean field widget
+ 
+## [1.0.3] - 03-24-2023
+
+* Fixing search field
+
+* ## [1.0.2] - 03-06-2023
 
 * Improving sub forms support
 
