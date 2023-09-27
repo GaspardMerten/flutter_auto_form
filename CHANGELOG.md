@@ -1,3 +1,7 @@
+## [1.0.7] - 09-27-2023
+
+* Fixing README.md
+
 ## [1.0.6] - 09-27-2023
 
 * Fixing README.md

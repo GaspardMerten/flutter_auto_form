@@ -26,7 +26,7 @@ another.
 Dynamic form generation is also feasible but still in experimental mode. It is accessible through the
 JsonSchemaForm class.
 
-A demo video can be found at: https://drive.google.com/uc?id=1axi4CSEYflt3oxmnvEI9pIpOMjN4AJD2
+
 
 ## Installation
 
@@ -54,14 +54,6 @@ dependencies:
   Boolean, Sub-form _(cascading forms)_, Select _(dropdown field allowing only predefined values)_**
 * Custom code: **You can customize and create new fields, validators, widgets as you please without even touching the
   source code of this package !**
-
-## Example
-
-The following gif illustrates some things you can realize with this package.
-
-The source code is located in the example folder.
-
-<img src='https://raw.githubusercontent.com/GaspardMerten/flutter_auto_form/master/demo.gif' height='350px'></img>
 
 ## Usage
 
@@ -126,6 +118,12 @@ print(form.toMap());
 },
 );
 ```
+## Example
+
+A demo video can be found [here](https://drive.google.com/uc?id=1axi4CSEYflt3oxmnvEI9pIpOMjN4AJD2). The
+four forms displayed in the video are all created with Flutter Auto Form, even the model search field.
+
+The source code is located in the example folder.
 
 ## Advanced usage
 
