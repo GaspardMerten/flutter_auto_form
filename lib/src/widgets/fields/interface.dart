@@ -8,6 +8,13 @@ abstract class FieldStatefulWidget extends StatefulWidget {
 }
 
 abstract class FieldState<T extends FieldStatefulWidget> extends State<T> {
+  @override
+  void initState() {
+    super.initState();
+
+    widget.fieldContext.field.updateStream.listen(onChanged);
+  }
+
   void onChanged(dynamic value) {
     setState(() {
       widget.fieldContext.onChanged(value);

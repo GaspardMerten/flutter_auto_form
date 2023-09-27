@@ -4,52 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auto_form/src/models/form.dart';
 import 'package:flutter_auto_form/src/widgets/form_state.dart';
 
-class AFWidget<T extends TemplateForm> extends StatefulWidget {
+class AFWidget<T extends TemplateForm> extends AFFormStatefulWidget<T> {
   const AFWidget({
-    Key? key,
-    required this.formBuilder,
-    required this.onSubmitted,
-    this.submitButton,
-    this.handleErrorOnSubmit,
-    this.enableFinalAction = true,
-    this.enableSubmitFormWrapper,
-  }) : super(key: key);
-
-  final T Function() formBuilder;
-
-  final Function(T form) onSubmitted;
-
-  final bool enableFinalAction;
-
-  final bool? enableSubmitFormWrapper;
-
-  final ValueChanged<String>? handleErrorOnSubmit;
-
-  final Widget Function(Function() submit)? submitButton;
+    super.key,
+    required super.formBuilder,
+    required super.onSubmitted,
+    super.submitButton,
+    super.handleErrorOnSubmit,
+    super.enableFinalAction = true,
+    super.enableSubmitFormWrapper,
+  });
 
   @override
-  AFWidgetState<T> createState() => AFWidgetState<T>(
-        formBuilder(),
-        handleErrorOnSubmit: handleErrorOnSubmit,
-        enableFinalAction: enableFinalAction,
-        enableSubmitFormWrapper: enableSubmitFormWrapper,
-      );
+  AFWidgetState<T> createState() => AFWidgetState<T>();
 }
 
 class AFWidgetState<T extends TemplateForm>
     extends AFFormState<AFWidget<T>, T> {
-  AFWidgetState(
-    T model, {
-    ValueChanged<String>? handleErrorOnSubmit,
-    required bool enableFinalAction,
-    bool? enableSubmitFormWrapper,
-  }) : super(
-          model: model,
-          handleErrorOnSubmit: handleErrorOnSubmit,
-          enableFinalAction: enableFinalAction,
-          enableSubmitFormWrapper: enableSubmitFormWrapper,
-        );
-
   @override
   Widget build(BuildContext context) {
     Widget child = form();

@@ -10,7 +10,7 @@ class RegistrationForm extends TemplateForm {
         (e) => 'Min 6 cara. Currently: ${e?.length ?? 0}',
       )
     ],
-    type: AFTextFieldType.NEW_PASSWORD,
+    type: AFTextFieldType.newPassword,
   );
 
   @override
@@ -24,7 +24,7 @@ class RegistrationForm extends TemplateForm {
           'Invalid email',
         ),
       ],
-      type: AFTextFieldType.EMAIL,
+      type: AFTextFieldType.email,
     ),
     passwordField,
     AFTextField(
@@ -36,7 +36,7 @@ class RegistrationForm extends TemplateForm {
           'Passwords not matching',
         ),
       ],
-      type: AFTextFieldType.NEW_PASSWORD,
+      type: AFTextFieldType.newPassword,
     ),
   ];
 }

@@ -40,10 +40,10 @@ abstract class TemplateForm {
   }
 
   dynamic set(String id, dynamic value) {
-    return fields.singleWhere((e) => e.id == id).value = value;
+    return fields.singleWhere((e) => e.id == id).updateValue(value);
   }
 
   Map<String, Object?> toMap() {
-    return { for (var e in fields) e.id : e.value };
+    return {for (var e in fields) e.id: e.value};
   }
 }

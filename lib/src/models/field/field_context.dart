@@ -30,7 +30,7 @@ class FieldContext {
       forceErrorDisplay ? field.validator(field.value) : null;
 
   void sendRequestFocusEvent() {
-    _focusStreamController.add(Object());
+    _focusStreamController.add(null);
   }
 
   void onChanged(value) {

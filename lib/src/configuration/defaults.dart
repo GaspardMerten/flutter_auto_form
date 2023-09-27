@@ -10,15 +10,14 @@ Future<T> kShowFutureLoadingDialog<T>({
   required BuildContext context,
   required FutureOr<T> future,
 }) async {
-  showDialog<dynamic>(
+  final T response = await showDialog<dynamic>(
     context: context,
     barrierDismissible: true,
-    builder: (BuildContext context) => const DefaultLoadingWidget(),
+    builder: (BuildContext context) => DefaultLoadingWidget(
+      popOnComplete: true,
+      future: future,
+    ),
   );
-
-  final T response = await future;
-
-  Navigator.pop(context);
 
   return response;
 }

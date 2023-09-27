@@ -32,7 +32,7 @@ class JsonSchemaForm extends TemplateForm {
               validators:
                   buildValidators<String>(element, schema.isRequired(element)),
               value: element.defaultValue,
-              type: AFTextFieldType.TEXT,
+              type: AFTextFieldType.text,
             ));
             break;
           case JsonSchemaType.number:

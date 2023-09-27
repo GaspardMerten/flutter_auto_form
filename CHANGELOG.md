@@ -1,3 +1,14 @@
+## [1.0.6] - 09-27-2023
+
+* Fixing README.md
+* Updating dependencies
+
+## [1.0.5] - 04-21-2023
+
+* Adding the possibility to add a callback when the value of a field changes.
+* Adding an updateStream for widgets to rebuild whenever the updateValue method is called
+* Cleaning up issues from dartanalyzer
+
 ## [1.0.4] - 03-29-2023
 
 * Improving the boolean field widget

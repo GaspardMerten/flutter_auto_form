@@ -4,7 +4,7 @@ import 'package:flutter_auto_form/flutter_auto_form.dart';
 
 class OrderForm extends TemplateForm {
   @override
-  final List<Field<Object>> fields = [
+  late final List<Field<Object>> fields = [
     AFNumberField<int>(
       id: 'order-number',
       name: 'Order\'s number',
@@ -25,10 +25,17 @@ class OrderForm extends TemplateForm {
       value: 1,
     ),
     AFSearchMultipleModelsField<Book>(
-      id: 'books',
-      name: 'Books',
-      validators: [NotEmptyListValidator('Please select at least one book')],
-      search: searchBook,
+        id: 'books',
+        name: 'Books',
+        validators: [NotEmptyListValidator('Please select at least one book')],
+        search: searchBook,
+        onChanged: (e) {
+          set('number_books', e?.length ?? 0);
+        }),
+    AFNumberField(
+      id: 'number_books',
+      name: 'Number of books',
+      validators: [],
     )
   ];
 }

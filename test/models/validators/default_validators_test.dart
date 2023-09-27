@@ -45,7 +45,7 @@ void main() {
       id: 'id',
       name: 'name',
       validators: [],
-      type: AFTextFieldType.TEXT,
+      type: AFTextFieldType.text,
       value: dValue,
     );
 
@@ -71,7 +71,8 @@ void main() {
       equals(null),
     );
     expect(
-      const AlphanumericValidator('error').validate(properAlphanumericWithNumber),
+      const AlphanumericValidator('error')
+          .validate(properAlphanumericWithNumber),
       equals(null),
     );
     expect(

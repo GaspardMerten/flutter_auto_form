@@ -1,10 +1,40 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 /// The widget that is displayed by the [kShowFutureLoadingDialog].
-class DefaultLoadingWidget extends StatelessWidget {
+class DefaultLoadingWidget<T> extends StatefulWidget {
   const DefaultLoadingWidget({
     Key? key,
+    required this.future,
+    required this.popOnComplete,
   }) : super(key: key);
+
+  final FutureOr<T> future;
+  final bool popOnComplete;
+
+  @override
+  State<DefaultLoadingWidget<T>> createState() =>
+      _DefaultLoadingWidgetState<T>();
+}
+
+class _DefaultLoadingWidgetState<T> extends State<DefaultLoadingWidget<T>> {
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.future is Future<T>) {
+      (widget.future as Future<T>).then(_onComplete);
+    } else {
+      _onComplete(widget.future as T);
+    }
+  }
+
+  void _onComplete(T value) {
+    if (widget.popOnComplete) {
+      Navigator.of(context).pop(value);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

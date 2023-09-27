@@ -55,6 +55,12 @@ class _AFTextFieldWidgetState
   void initState() {
     super.initState();
 
+    field.updateStream.listen((event) {
+      setState(() {
+        controller.text = event == null ? '' : event.toString();
+      });
+    });
+
     controller
         .addListener(() => widget.fieldContext.onChanged(controller.text));
   }
@@ -65,8 +71,8 @@ class _AFTextFieldWidgetState
       labelText: field.name,
     ).applyDefaults(Theme.of(context).inputDecorationTheme);
 
-    final bool obscureText = field.type == AFTextFieldType.PASSWORD ||
-        field.type == AFTextFieldType.NEW_PASSWORD;
+    final bool obscureText = field.type == AFTextFieldType.password ||
+        field.type == AFTextFieldType.newPassword;
 
     final TextInputAction keyboardAction;
 

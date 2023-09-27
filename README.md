@@ -4,9 +4,34 @@
 
 <i>**The easiest way to create fully customizable forms with only a tiny amount of code.**</i>
 
+## Introduction
+
+Are you tired of writing endless lines of code to create forms in your Flutter apps? Look no further! Our Flutter Auto
+Form package is here to revolutionize your form-building experience.
+
+Our primary goal is to significantly reduce the amount of code required to create forms in Flutter. We achieve this by
+embracing a clear separation of concerns between form logic and form display.
+
+With Flutter Auto Form, you write the form logic in pure Dart, without any direct mention of widgets. Instead, we
+introduce the AFWidget, which dynamically renders all the necessary widgets based on a straightforward form
+declaration—a simple Dart class that extends the TemplateForm class.
+
+But that's not all! Our package empowers you to design your custom fields and linked widgets, making nearly any form
+conceivable. Whether you're working on basic forms or tackling complex ones, Flutter Auto Form has got you covered.
+
+The true magic of Flutter Auto Form shines when you're dealing with multiple forms, especially complex ones. All your
+validators are automatically called when you submit a form, and you can even create sub-forms that cascade into one
+another.
+
+Dynamic form generation is also feasible but still in experimental mode. It is accessible through the
+JsonSchemaForm class.
+
+A demo video can be found at: https://drive.google.com/uc?id=1axi4CSEYflt3oxmnvEI9pIpOMjN4AJD2
+
 ## Installation
 
-To use this plugin, add `flutter_auto_form` as a [dependency in your pubspec.yaml file](https://plus.fluttercommunity.dev/docs/overview).
+To use this plugin, add `flutter_auto_form` as
+a [dependency in your pubspec.yaml file](https://plus.fluttercommunity.dev/docs/overview).
 
 <i>pubspec.yaml</i> <br><br>
 
@@ -17,11 +42,7 @@ dependencies:
 
   # Your other packages  ...
 
-<<<<<<< HEAD
-  flutter_auto_form: ^0.4.3
-=======
-  flutter_auto_form: ^1.0.0
->>>>>>> 49a0ce67aa037e85d7ef317e89507cf62ef52ce3
+  flutter_auto_form: ^1.0.6
 ```
 
 ## Support
@@ -89,36 +110,30 @@ class LoginForm extends TemplateForm {
 
 The second & (already) last step is to add the AFWidget wherever you would like to display a form.
 
-
 ```dart
 AFWidget<RegistrationForm>(
-  formBuilder: () => RegistrationForm(),
-  submitButton: (Function({bool showLoadingDialog}) submit) => Padding(
-    padding: const EdgeInsets.only(top: 32),
-    child: MaterialButton(
-      child: Text('Submit'),
-      onPressed: () => submit(showLoadingDialog: true),
-    ),
-  ),
-  onSubmitted: (RegistrationForm form) {
-    // do whatever you want when the form is submitted
-    print(form.toMap());
-  },
+formBuilder: () => RegistrationForm(),
+submitButton: (Function({bool showLoadingDialog}) submit) => Padding(
+padding: const EdgeInsets.only(top: 32),
+child: MaterialButton(
+child: Text('Submit'),
+onPressed: () => submit(showLoadingDialog: true),
+),
+),
+onSubmitted: (RegistrationForm form) {
+// do whatever you want when the form is submitted
+print(form.toMap());
+},
 );
 ```
 
-The AFTextField and AFNumberField are the only two fields available by defaults for the time being. 
-
 ## Advanced usage
 
-<<<<<<< HEAD
-_DOCUMENTATION COMING SOON_
-=======
-If you need to create your own field (date field, color field, ...) you can always create it by overriding the Field
-class. Then to display a custom widget, create a stateful widget that extends the FieldStatefulWidget and of which the
+If you need to create your own field (color field, image field, ...) you can always create it by overriding the Field
+class. Then to display a custom widget, create a stateful widget that extends the FieldStatefulWidget, and of which the
 state extends the FieldState class.
->>>>>>> 49a0ce67aa037e85d7ef317e89507cf62ef52ce3
 
-##   
+##      
 
-<i>This package is still under construction ! Do not hesitate to create an issue on the GitHub page if you find any bug or if you would like to see a new type of validator, field coming. And if you are that motivated if you would gladly review & accept your PR !
+<i>This package is still under construction ! Do not hesitate to create an issue on the GitHub page if you find any bug
+or if you would like to see a new type of validator, field !</i>

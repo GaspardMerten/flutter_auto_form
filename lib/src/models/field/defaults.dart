@@ -7,20 +7,21 @@ import 'package:flutter_auto_form/src/widgets/fields/fields.dart';
 
 /// The different types of field for the [AFTextField].
 enum AFTextFieldType {
-  TEXT,
-  NUMBER,
-  PASSWORD,
-  EMAIL,
-  USERNAME,
-  NEW_PASSWORD,
-  NEW_USERNAME,
-  COLOR,
-  URL
+  text,
+  number,
+  password,
+  email,
+  username,
+  newPassword,
+  newUsername,
+  color,
+  url
 }
 
 /// The default [Field] extended class used to represent a form's text field.
 class AFTextField<T extends Object> extends Field<T> {
   AFTextField({
+    super.onChanged,
     required String id,
     required String name,
     required List<Validator<T>> validators,
@@ -40,7 +41,7 @@ class AFTextField<T extends Object> extends Field<T> {
 
   @override
   T? parser(T? unparsedValue) {
-    if (type == AFTextFieldType.EMAIL) {
+    if (type == AFTextFieldType.email) {
       return (unparsedValue as String?)?.trim() as T?;
     } else {
       return unparsedValue;
@@ -54,6 +55,7 @@ class AFTextField<T extends Object> extends Field<T> {
 /// The default [Field] extended class used to represent a form's number field.
 class AFNumberField<T extends num> extends AFTextField<T> {
   AFNumberField({
+    super.onChanged,
     required String id,
     required String name,
     required List<Validator<T>> validators,
@@ -62,7 +64,7 @@ class AFNumberField<T extends num> extends AFTextField<T> {
           id: id,
           name: name,
           validators: validators,
-          type: AFTextFieldType.NUMBER,
+          type: AFTextFieldType.number,
           value: value,
         );
 
@@ -87,6 +89,7 @@ class AFNumberField<T extends num> extends AFTextField<T> {
 /// The default [Field] extended class used to represent a form's number field.
 class AFDateField extends Field<DateTime> {
   AFDateField({
+    super.onChanged,
     required String id,
     required String name,
     required List<Validator<DateTime>> validators,
@@ -115,6 +118,7 @@ class AFDateField extends Field<DateTime> {
 /// The default [Field] extended class used to represent a form's number field.
 class AFTimeField extends Field<DateTime> {
   AFTimeField({
+    super.onChanged,
     required String id,
     required String name,
     required List<Validator<DateTime>> validators,
@@ -142,6 +146,7 @@ class AFTimeField extends Field<DateTime> {
 
 class AFSelectField<T extends Object> extends Field<T> {
   AFSelectField({
+    super.onChanged,
     required String id,
     required String name,
     required List<Validator<Object?>> validators,
@@ -173,6 +178,7 @@ class AFSelectField<T extends Object> extends Field<T> {
 
 class AFBooleanField extends Field<bool> {
   AFBooleanField({
+    super.onChanged,
     required String id,
     required String name,
     required List<Validator<bool?>> validators,
@@ -194,6 +200,7 @@ class AFBooleanField extends Field<bool> {
 
 class AFSearchModelField<T extends Object> extends Field<T> {
   AFSearchModelField({
+    super.onChanged,
     required String id,
     required String name,
     required List<Validator<Object?>> validators,
@@ -211,6 +218,7 @@ class AFSearchModelField<T extends Object> extends Field<T> {
 
 class AFSearchMultipleModelsField<T extends Object> extends Field<List<T>> {
   AFSearchMultipleModelsField({
+    super.onChanged,
     required String id,
     required String name,
     required List<Validator<List<T>>> validators,
@@ -218,7 +226,6 @@ class AFSearchMultipleModelsField<T extends Object> extends Field<List<T>> {
   }) : super(id: id, name: name, validators: validators);
 
   final Future<List<T>> Function(String? query) search;
-
 
   @override
   List<T>? parser(covariant List? unparsedValue) {
@@ -276,6 +283,7 @@ class AFSubFormField<T extends TemplateForm> extends Field<Map>
 class AFMultipleSubFormField<T extends TemplateForm>
     extends Field<List<Map<String, dynamic>>> with WithForceErrorStream {
   AFMultipleSubFormField({
+    super.onChanged,
     required String id,
     required String name,
     required this.formBuilder,

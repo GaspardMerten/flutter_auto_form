@@ -12,7 +12,6 @@ const Map<String, dynamic> jsonSchema = {
       'default': 2001,
       'examples': [2001]
     },
-    'Ca': {'type': 'number', 'examples': null},
     'Type': {
       'type': 'string',
       'default': 'Molle',

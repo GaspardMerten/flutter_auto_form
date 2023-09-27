@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_auto_form/src/configuration/typedef.dart';
 import 'package:flutter_auto_form/src/models/validators/validator.dart';
 
@@ -9,7 +12,21 @@ typedef FieldValueParser<T> = T Function(String value);
 /// want to create. See the [AFTextField] widget to learn more on how
 /// to extend it.
 abstract class Field<T> {
-  Field({required this.id, required this.name, required this.validators});
+  Field({
+    required this.id,
+    required this.name,
+    required this.validators,
+    this.onChanged,
+  });
+
+  final StreamController<T?> _streamController =
+      StreamController<T?>.broadcast();
+
+  /// The stream that will be used to notify the form that the field's value
+  /// has changed.
+  Stream<T?> get updateStream => _streamController.stream;
+
+  final ValueChanged<T?>? onChanged;
 
   /// A unique identifier for the field which will be used to retrieve its data.
   final String id;
@@ -29,6 +46,14 @@ abstract class Field<T> {
   /// The current value of the field.
   set value(covariant Object? value) {
     _value = parser(value);
+    onChanged?.call(_value);
+  }
+
+  /// Sets the value of the field and notifies the form's widgets that the value has
+  /// changed.
+  void updateValue(covariant Object? value) {
+    _value = parser(value);
+    _streamController.add(_value);
   }
 
   /// This method returns null if the field is valid. Otherwise it will

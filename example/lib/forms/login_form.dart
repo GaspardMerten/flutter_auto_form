@@ -12,7 +12,7 @@ class LoginForm extends TemplateForm {
           (e) => 'Min 5 characters, currently ${e?.length ?? 0} ',
         )
       ],
-      type: AFTextFieldType.USERNAME,
+      type: AFTextFieldType.username,
     ),
     AFTextField(
       id: 'password',
@@ -23,7 +23,7 @@ class LoginForm extends TemplateForm {
           (e) => 'Min 6 characters, currently ${e?.length ?? 0} ',
         )
       ],
-      type: AFTextFieldType.PASSWORD,
+      type: AFTextFieldType.password,
     ),
     AFBooleanField(
       id: 'accept-condition',

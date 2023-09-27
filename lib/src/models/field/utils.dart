@@ -6,19 +6,19 @@ List<String> getAutoFillHintsFromFieldType(AFTextField field) {
   String? autoFillHint;
 
   switch (field.type) {
-    case AFTextFieldType.PASSWORD:
+    case AFTextFieldType.password:
       autoFillHint = AutofillHints.password;
       break;
-    case AFTextFieldType.EMAIL:
+    case AFTextFieldType.email:
       autoFillHint = AutofillHints.email;
       break;
-    case AFTextFieldType.USERNAME:
+    case AFTextFieldType.username:
       autoFillHint = AutofillHints.username;
       break;
-    case AFTextFieldType.NEW_PASSWORD:
+    case AFTextFieldType.newPassword:
       autoFillHint = AutofillHints.newPassword;
       break;
-    case AFTextFieldType.NEW_USERNAME:
+    case AFTextFieldType.newUsername:
       autoFillHint = AutofillHints.newUsername;
       break;
     default:
@@ -33,22 +33,22 @@ TextInputType? getTextInputType(AFTextField field) {
   TextInputType? inputType;
 
   switch (field.type) {
-    case AFTextFieldType.EMAIL:
+    case AFTextFieldType.email:
       inputType = TextInputType.emailAddress;
       break;
-    case AFTextFieldType.USERNAME:
+    case AFTextFieldType.username:
       inputType = TextInputType.name;
       break;
-    case AFTextFieldType.NEW_PASSWORD:
+    case AFTextFieldType.newPassword:
       inputType = TextInputType.visiblePassword;
       break;
-    case AFTextFieldType.PASSWORD:
+    case AFTextFieldType.password:
       inputType = TextInputType.visiblePassword;
       break;
-    case AFTextFieldType.NEW_USERNAME:
+    case AFTextFieldType.newUsername:
       inputType = TextInputType.name;
       break;
-    case AFTextFieldType.NUMBER:
+    case AFTextFieldType.number:
       inputType = TextInputType.number;
       break;
     default:

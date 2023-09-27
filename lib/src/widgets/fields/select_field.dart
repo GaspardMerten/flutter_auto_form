@@ -37,8 +37,8 @@ class _SelectFieldWidgetState<T extends Object>
         items: [
           for (final value in field.values)
             DropdownMenuItem(
-              child: Text(field.textBuilder(value)),
               value: value,
+              child: Text(field.textBuilder(value)),
             )
         ],
       ),
