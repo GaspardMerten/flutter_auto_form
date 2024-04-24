@@ -33,14 +33,14 @@ class _DateFieldWidgetState<T extends Object>
         decoration: InputDecoration(
             labelText: field.name,
             suffixIcon: const Icon(Icons.calendar_month)),
-        onDateSelected: (date) => setState(() {
+        onChanged: (date) => setState(() {
           widget.fieldContext.onChanged(date);
         }),
         autovalidateMode: widget.fieldContext.forceErrorDisplay
             ? AutovalidateMode.always
             : AutovalidateMode.onUserInteraction,
         validator: field.validator,
-        initialDate: field.value,
+        initialPickerDateTime: field.value,
         initialValue: field.value,
       ),
     );
