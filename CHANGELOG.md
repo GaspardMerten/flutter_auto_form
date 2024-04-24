@@ -1,3 +1,8 @@
+## [2.0.0] - 04-24-2024
+
+* Migrating to Dart SDK '>=3.3.3 <4.0.0'
+* Updating dependencies, fixing date_field breaking changes
+
 ## [1.0.7] - 09-27-2023
 
 * Fixing README.md
